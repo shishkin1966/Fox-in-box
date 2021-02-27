@@ -20,9 +20,9 @@ import java.util.concurrent.TimeUnit
 class NetExecutor : AbsRequestExecutor(), IObservableSubscriber {
     companion object {
         const val NAME = "NetExecutor"
+        const val QUEUE_CAPACITY = 1024
     }
 
-    private val QUEUE_CAPACITY = 1024
     private var threadCount = 2
     private var maxThreadCount = 2
     private val keepAliveTime: Long = 10 // 10 мин

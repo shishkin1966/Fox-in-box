@@ -10,9 +10,9 @@ import java.util.concurrent.TimeUnit
 class DbExecutor : AbsRequestExecutor() {
     companion object {
         const val NAME = "DbExecutor"
+        const val QUEUE_CAPACITY = 1024
     }
 
-    private val QUEUE_CAPACITY = 1024
     private val threadCount = 4
     private val maxThreadCount = 4
     private val keepAliveTime: Long = 10 // 10 мин

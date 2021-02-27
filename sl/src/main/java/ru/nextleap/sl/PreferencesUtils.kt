@@ -85,7 +85,7 @@ class PreferencesUtils {
         fun remove(context: Context, key: String) {
             val preferences = PreferenceManager.getDefaultSharedPreferences(context)
             val editor = preferences.edit()
-            editor.remove(key).commit()
+            editor.remove(key).apply()
         }
 
         @JvmStatic
@@ -98,7 +98,7 @@ class PreferencesUtils {
         fun clear(context: Context) {
             val preferences = PreferenceManager.getDefaultSharedPreferences(context)
             val editor = preferences.edit()
-            editor.clear().commit()
+            editor.clear().apply()
         }
     }
 }
