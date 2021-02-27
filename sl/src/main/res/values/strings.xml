@@ -1,0 +1,9 @@
+<resources>
+    <string name="ok_upper">OK</string>
+    <string name="setting">Настройки</string>
+    <string name="cancel">Отмена</string>
+    <string name="warning">Внимание</string>
+    <string name="exit">Выход</string>
+    <string name="double_back_pressed">Для выхода нажмите ещё раз</string>
+    <string name="network_disconnected">Сеть недоступна</string>
+</resources>

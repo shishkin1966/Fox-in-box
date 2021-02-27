@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background">
+
+    <TextView
+        android:id="@+id/back"
+        style="@style/Button.Main"
+        android:layout_alignParentBottom="true"
+        android:text="@string/return_main" />
+
+    <View
+        android:id="@+id/menuShadow"
+        android:layout_width="match_parent"
+        android:layout_height="6dp"
+        android:layout_above="@id/back"
+        android:background="@drawable/above_shadow" />
+
+</RelativeLayout>
+

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <item name="dialog_request_permissions" type="id" />
+    <item name="progressBar" type="id" />
+    <item name="errorMessage" type="id" />
+    <item name="root" type="id" />
+    <item name="selected_view" type="id" />
+
+</resources>

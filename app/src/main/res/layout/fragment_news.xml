@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/swipeRefreshLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background">
+
+        <TextView
+            android:id="@+id/errorMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:background="@color/red"
+            android:ellipsize="end"
+            android:maxHeight="@dimen/dimen_256dp"
+            android:paddingStart="@dimen/dimen_8dp"
+            android:paddingTop="@dimen/dimen_4dp"
+            android:paddingEnd="@dimen/dimen_8dp"
+            android:paddingBottom="@dimen/dimen_4dp"
+            android:textColor="@color/white"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/info"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_40dp"
+            android:layout_below="@id/errorMessage"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="@dimen/dimen_24dp"
+                android:layout_height="@dimen/dimen_24dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/dimen_12dp"
+                android:layout_marginEnd="@dimen/dimen_8dp"
+                android:background="@drawable/ic_circle_gray" />
+
+            <TextView
+                android:id="@+id/fio"
+                style="@style/Text.Button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:lines="1"
+                android:maxLines="1"
+                android:textColor="@color/text"
+                android:textSize="@dimen/text_size_large" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/dimen_8dp"
+                android:text="@string/your_score"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/text_size_large" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dimen_24dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/dimen_8dp"
+                android:layout_marginEnd="@dimen/dimen_16dp"
+                android:background="@drawable/orange_button_background_rounded"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/dimen_24dp"
+                    android:layout_height="@dimen/dimen_24dp"
+                    android:layout_gravity="center_vertical"
+                    app:srcCompat="@drawable/ic_scope" />
+
+                <TextView
+                    android:id="@+id/scope"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:paddingEnd="@dimen/dimen_8dp"
+                    android:text="11493"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_above="@id/menuDivider"
+            android:layout_below="@id/info"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="6dp"
+            android:layout_above="@id/menuDivider"
+            android:background="@drawable/above_shadow" />
+
+        <HorizontalScrollView
+            android:id="@+id/filter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/background">
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dimen_40dp"
+                app:singleSelection="true">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip1"
+                    style="@style/Chip.Single"
+                    android:layout_marginStart="@dimen/dimen_8dp"
+                    android:layout_marginEnd="@dimen/dimen_8dp"
+                    android:checked="true"
+                    android:text="Все" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip2"
+                    style="@style/Chip.Single"
+                    android:layout_marginEnd="@dimen/dimen_8dp"
+                    android:text="Материалы" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip3"
+                    style="@style/Chip.Single"
+                    android:layout_marginEnd="@dimen/dimen_8dp"
+                    android:text="Сертификаты" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip4"
+                    style="@style/Chip.Single"
+                    android:layout_marginEnd="@dimen/dimen_8dp"
+                    android:text="Праздники" />
+
+            </com.google.android.material.chip.ChipGroup>
+        </HorizontalScrollView>
+
+        <View
+            android:id="@+id/menuDivider"
+            style="@style/HorizontalDivider"
+            android:layout_above="@id/filter" />
+
+        <me.zhanghai.android.materialprogressbar.MaterialProgressBar
+            android:id="@+id/progressBar"
+            style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="-6dp"
+            android:indeterminate="true"
+            android:visibility="invisible"
+            app:mpb_indeterminateTint="@color/orange"
+            app:mpb_progressStyle="horizontal"
+            app:mpb_showProgressBackground="false" />
+
+        <View
+            android:id="@+id/topDivider"
+            style="@style/HorizontalDivider"
+            android:layout_below="@id/info" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="6dp"
+            android:layout_below="@id/topDivider"
+            android:background="@drawable/below_shadow" />
+
+
+    </RelativeLayout>
+
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

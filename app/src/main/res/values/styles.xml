@@ -1,0 +1,164 @@
+<resources>
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/transparent</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="actionMenuTextColor">@android:color/white</item>
+        <item name="colorControlNormal">@android:color/white</item>
+    </style>
+
+    <style name="SplashTheme" parent="AppTheme">
+        <item name="android:windowBackground">@mipmap/fox_in_box</item>
+    </style>
+
+    <style name="MenuTextStyle" parent="Text.Body">
+        <item name="android:textColor">@color/gray</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="BottomMenuTextStyle" parent="MenuTextStyle">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:paddingBottom">@dimen/dimen_4dp</item>
+        <item name="android:paddingTop">@dimen/dimen_8dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:clickable">true</item>
+        <item name="android:background">@drawable/menu_button_selector</item>
+        <item name="android:textColor">@color/menu_text_selector</item>
+    </style>
+
+    <style name="VerticalMenuTextStyle" parent="MenuTextStyle">
+        <item name="android:textSize">@dimen/text_size_xlarge</item>
+        <item name="android:layout_height">@dimen/menu_vertical_height</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:paddingStart">@dimen/dimen_12dp</item>
+        <item name="android:paddingEnd">@dimen/dimen_12dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:clickable">true</item>
+        <item name="android:textColor">@color/menu_text_selector</item>
+    </style>
+
+    <style name="HorizontalDivider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0.5dp</item>
+        <item name="android:background">@color/gray</item>
+    </style>
+
+    <style name="SwitchCompat">
+        <item name="thumbTint">@color/switch_thumb_selector</item>
+        <item name="trackTint">@color/switch_track_selector</item>
+    </style>
+
+    <style name="Chip" parent="Widget.MaterialComponents.Chip.Choice">
+    </style>
+
+    <style name="Chip.Single" parent="Chip">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">@dimen/dimen_2dp</item>
+        <item name="android:layout_marginLeft">@dimen/dimen_2dp</item>
+        <item name="android:layout_marginRight">@dimen/dimen_2dp</item>
+        <item name="android:layout_marginEnd">@dimen/dimen_2dp</item>
+        <item name="chipBackgroundColor">@color/chip_bg_single_selector</item>
+        <item name="android:textColor">@color/chip_text_selector</item>
+        <item name="android:textAppearance">@style/Text.Body</item>
+    </style>
+
+    <style name="Text" parent="@android:style/Widget.TextView">
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:textColor">@color/text</item>
+        <item name="android:textSize">@dimen/text_size</item>
+    </style>
+
+    <style name="Text.Body" parent ="Text">
+        <item name="android:textSize">@dimen/text_size</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="Text.Button" parent ="Text">
+        <item name="android:textSize">@dimen/text_size_large</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="Text.Header" parent ="Text">
+        <item name="android:textSize">@dimen/text_size_xlarge</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="InputLayout" parent="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColorPrimary">@color/text</item>
+        <item name="boxBackgroundColor">@android:color/white</item>
+        <item name="hintEnabled">true</item>
+    </style>
+
+    <style name="InputLayout.Required" parent="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColorPrimary">@color/text</item>
+        <item name="boxBackgroundColor">@color/red_ripple</item>
+        <item name="hintEnabled">true</item>
+    </style>
+
+    <style name="InputLayoutEditText" parent="Widget.AppCompat.EditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/edittext_selector</item>
+        <item name="android:inputType">text</item>
+        <item name="android:textSize">@dimen/text_size_large</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="Button" parent="Text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">@dimen/dimen_16dp</item>
+        <item name="android:paddingRight">@dimen/dimen_16dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/text_size_large</item>
+        <item name="android:textAppearance">@style/Text.Button</item>
+    </style>
+
+    <style name="Button.Main" parent="Button">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dimen_40dp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/orange_button_selector</item>
+        <item name="android:background">@drawable/orange_button_background</item>
+    </style>
+
+    <style name="Button.Orange" parent="Button">
+        <item name="android:layout_height">@dimen/dimen_40dp</item>
+        <item name="android:paddingLeft">@dimen/dimen_32dp</item>
+        <item name="android:paddingRight">@dimen/dimen_32dp</item>
+        <item name="android:textColor">@color/orange_button_selector</item>
+        <item name="android:background">@drawable/orange_button_background_rounded</item>
+    </style>
+
+    <style name="Button.Gray" parent="Button">
+        <item name="android:layout_height">@dimen/dimen_40dp</item>
+        <item name="android:paddingLeft">@dimen/dimen_32dp</item>
+        <item name="android:paddingRight">@dimen/dimen_32dp</item>
+        <item name="android:textColor">@color/gray_button_selector</item>
+        <item name="android:background">@drawable/gray_button_background_rounded</item>
+    </style>
+
+    <style name="Button.Flat.Orange" parent="Button">
+        <item name="android:layout_height">@dimen/dimen_32dp</item>
+        <item name="android:paddingLeft">@dimen/dimen_16dp</item>
+        <item name="android:paddingRight">@dimen/dimen_16dp</item>
+        <item name="android:textColor">@color/orange_text_selector</item>
+        <item name="android:background">@drawable/transparent_orange_button_background_rounded</item>
+    </style>
+
+</resources>

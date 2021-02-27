@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "338826660701",
+    "firebase_url": "https://fox-in-box-1d267.firebaseio.com",
+    "project_id": "fox-in-box-1d267",
+    "storage_bucket": "fox-in-box-1d267.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:338826660701:android:8ad324147653333ad3b6b4",
+        "android_client_info": {
+          "package_name": "ru.nextleap.fox_in_box"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "338826660701-kvqdaevvc99ubedvt9fag9i5qc1h7dha.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYdt_xVFFXyzS4qdQY7FtL_J8vPw1rLv0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "338826660701-kvqdaevvc99ubedvt9fag9i5qc1h7dha.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

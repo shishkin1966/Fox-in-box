@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/dimen_16dp"
+    android:layout_marginTop="@dimen/dimen_8dp"
+    android:layout_marginEnd="@dimen/dimen_16dp"
+    android:layout_marginBottom="@dimen/dimen_8dp"
+    android:clickable="true"
+    android:focusable="true"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="@dimen/dimen_16dp"
+    app:cardElevation="@dimen/dimen_4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/text"
+            style="@style/Text.Header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_8dp"
+            android:layout_marginTop="@dimen/dimen_4dp"
+            android:layout_marginEnd="@dimen/dimen_8dp"
+            android:layout_marginBottom="@dimen/dimen_8dp"
+            android:textColor="@color/text" />
+
+        <View
+            style="@style/HorizontalDivider"
+            android:layout_marginStart="@dimen/dimen_8dp"
+            android:layout_marginEnd="@dimen/dimen_8dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_24dp"
+            android:layout_marginTop="@dimen/dimen_8dp"
+            android:layout_marginEnd="@dimen/dimen_24dp"
+            android:layout_marginBottom="@dimen/dimen_8dp">
+
+            <ImageView
+                android:id="@+id/startDateImage"
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size"
+                android:padding="@dimen/dimen_4dp"
+                android:layout_gravity="center_vertical"
+                app:srcCompat="@drawable/ic_calendar" />
+
+            <TextView
+                android:id="@+id/startDate"
+                style="@style/Text.Button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/dimen_8dp"
+                android:layout_weight="1"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/text_size_large" />
+
+            <ImageView
+                android:id="@+id/likeImage"
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size"
+                android:padding="@dimen/dimen_4dp"
+                android:layout_gravity="center_vertical"
+                app:srcCompat="@drawable/ic_like" />
+
+            <TextView
+                android:id="@+id/like"
+                style="@style/Text.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/dimen_8dp"
+                android:layout_marginEnd="@dimen/dimen_16dp"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/text_size_large" />
+
+            <ImageView
+                android:id="@+id/commentImage"
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size"
+                android:padding="@dimen/dimen_4dp"
+                android:layout_gravity="center_vertical"
+                app:srcCompat="@drawable/ic_comment" />
+
+            <TextView
+                android:id="@+id/comment"
+                style="@style/Text.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/dimen_8dp"
+                android:layout_marginEnd="@dimen/dimen_16dp"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/text_size_large" />
+
+            <ImageView
+                android:id="@+id/displayImage"
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size"
+                android:padding="@dimen/dimen_4dp"
+                android:layout_gravity="center_vertical"
+                app:srcCompat="@drawable/ic_display" />
+
+            <TextView
+                android:id="@+id/display"
+                style="@style/Text.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/dimen_8dp"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/text_size_large" />
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>
+

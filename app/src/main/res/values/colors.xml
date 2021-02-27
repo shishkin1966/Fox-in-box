@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FF790E</color>
+    <color name="colorPrimaryDark">#cF590E</color>
+    <color name="colorAccent">#FF790E</color>
+    <color name="colorAccentDarker">#cF590E</color>
+    <color name="colorAccentDarkest">#763515</color>
+
+    <color name="text">#212121</color>
+    <color name="red_ripple">#30ffC0C0</color>
+
+    <color name="button_small">#478dfa</color>
+    <color name="background_new">#FEF8D7</color>
+
+</resources>

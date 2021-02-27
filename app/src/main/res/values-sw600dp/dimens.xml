@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="menu_height">48dp</dimen>
+    <dimen name="menu_vertical_height">56dp</dimen>
+    <dimen name="badger_horizontal_offset">32dp</dimen>
+    <dimen name="badger_vertical_offset">10dp</dimen>
+    <dimen name="news_image_height">600dp</dimen>
+    <dimen name="news_image_width">400dp</dimen>
+</resources>

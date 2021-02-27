@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background">
+
+    <LinearLayout
+        android:id="@+id/info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <View style="@style/HorizontalDivider" />
+
+        <TextView
+            android:id="@+id/version"
+            style="@style/Text.Header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dimen_8dp"
+            android:layout_marginBottom="@dimen/dimen_8dp"
+            android:textColor="@color/gray" />
+
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_above="@id/info"
+        android:layout_alignParentTop="true"
+        android:fadingEdge="none"
+        android:overScrollMode="never">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/dimen_12dp"
+            android:paddingBottom="@dimen/dimen_12dp">
+
+            <ru.nextleap.common.RippleTextView
+                android:id="@+id/menu_terms_promotions"
+                style="@style/VerticalMenuTextStyle"
+                android:drawableStart="@drawable/ic_terms_promotions"
+                android:drawablePadding="@dimen/dimen_12dp"
+                android:text="@string/menu_terms_promotions" />
+
+            <ru.nextleap.common.RippleTextView
+                android:id="@+id/menu_products"
+                style="@style/VerticalMenuTextStyle"
+                android:drawableStart="@drawable/ic_products"
+                android:drawablePadding="@dimen/dimen_12dp"
+                android:text="@string/menu_products" />
+
+            <ru.nextleap.common.RippleTextView
+                android:id="@+id/menu_ordering_prizes"
+                style="@style/VerticalMenuTextStyle"
+                android:drawableStart="@drawable/ic_ordering_prizes"
+                android:drawablePadding="@dimen/dimen_12dp"
+                android:text="@string/menu_ordering_prizes" />
+
+            <ru.nextleap.common.RippleTextView
+                android:id="@+id/menu_rating_participants"
+                style="@style/VerticalMenuTextStyle"
+                android:drawableStart="@drawable/ic_rating_participants"
+                android:drawablePadding="@dimen/dimen_12dp"
+                android:text="@string/menu_rating_participants" />
+
+            <ru.nextleap.common.RippleTextView
+                android:id="@+id/menu_reports"
+                style="@style/VerticalMenuTextStyle"
+                android:drawableStart="@drawable/ic_reports"
+                android:drawablePadding="@dimen/dimen_12dp"
+                android:text="@string/menu_reports" />
+
+            <ru.nextleap.common.RippleTextView
+                android:id="@+id/menu_analytics"
+                style="@style/VerticalMenuTextStyle"
+                android:drawableStart="@drawable/ic_analytics"
+                android:drawablePadding="@dimen/dimen_12dp"
+                android:text="@string/menu_analytics" />
+
+            <ru.nextleap.common.RippleTextView
+                android:id="@+id/menu_faq"
+                style="@style/VerticalMenuTextStyle"
+                android:drawableStart="@drawable/ic_faq"
+                android:drawablePadding="@dimen/dimen_12dp"
+                android:text="@string/menu_faq" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>
+

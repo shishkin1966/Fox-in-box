@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">Fox in box</string>
+    <string name="app_upadted">Приложение обновлено</string>
+
+    <string name="menu_profile">Профиль</string>
+    <string name="menu_news">Новости</string>
+    <string name="menu_prize">Призовой фонд</string>
+    <string name="menu_materials">Материалы</string>
+    <string name="menu_more">Еще</string>
+
+    <string name="setting_use_push">Использовать push сообщения</string>
+    <string name="setting_title">Настройки</string>
+    <string name="setting_use_sound">Использовать звук при оповещениях</string>
+
+    <string name="security_put_error">Ошибка сохранения информации в защищенном хранилище</string>
+    <string name="return_main">Вернуться на главный экран</string>
+
+    <string name="menu_terms_promotions">Условия акций</string>
+    <string name="menu_products">Продукция</string>
+    <string name="menu_ordering_prizes">Заказ призов</string>
+    <string name="menu_rating_participants">Рейтинг участников</string>
+    <string name="menu_reports">Отчеты</string>
+    <string name="menu_analytics">Аналитика</string>
+    <string name="menu_faq">Ответы на частые вопросы</string>
+    <string name="your_score">Ваши баллы</string>
+    <string name="detailed">Подробнее</string>
+    <string name="version">Версия</string>
+    <string name="from">от</string>
+
+</resources>
