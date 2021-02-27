@@ -7,7 +7,7 @@ import ru.nextleap.sl.lifecycle.Lifecycle
 abstract class AbsSmallUnion<T : IProviderSubscriber> : AbsProvider(), ISmallUnion<T> {
     private val secretary = createSecretary()
 
-    override fun createSecretary(): ISecretary<T> {
+    final override fun createSecretary(): ISecretary<T> {
         return RefSecretary()
     }
 

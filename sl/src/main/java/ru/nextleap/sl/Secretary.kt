@@ -5,7 +5,7 @@ import java.util.concurrent.ConcurrentHashMap
 import kotlin.collections.ArrayList
 
 
-class Secretary<T>() : ISecretary<T> {
+class Secretary<T> : ISecretary<T> {
     private val subscribers = Collections.synchronizedMap(ConcurrentHashMap<String, T>())
 
     override fun remove(key: String): T? {

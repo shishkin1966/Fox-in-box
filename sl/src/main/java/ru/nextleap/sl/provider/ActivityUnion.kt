@@ -81,11 +81,13 @@ class ActivityUnion : AbsUnion<IActivity>(), IActivityUnion {
         }
     }
 
+    /*
     override fun onUnRegisterLastSubscriber() {
-        //if (ApplicationProvider.instance.isExit()) {
-        //    android.os.Process.killProcess(android.os.Process.myPid())
-        //}
+        if (ApplicationProvider.instance.isExit()) {
+            android.os.Process.killProcess(android.os.Process.myPid())
+        }
     }
+    */
 
     override fun <F> getFragment(cls: Class<F>, id: Int): F? {
         val activity = getActivity<AppCompatActivity>()
