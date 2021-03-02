@@ -2,11 +2,13 @@ package ru.nextleap.fox_in_box.screen.news
 
 import com.google.gson.internal.LinkedTreeMap
 import ru.nextleap.common.ApplicationUtils
+import ru.nextleap.fox_in_box.ApplicationSingleton
 import ru.nextleap.fox_in_box.action.Actions
 import ru.nextleap.fox_in_box.data.BaseResponse
 import ru.nextleap.fox_in_box.data.News
 import ru.nextleap.fox_in_box.provider.Providers
 import ru.nextleap.fox_in_box.request.GetNewsListRequest
+import ru.nextleap.fox_in_box.request.PutStorageRequest
 import ru.nextleap.sl.action.*
 import ru.nextleap.sl.data.ExtResult
 import ru.nextleap.sl.message.DataMessage
@@ -69,17 +71,19 @@ class NewsPresenter(model: NewsModel) : AbsModelPresenter(model), IResponseListe
                                 eof = true
                             }
                             if (eof) {
-                                getView<NewsFragment>().addAction(HideProgressBarAction())
+                                val json = ApplicationSingleton.instance.storageProvider.toJson(this.data)
+                                ApplicationSingleton.instance.commonExecutor.execute(PutStorageRequest(NAME, json))
+                                getView<NewsFragment>().actionHandler.hideProgressBar()
                             }
                             hasData()
                         } else {
-                            getView<NewsFragment>().addAction(HideProgressBarAction())
+                            getView<NewsFragment>().actionHandler.hideProgressBar()
                         }
                     }
                 }
             } else {
-                getView<NewsFragment>().addAction(HideProgressBarAction())
-                getView<NewsFragment>().addAction(ShowErrorAction(result.getErrorText()))
+                getView<NewsFragment>().actionHandler.hideProgressBar()
+                getView<NewsFragment>().actionHandler.showErrorAction(ShowErrorAction(result.getErrorText()))
             }
         }
     }
@@ -90,9 +94,18 @@ class NewsPresenter(model: NewsModel) : AbsModelPresenter(model), IResponseListe
 
     override fun onStart() {
         setPageSize(PageSize)
-        if (!::data.isInitialized) {
+        val json = ApplicationSingleton.instance.storageProvider.get(NAME)
+        if  (json == null) {
             data = NewsData()
             getData()
+        } else {
+            data = ApplicationSingleton.instance.storageProvider.fromJson(json.toString(), NewsData::class.java)
+            getView<NewsFragment>().addAction(
+                DataAction(
+                    Actions.AddAllItems,
+                    data.list
+                )
+            )
         }
     }
 
@@ -108,7 +121,7 @@ class NewsPresenter(model: NewsModel) : AbsModelPresenter(model), IResponseListe
     private fun getData() {
         init()
         ApplicationUtils.runOnUiThread {
-            getView<NewsFragment>().addAction(ShowProgressBarAction())
+            getView<NewsFragment>().actionHandler.showProgressBar()
         }
         hasData()
     }

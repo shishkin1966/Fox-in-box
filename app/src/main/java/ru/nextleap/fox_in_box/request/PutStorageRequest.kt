@@ -5,7 +5,7 @@ import ru.nextleap.sl.request.AbsRequest
 import java.io.Serializable
 import java.util.concurrent.TimeUnit
 
-class PutStorageRequest(private val key: String, private val value: Serializable) : AbsRequest() {
+class PutStorageRequest(private val key: String, private val value: Serializable?) : AbsRequest() {
     companion object {
         const val NAME = "PutStorageRequest"
     }
@@ -15,11 +15,13 @@ class PutStorageRequest(private val key: String, private val value: Serializable
     }
 
     override fun run() {
-        ApplicationSingleton.instance.storageProvider.put(
-            key,
-            value,
-            System.currentTimeMillis() + TimeUnit.HOURS.toMillis(2)
-        )
+        if (value != null) {
+            ApplicationSingleton.instance.storageProvider.put(
+                key,
+                value,
+                System.currentTimeMillis() + TimeUnit.HOURS.toMillis(2)
+            )
+        }
     }
 
     override fun getName(): String {
