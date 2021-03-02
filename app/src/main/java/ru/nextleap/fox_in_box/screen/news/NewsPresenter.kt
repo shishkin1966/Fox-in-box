@@ -61,12 +61,7 @@ class NewsPresenter(model: NewsModel) : AbsModelPresenter(model), IResponseListe
                                     eof = true
                                 }
                                 this.data.list.addAll(list)
-                                getView<NewsFragment>().addAction(
-                                    DataAction(
-                                        Actions.AddItems,
-                                        list
-                                    )
-                                )
+                                getView<NewsFragment>().addItems(list)
                             } else {
                                 eof = true
                             }
@@ -100,12 +95,7 @@ class NewsPresenter(model: NewsModel) : AbsModelPresenter(model), IResponseListe
             getData()
         } else {
             data = ApplicationSingleton.instance.storageProvider.fromJson(json.toString(), NewsData::class.java)
-            getView<NewsFragment>().addAction(
-                DataAction(
-                    Actions.AddAllItems,
-                    data.list
-                )
-            )
+            getView<NewsFragment>().addAllItems(data.list)
         }
     }
 
@@ -152,7 +142,7 @@ class NewsPresenter(model: NewsModel) : AbsModelPresenter(model), IResponseListe
         currentPageSize = 0
         eof = false
         data.list.clear()
-        getView<NewsFragment>().addAction(ApplicationAction(Actions.ClearItems))
+        getView<NewsFragment>().clearItems()
     }
 
     private fun hasData() {
