@@ -20,6 +20,7 @@ import ru.nextleap.sl.PreferencesUtils
 import ru.nextleap.sl.action.ApplicationAction
 import ru.nextleap.sl.action.DataAction
 import ru.nextleap.sl.action.IAction
+import ru.nextleap.sl.action.ShowErrorAction
 import ru.nextleap.sl.model.IModel
 import ru.nextleap.sl.provider.ApplicationProvider
 import ru.nextleap.sl.ui.AbsContentFragment
@@ -48,6 +49,8 @@ class NewsFragment : AbsContentFragment(), ChipGroup.OnCheckedChangeListener,
     private var position: Int =
         PreferencesUtils.getInt(ApplicationProvider.appContext, CHIP_POSITION, 1)
     private val adapter: NewsRecyclerViewAdapter = NewsRecyclerViewAdapter()
+
+    private var count : Int = 0
 
     override fun createModel(): IModel {
         return NewsModel(this)
