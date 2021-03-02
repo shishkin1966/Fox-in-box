@@ -2,12 +2,16 @@ package ru.nextleap.fox_in_box.screen.orders
 
 import com.google.gson.internal.LinkedTreeMap
 import ru.nextleap.common.ApplicationUtils
+import ru.nextleap.fox_in_box.ApplicationSingleton
 import ru.nextleap.fox_in_box.action.Actions
 import ru.nextleap.fox_in_box.data.BaseResponse
 import ru.nextleap.fox_in_box.data.Orders
 import ru.nextleap.fox_in_box.provider.Providers
 import ru.nextleap.fox_in_box.request.GetOrdersListRequest
-import ru.nextleap.sl.action.*
+import ru.nextleap.fox_in_box.request.PutStorageRequest
+import ru.nextleap.sl.action.ApplicationAction
+import ru.nextleap.sl.action.IAction
+import ru.nextleap.sl.action.ShowErrorAction
 import ru.nextleap.sl.data.ExtResult
 import ru.nextleap.sl.presenter.AbsModelPresenter
 import ru.nextleap.sl.request.IResponseListener
@@ -45,9 +49,13 @@ class OrdersPresenter(model: OrdersModel) : AbsModelPresenter(model), IResponseL
 
     override fun onStart() {
         setPageSize(PageSize)
-        if (!::data.isInitialized) {
+        val json = ApplicationSingleton.instance.storageProvider.get(NAME)
+        if  (json == null) {
             data = OrdersData()
             getData()
+        } else {
+            data = ApplicationSingleton.instance.storageProvider.fromJson(json.toString(), OrdersData::class.java)
+            getView<OrdersFragment>().addAllItems(data.list)
         }
     }
 
@@ -63,7 +71,7 @@ class OrdersPresenter(model: OrdersModel) : AbsModelPresenter(model), IResponseL
     private fun getData() {
         init()
         ApplicationUtils.runOnUiThread {
-            getView<OrdersFragment>().addAction(ShowProgressBarAction())
+            getView<OrdersFragment>().actionHandler.showProgressBar()
         }
         hasData()
     }
@@ -73,7 +81,7 @@ class OrdersPresenter(model: OrdersModel) : AbsModelPresenter(model), IResponseL
         currentPageSize = 0
         eof = false
         data.list.clear()
-        getView<OrdersFragment>().addAction(ApplicationAction(Actions.ClearItems))
+        getView<OrdersFragment>().clearItems()
     }
 
     private fun hasData() {
@@ -98,27 +106,26 @@ class OrdersPresenter(model: OrdersModel) : AbsModelPresenter(model), IResponseL
                                     eof = true
                                 }
                                 this.data.list.addAll(list)
-                                getView<OrdersFragment>().addAction(
-                                    DataAction(
-                                        Actions.AddItems,
-                                        list
-                                    )
-                                )
+                                getView<OrdersFragment>().addItems(list)
                             } else {
                                 eof = true
                             }
                             if (eof) {
-                                getView<OrdersFragment>().addAction(HideProgressBarAction())
+                                val json = ApplicationSingleton.instance.storageProvider.toJson(this.data)
+                                ApplicationSingleton.instance.commonExecutor.execute(
+                                    PutStorageRequest(NAME, json)
+                                )
+                                getView<OrdersFragment>().actionHandler.hideProgressBar()
                             }
                             hasData()
                         } else {
-                            getView<OrdersFragment>().addAction(HideProgressBarAction())
+                            getView<OrdersFragment>().actionHandler.hideProgressBar()
                         }
                     }
                 }
             } else {
-                getView<OrdersFragment>().addAction(HideProgressBarAction())
-                getView<OrdersFragment>().addAction(ShowErrorAction(result.getErrorText()))
+                getView<OrdersFragment>().actionHandler.hideProgressBar()
+                getView<OrdersFragment>().actionHandler.showErrorAction(ShowErrorAction(result.getErrorText()))
             }
         }
     }

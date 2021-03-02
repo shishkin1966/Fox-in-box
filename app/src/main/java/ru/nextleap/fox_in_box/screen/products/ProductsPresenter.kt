@@ -2,12 +2,16 @@ package ru.nextleap.fox_in_box.screen.products
 
 import com.google.gson.internal.LinkedTreeMap
 import ru.nextleap.common.ApplicationUtils
+import ru.nextleap.fox_in_box.ApplicationSingleton
 import ru.nextleap.fox_in_box.action.Actions
 import ru.nextleap.fox_in_box.data.BaseResponse
 import ru.nextleap.fox_in_box.data.SKU
 import ru.nextleap.fox_in_box.provider.Providers
 import ru.nextleap.fox_in_box.request.GetSKUListRequest
-import ru.nextleap.sl.action.*
+import ru.nextleap.fox_in_box.request.PutStorageRequest
+import ru.nextleap.sl.action.ApplicationAction
+import ru.nextleap.sl.action.IAction
+import ru.nextleap.sl.action.ShowErrorAction
 import ru.nextleap.sl.data.ExtResult
 import ru.nextleap.sl.presenter.AbsModelPresenter
 import ru.nextleap.sl.request.IResponseListener
@@ -46,9 +50,13 @@ class ProductsPresenter(model: ProductsModel) : AbsModelPresenter(model), IRespo
 
     override fun onStart() {
         setPageSize(PageSize)
-        if (!::data.isInitialized) {
+        val json = ApplicationSingleton.instance.storageProvider.get(NAME)
+        if  (json == null) {
             data = SKUData()
             getData()
+        } else {
+            data = ApplicationSingleton.instance.storageProvider.fromJson(json.toString(), SKUData::class.java)
+            getView<ProductsFragment>().addAllItems(data.list)
         }
     }
 
@@ -64,7 +72,7 @@ class ProductsPresenter(model: ProductsModel) : AbsModelPresenter(model), IRespo
     private fun getData() {
         init()
         ApplicationUtils.runOnUiThread {
-            getView<ProductsFragment>().addAction(ShowProgressBarAction())
+            getView<ProductsFragment>().actionHandler.showProgressBar()
         }
         hasData()
     }
@@ -74,7 +82,7 @@ class ProductsPresenter(model: ProductsModel) : AbsModelPresenter(model), IRespo
         currentPageSize = 0
         eof = false
         data.list.clear()
-        getView<ProductsFragment>().addAction(ApplicationAction(Actions.ClearItems))
+        getView<ProductsFragment>().clearItems()
     }
 
     private fun hasData() {
@@ -103,27 +111,26 @@ class ProductsPresenter(model: ProductsModel) : AbsModelPresenter(model), IRespo
                                     eof = true
                                 }
                                 this.data.list.addAll(list)
-                                getView<ProductsFragment>().addAction(
-                                    DataAction(
-                                        Actions.AddItems,
-                                        list
-                                    )
-                                )
+                                getView<ProductsFragment>().addItems(list)
                             } else {
                                 eof = true
                             }
                             if (eof) {
-                                getView<ProductsFragment>().addAction(HideProgressBarAction())
+                                val json = ApplicationSingleton.instance.storageProvider.toJson(this.data)
+                                ApplicationSingleton.instance.commonExecutor.execute(
+                                    PutStorageRequest(NAME, json)
+                                )
+                                getView<ProductsFragment>().actionHandler.hideProgressBar()
                             }
                             hasData()
                         } else {
-                            getView<ProductsFragment>().addAction(HideProgressBarAction())
+                            getView<ProductsFragment>().actionHandler.hideProgressBar()
                         }
                     }
                 }
             } else {
-                getView<ProductsFragment>().addAction(HideProgressBarAction())
-                getView<ProductsFragment>().addAction(ShowErrorAction(result.getErrorText()))
+                getView<ProductsFragment>().actionHandler.hideProgressBar()
+                getView<ProductsFragment>().actionHandler.showErrorAction(ShowErrorAction(result.getErrorText()))
             }
         }
     }

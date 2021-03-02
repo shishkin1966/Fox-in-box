@@ -2,11 +2,13 @@ package ru.nextleap.fox_in_box.screen.aggregated
 
 import com.google.gson.internal.LinkedTreeMap
 import ru.nextleap.common.ApplicationUtils
+import ru.nextleap.fox_in_box.ApplicationSingleton
 import ru.nextleap.fox_in_box.action.Actions
 import ru.nextleap.fox_in_box.data.Aggregated
 import ru.nextleap.fox_in_box.data.BaseResponse
 import ru.nextleap.fox_in_box.provider.Providers
 import ru.nextleap.fox_in_box.request.GetAggregatedListRequest
+import ru.nextleap.fox_in_box.request.PutStorageRequest
 import ru.nextleap.sl.action.*
 import ru.nextleap.sl.data.ExtResult
 import ru.nextleap.sl.presenter.AbsModelPresenter
@@ -45,9 +47,13 @@ class AggregatedPresenter(model: AggregatedModel) : AbsModelPresenter(model), IR
 
     override fun onStart() {
         setPageSize(PageSize)
-        if (!::data.isInitialized) {
+        val json = ApplicationSingleton.instance.storageProvider.get(NAME)
+        if  (json == null) {
             data = AggregatedData()
             getData()
+        } else {
+            data = ApplicationSingleton.instance.storageProvider.fromJson(json.toString(), AggregatedData::class.java)
+            getView<AggregatedFragment>().addAllItems(data.list)
         }
     }
 
@@ -63,7 +69,7 @@ class AggregatedPresenter(model: AggregatedModel) : AbsModelPresenter(model), IR
     private fun getData() {
         init()
         ApplicationUtils.runOnUiThread {
-            getView<AggregatedFragment>().addAction(ShowProgressBarAction())
+            getView<AggregatedFragment>().actionHandler.showProgressBar()
         }
         hasData()
     }
@@ -73,7 +79,7 @@ class AggregatedPresenter(model: AggregatedModel) : AbsModelPresenter(model), IR
         currentPageSize = 0
         eof = false
         data.list.clear()
-        getView<AggregatedFragment>().addAction(ApplicationAction(Actions.ClearItems))
+        getView<AggregatedFragment>().clearItems()
     }
 
     private fun hasData() {
@@ -103,27 +109,26 @@ class AggregatedPresenter(model: AggregatedModel) : AbsModelPresenter(model), IR
                                     eof = true
                                 }
                                 this.data.list.addAll(list)
-                                getView<AggregatedFragment>().addAction(
-                                    DataAction(
-                                        Actions.AddItems,
-                                        list
-                                    )
-                                )
+                                getView<AggregatedFragment>().addItems(list)
                             } else {
                                 eof = true
                             }
                             if (eof) {
-                                getView<AggregatedFragment>().addAction(HideProgressBarAction())
+                                val json = ApplicationSingleton.instance.storageProvider.toJson(this.data)
+                                ApplicationSingleton.instance.commonExecutor.execute(
+                                    PutStorageRequest(NAME, json)
+                                )
+                                getView<AggregatedFragment>().actionHandler.hideProgressBar()
                             }
                             hasData()
                         } else {
-                            getView<AggregatedFragment>().addAction(HideProgressBarAction())
+                            getView<AggregatedFragment>().actionHandler.hideProgressBar()
                         }
                     }
                 }
             } else {
-                getView<AggregatedFragment>().addAction(HideProgressBarAction())
-                getView<AggregatedFragment>().addAction(ShowErrorAction(result.getErrorText()))
+                getView<AggregatedFragment>().actionHandler.hideProgressBar()
+                getView<AggregatedFragment>().actionHandler.showErrorAction(ShowErrorAction(result.getErrorText()))
             }
         }
     }
