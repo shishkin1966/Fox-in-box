@@ -137,6 +137,7 @@ class ProductsPresenter(model: ProductsModel) : AbsModelPresenter(model), IRespo
                     getData()
                     return true
                 }
+
                 Actions.DataChanged -> {
                     ApplicationUtils.runOnUiThread {
                         getView<ProductsFragment>().dataChanged()

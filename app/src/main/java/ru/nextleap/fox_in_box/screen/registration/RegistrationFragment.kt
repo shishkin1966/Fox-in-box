@@ -8,8 +8,6 @@ import android.widget.TextView
 import ru.nextleap.common.ApplicationUtils
 import ru.nextleap.fox_in_box.ApplicationSingleton
 import ru.nextleap.fox_in_box.R
-import ru.nextleap.sl.action.IAction
-import ru.nextleap.sl.action.handler.FragmentActionHandler
 import ru.nextleap.sl.model.IModel
 import ru.nextleap.sl.provider.ApplicationProvider
 import ru.nextleap.sl.ui.AbsContentFragment
@@ -25,19 +23,10 @@ class RegistrationFragment : AbsContentFragment() {
         }
     }
 
-    private val actionHandler = FragmentActionHandler(this)
     private lateinit var next: TextView
 
     override fun createModel(): IModel {
         return RegistrationModel(this)
-    }
-
-    override fun onAction(action: IAction): Boolean {
-        if (!isValid()) return false
-
-        if (actionHandler.onAction(action)) return true
-
-        return false
     }
 
     override fun onCreateView(

@@ -14,7 +14,6 @@ import ru.nextleap.fox_in_box.R
 import ru.nextleap.fox_in_box.screen.main.MainPresenter
 import ru.nextleap.sl.action.ApplicationAction
 import ru.nextleap.sl.action.IAction
-import ru.nextleap.sl.action.handler.FragmentActionHandler
 import ru.nextleap.sl.model.IModel
 import ru.nextleap.sl.provider.ApplicationProvider
 import ru.nextleap.sl.ui.AbsContentFragment
@@ -30,7 +29,6 @@ class MoreFragment : AbsContentFragment() {
         }
     }
 
-    private val actionHandler = FragmentActionHandler(this)
     private lateinit var menuTermsPromotions: TextView
     private lateinit var menuProducts: TextView
     private lateinit var menuOrderingPrizes: TextView
@@ -90,7 +88,7 @@ class MoreFragment : AbsContentFragment() {
         menuFaq.setOnClickListener(this::onClick)
 
         version = view.findViewById(R.id.version)
-        var date: String = ""
+        var date = ""
         try {
             val packageInfo: PackageInfo =
                 ApplicationProvider.appContext.packageManager.getPackageInfo(

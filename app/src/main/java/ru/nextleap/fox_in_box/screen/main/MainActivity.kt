@@ -12,13 +12,11 @@ import ru.nextleap.fox_in_box.GlideApp
 import ru.nextleap.fox_in_box.R
 import ru.nextleap.fox_in_box.presenter.OnBackPressedPresenter
 import ru.nextleap.sl.action.*
-import ru.nextleap.sl.action.handler.ActivityActionHandler
 import ru.nextleap.sl.provider.ApplicationProvider
 import ru.nextleap.sl.ui.AbsContentActivity
 
 
 class MainActivity : AbsContentActivity() {
-    private val actionHandler = ActivityActionHandler(this)
     private val onBackPressedPresenter = OnBackPressedPresenter()
     lateinit var router: MainRouter
 
@@ -30,7 +28,7 @@ class MainActivity : AbsContentActivity() {
             return true
         }
 
-        if (actionHandler.onAction(action)) return true
+        if (super.onAction(action)) return true
 
         return false
     }

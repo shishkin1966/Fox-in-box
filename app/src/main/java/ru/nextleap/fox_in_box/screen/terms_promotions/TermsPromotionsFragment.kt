@@ -9,8 +9,6 @@ import ru.nextleap.fox_in_box.ApplicationSingleton
 import ru.nextleap.fox_in_box.R
 import ru.nextleap.fox_in_box.screen.home.HomePresenter
 import ru.nextleap.sl.action.ApplicationAction
-import ru.nextleap.sl.action.IAction
-import ru.nextleap.sl.action.handler.FragmentActionHandler
 import ru.nextleap.sl.model.IModel
 import ru.nextleap.sl.ui.AbsContentFragment
 
@@ -25,19 +23,10 @@ class TermsPromotionsFragment : AbsContentFragment() {
         }
     }
 
-    private val actionHandler = FragmentActionHandler(this)
     private lateinit var back: TextView
 
     override fun createModel(): IModel {
         return TermsPromotionsModel(this)
-    }
-
-    override fun onAction(action: IAction): Boolean {
-        if (!isValid()) return false
-
-        if (actionHandler.onAction(action)) return true
-
-        return false
     }
 
     override fun onCreateView(

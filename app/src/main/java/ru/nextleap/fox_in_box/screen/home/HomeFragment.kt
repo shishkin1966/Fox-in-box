@@ -13,8 +13,6 @@ import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.badge.BadgeUtils
 import ru.nextleap.fox_in_box.ApplicationSingleton
 import ru.nextleap.fox_in_box.R
-import ru.nextleap.sl.action.IAction
-import ru.nextleap.sl.action.handler.FragmentActionHandler
 import ru.nextleap.sl.model.IModel
 import ru.nextleap.sl.provider.ApplicationProvider
 import ru.nextleap.sl.ui.AbsContentFragment
@@ -30,7 +28,6 @@ class HomeFragment : AbsContentFragment() {
         }
     }
 
-    private val actionHandler = FragmentActionHandler(this)
     private lateinit var button1: TextView
     private lateinit var button2: TextView
     private lateinit var button3: TextView
@@ -76,7 +73,7 @@ class HomeFragment : AbsContentFragment() {
         }
     }
 
-    @SuppressLint("RestrictedApi")
+    @SuppressLint("RestrictedApi", "UnsafeExperimentalUsageError")
     private fun setBadger() {
         val badgeDrawable = BadgeDrawable.create(button1.context)
         badgeDrawable.number = countNewsBadger
@@ -88,14 +85,6 @@ class HomeFragment : AbsContentFragment() {
             ApplicationProvider.appContext.resources.getDimension(R.dimen.badger_vertical_offset)
                 .toInt()
         BadgeUtils.attachBadgeDrawable(badgeDrawable, button1, fl)
-    }
-
-    override fun onAction(action: IAction): Boolean {
-        if (!isValid()) return false
-
-        if (actionHandler.onAction(action)) return true
-
-        return false
     }
 
     override fun onCreateView(

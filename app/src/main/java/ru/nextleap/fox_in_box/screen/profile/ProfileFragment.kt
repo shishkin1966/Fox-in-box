@@ -10,7 +10,6 @@ import ru.nextleap.fox_in_box.action.Actions
 import ru.nextleap.fox_in_box.data.Profile
 import ru.nextleap.sl.action.DataAction
 import ru.nextleap.sl.action.IAction
-import ru.nextleap.sl.action.handler.FragmentActionHandler
 import ru.nextleap.sl.model.IModel
 import ru.nextleap.sl.ui.AbsContentFragment
 
@@ -24,8 +23,6 @@ class ProfileFragment : AbsContentFragment() {
             return ProfileFragment()
         }
     }
-
-    private val actionHandler = FragmentActionHandler(this)
 
     override fun createModel(): IModel {
         return ProfileModel(this)
@@ -43,7 +40,7 @@ class ProfileFragment : AbsContentFragment() {
             }
         }
 
-        if (actionHandler.onAction(action)) return true
+        if (super.onAction(action)) return true
 
         return false
     }
