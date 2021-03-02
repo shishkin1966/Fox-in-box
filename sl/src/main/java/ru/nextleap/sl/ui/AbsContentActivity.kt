@@ -5,6 +5,8 @@ import com.google.android.material.snackbar.Snackbar
 import ru.nextleap.common.ApplicationUtils
 import ru.nextleap.sl.R
 import ru.nextleap.sl.action.HideKeyboardAction
+import ru.nextleap.sl.action.IAction
+import ru.nextleap.sl.action.handler.ActivityActionHandler
 import ru.nextleap.sl.observe.NetObservable
 import ru.nextleap.sl.provider.IObservableSubscriber
 import ru.nextleap.sl.provider.IRouterProvider
@@ -12,7 +14,18 @@ import ru.nextleap.sl.provider.ObservableUnion
 
 abstract class AbsContentActivity : AbsModelActivity(), IRouterProvider,
     IObservableSubscriber {
+
+    val actionHandler = ActivityActionHandler(this)
+
     private var snackbar: Snackbar? = null
+
+    override fun onAction(action: IAction): Boolean {
+        if (!isValid()) return false
+
+        if (actionHandler.onAction(action)) return true
+
+        return false
+    }
 
     override fun onPause() {
         super.onPause()

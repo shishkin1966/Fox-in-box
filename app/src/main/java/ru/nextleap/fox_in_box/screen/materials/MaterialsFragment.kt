@@ -16,7 +16,6 @@ import ru.nextleap.fox_in_box.screen.IItemsList
 import ru.nextleap.sl.action.ApplicationAction
 import ru.nextleap.sl.action.DataAction
 import ru.nextleap.sl.action.IAction
-import ru.nextleap.sl.action.handler.FragmentActionHandler
 import ru.nextleap.sl.model.IModel
 import ru.nextleap.sl.ui.AbsContentFragment
 
@@ -33,7 +32,6 @@ class MaterialsFragment : AbsContentFragment(), SwipeRefreshLayout.OnRefreshList
         }
     }
 
-    private val actionHandler = FragmentActionHandler(this)
     private lateinit var recyclerView: RecyclerView
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     private val adapter: MaterialsRecyclerViewAdapter = MaterialsRecyclerViewAdapter()
@@ -67,7 +65,7 @@ class MaterialsFragment : AbsContentFragment(), SwipeRefreshLayout.OnRefreshList
             }
         }
 
-        if (actionHandler.onAction(action)) return true
+        if (super.onAction(action)) return true
 
         return false
     }

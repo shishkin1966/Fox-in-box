@@ -13,7 +13,6 @@ import ru.nextleap.fox_in_box.R
 import ru.nextleap.fox_in_box.setting.Setting
 import ru.nextleap.sl.action.DataAction
 import ru.nextleap.sl.action.IAction
-import ru.nextleap.sl.action.handler.FragmentActionHandler
 import ru.nextleap.sl.model.IModel
 import ru.nextleap.sl.ui.AbsContentFragment
 
@@ -28,7 +27,6 @@ class SettingsFragment : AbsContentFragment(), CompoundButton.OnCheckedChangeLis
         }
     }
 
-    private val actionHandler = FragmentActionHandler(this)
     private lateinit var listView: LinearLayout
 
     override fun createModel(): IModel {

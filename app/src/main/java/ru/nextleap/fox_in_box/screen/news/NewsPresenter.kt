@@ -122,6 +122,7 @@ class NewsPresenter(model: NewsModel) : AbsModelPresenter(model), IResponseListe
                     getData()
                     return true
                 }
+
                 Actions.DataChanged -> {
                     ApplicationUtils.runOnUiThread {
                         getView<NewsFragment>().dataChanged()

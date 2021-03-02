@@ -18,7 +18,7 @@ import ru.nextleap.sl.provider.IErrorProvider
 import ru.nextleap.sl.ui.MaterialDialogExt
 
 
-class FragmentActionHandler(private val fragment: Fragment) : BaseActionHandler() {
+class FragmentActionHandler(private val fragment: Fragment) : BaseActionHandler(), IFragmentActionHandler {
     override fun onAction(action: IAction): Boolean {
         if (fragment is IValidated && !fragment.isValid()) return false
 
@@ -64,7 +64,7 @@ class FragmentActionHandler(private val fragment: Fragment) : BaseActionHandler(
         return false
     }
 
-    private fun showErrorAction(action: ShowErrorAction) {
+    override fun showErrorAction(action: ShowErrorAction) {
         val view = fragment.view?.findViewById<View>(R.id.errorMessage)
         if (view != null && view is TextView) {
             view.clearAnimation()
@@ -82,23 +82,23 @@ class FragmentActionHandler(private val fragment: Fragment) : BaseActionHandler(
         }
     }
 
-    private fun showProgressBar() {
+    override fun showProgressBar() {
         val view = fragment.view?.findViewById<View>(R.id.progressBar)
         view?.visibility = View.VISIBLE
     }
 
-    fun hideProgressBar() {
+    override fun hideProgressBar() {
         val view = fragment.view?.findViewById<View>(R.id.progressBar)
         view?.visibility = View.INVISIBLE
     }
 
-    private fun showKeyboard(action: ShowKeyboardAction) {
+    override fun showKeyboard(action: ShowKeyboardAction) {
         val activity = fragment.activity ?: return
 
         KeyboardRunnable(activity, action.getView()).run()
     }
 
-    fun hideKeyboard() {
+    override fun hideKeyboard() {
         val activity = fragment.activity ?: return
         if (activity.isFinishing) return
 
@@ -117,12 +117,12 @@ class FragmentActionHandler(private val fragment: Fragment) : BaseActionHandler(
         }
     }
 
-    private fun getRootView(): View? {
+    override fun getRootView(): View? {
         val view = fragment.view?.findViewById<View>(R.id.root)
         return view ?: fragment.view
     }
 
-    private fun showDialog(action: ShowDialogAction) {
+    override fun showDialog(action: ShowDialogAction) {
         val activity = fragment.activity ?: return
         if (activity.isFinishing) return
 
@@ -138,7 +138,7 @@ class FragmentActionHandler(private val fragment: Fragment) : BaseActionHandler(
         ).show()
     }
 
-    private fun showListDialog(action: ShowListDialogAction) {
+    override fun showListDialog(action: ShowListDialogAction) {
         val activity = fragment.activity ?: return
         if (activity.isFinishing) return
 

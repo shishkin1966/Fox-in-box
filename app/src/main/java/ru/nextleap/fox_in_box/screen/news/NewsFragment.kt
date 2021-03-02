@@ -20,7 +20,6 @@ import ru.nextleap.sl.PreferencesUtils
 import ru.nextleap.sl.action.ApplicationAction
 import ru.nextleap.sl.action.DataAction
 import ru.nextleap.sl.action.IAction
-import ru.nextleap.sl.action.handler.FragmentActionHandler
 import ru.nextleap.sl.model.IModel
 import ru.nextleap.sl.provider.ApplicationProvider
 import ru.nextleap.sl.ui.AbsContentFragment
@@ -39,7 +38,6 @@ class NewsFragment : AbsContentFragment(), ChipGroup.OnCheckedChangeListener,
         }
     }
 
-    private val actionHandler = FragmentActionHandler(this)
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     private lateinit var recyclerView: RecyclerView
     private lateinit var chipGroup: ChipGroup
@@ -80,7 +78,7 @@ class NewsFragment : AbsContentFragment(), ChipGroup.OnCheckedChangeListener,
             }
         }
 
-        if (actionHandler.onAction(action)) return true
+        if (super.onAction(action)) return true
 
         return false
     }

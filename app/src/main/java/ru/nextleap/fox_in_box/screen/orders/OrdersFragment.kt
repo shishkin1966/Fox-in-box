@@ -18,7 +18,6 @@ import ru.nextleap.fox_in_box.screen.home.HomePresenter
 import ru.nextleap.sl.action.ApplicationAction
 import ru.nextleap.sl.action.DataAction
 import ru.nextleap.sl.action.IAction
-import ru.nextleap.sl.action.handler.FragmentActionHandler
 import ru.nextleap.sl.model.IModel
 import ru.nextleap.sl.ui.AbsContentFragment
 
@@ -35,7 +34,6 @@ class OrdersFragment : AbsContentFragment(), SwipeRefreshLayout.OnRefreshListene
         }
     }
 
-    private val actionHandler = FragmentActionHandler(this)
     private lateinit var back: TextView
     private lateinit var recyclerView: RecyclerView
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
@@ -70,7 +68,7 @@ class OrdersFragment : AbsContentFragment(), SwipeRefreshLayout.OnRefreshListene
             }
         }
 
-        if (actionHandler.onAction(action)) return true
+        if (super.onAction(action)) return true
 
         return false
     }

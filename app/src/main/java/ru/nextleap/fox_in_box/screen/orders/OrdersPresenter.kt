@@ -132,6 +132,7 @@ class OrdersPresenter(model: OrdersModel) : AbsModelPresenter(model), IResponseL
                     getData()
                     return true
                 }
+
                 Actions.DataChanged -> {
                     ApplicationUtils.runOnUiThread {
                         getView<OrdersFragment>().dataChanged()

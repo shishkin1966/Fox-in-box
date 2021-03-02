@@ -134,6 +134,7 @@ class MaterialsPresenter(model: MaterialsModel) : AbsModelPresenter(model), IRes
                     getData()
                     return true
                 }
+
                 Actions.DataChanged -> {
                     ApplicationUtils.runOnUiThread {
                         getView<MaterialsFragment>().dataChanged()

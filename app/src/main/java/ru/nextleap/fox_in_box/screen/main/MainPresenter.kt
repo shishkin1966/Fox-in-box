@@ -49,12 +49,12 @@ class MainPresenter(model: MainModel) : AbsModelPresenter(model), IResponseListe
         if (!isValid()) return false
 
         if (action is ShowProgressBarAction) {
-            getView<MainActivity>().addAction(ShowProgressBarAction())
+            getView<MainActivity>().actionHandler.showProgressBar()
             return true
         }
 
         if (action is HideProgressBarAction) {
-            getView<MainActivity>().addAction(HideProgressBarAction())
+            getView<MainActivity>().actionHandler.hideProgressBar()
             return true
         }
 

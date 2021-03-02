@@ -24,7 +24,7 @@ import ru.nextleap.sl.provider.ErrorProvider
 import ru.nextleap.sl.provider.IErrorProvider
 
 
-class ActivityActionHandler(private val activity: AppCompatActivity) : BaseActionHandler() {
+class ActivityActionHandler(private val activity: AppCompatActivity) : BaseActionHandler(), IActivityActionHandler {
     private var snackbar: Snackbar? = null
 
     @SuppressLint("QueryPermissionsNeeded")
@@ -104,11 +104,11 @@ class ActivityActionHandler(private val activity: AppCompatActivity) : BaseActio
         return false
     }
 
-    private fun showKeyboard(action: ShowKeyboardAction) {
+    override fun showKeyboard(action: ShowKeyboardAction) {
         KeyboardRunnable(activity, action.getView()).run()
     }
 
-    fun hideKeyboard() {
+    override fun hideKeyboard() {
         if (activity.isFinishing) return
 
         val imm = ApplicationUtils.getSystemService<InputMethodManager>(
@@ -123,13 +123,13 @@ class ActivityActionHandler(private val activity: AppCompatActivity) : BaseActio
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
-    private fun getRootView(): View {
+    override fun getRootView(): View {
         return if (activity.findViewById<View>(R.id.root) != null) {
             activity.findViewById(R.id.root)
         } else (activity.findViewById<View>(android.R.id.content) as ViewGroup).getChildAt(0)
     }
 
-    private fun showSnackbar(action: ShowSnackbarAction) {
+    override fun showSnackbar(action: ShowSnackbarAction) {
         var view: View? = null
         if (view == null) {
             view = getRootView()
@@ -165,11 +165,11 @@ class ActivityActionHandler(private val activity: AppCompatActivity) : BaseActio
         }
     }
 
-    private fun hideSnackbar() {
+    override fun hideSnackbar() {
         snackbar?.dismiss()
     }
 
-    private fun grantPermission(permission: String) {
+    override fun grantPermission(permission: String) {
         if (ApplicationUtils.hasMarshmallow()) {
             if (!ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)) {
                 activity.requestPermissions(
@@ -180,17 +180,17 @@ class ActivityActionHandler(private val activity: AppCompatActivity) : BaseActio
         }
     }
 
-    private fun showProgressBar() {
+    override fun showProgressBar() {
         val view = activity.findViewById<View>(R.id.progressBar)
         view?.visibility = View.VISIBLE
     }
 
-    fun hideProgressBar() {
+    override fun hideProgressBar() {
         val view = activity.findViewById<View>(R.id.progressBar)
         view?.visibility = View.INVISIBLE
     }
 
-    private fun grantPermission(permission: String, listener: String?, helpMessage: String?) {
+    override fun grantPermission(permission: String, listener: String?, helpMessage: String?) {
         if (ApplicationUtils.hasMarshmallow()) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)) {
                 if (activity is IActionListener) {
@@ -215,7 +215,7 @@ class ActivityActionHandler(private val activity: AppCompatActivity) : BaseActio
         }
     }
 
-    private fun showErrorAction(action: ShowErrorAction) {
+    override fun showErrorAction(action: ShowErrorAction) {
         val view = activity.findViewById<View>(R.id.errorMessage)
         if (view != null && view is TextView) {
             view.setOnClickListener {
