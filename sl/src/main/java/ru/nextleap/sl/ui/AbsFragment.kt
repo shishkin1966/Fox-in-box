@@ -51,7 +51,6 @@ abstract class AbsFragment : Fragment(), IFragment {
         super.onDestroy()
 
         stateObservable.setState(Lifecycle.VIEW_DESTROY)
-        stateObservable.clearLifecycleObservers()
 
         if (this is IProviderSubscriber) {
             ApplicationProvider.serviceLocator?.unregisterSubscriber(this)

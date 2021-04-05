@@ -19,6 +19,9 @@ class LifecycleObservable(state: Int) : ILifecycleObservable {
                 stateable.get()!!.setState(this.state)
             }
         }
+        if (state == Lifecycle.VIEW_DESTROY) {
+            clearLifecycleObservers()
+        }
     }
 
     override fun getState(): Int {

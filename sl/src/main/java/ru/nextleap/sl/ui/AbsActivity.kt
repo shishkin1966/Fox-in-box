@@ -52,7 +52,6 @@ abstract class AbsActivity : AppCompatActivity(), IActivity {
         super.onDestroy()
 
         lifecycleObservable.setState(Lifecycle.VIEW_DESTROY)
-        lifecycleObservable.clearLifecycleObservers()
 
         ApplicationProvider.serviceLocator?.unregisterSubscriber(this)
     }
