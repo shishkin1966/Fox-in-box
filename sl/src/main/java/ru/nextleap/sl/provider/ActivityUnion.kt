@@ -167,10 +167,8 @@ class ActivityUnion : AbsUnion<IActivity>(), IActivityUnion {
 
     override fun back() {
         val subscriber = getCurrentSubscriber()
-        if (subscriber != null) {
-            if (subscriber is AbsActivity) {
-                subscriber.onBackPressed()
-            }
+        if (subscriber != null && subscriber is AbsActivity) {
+            subscriber.onBackPressed()
         }
     }
 
