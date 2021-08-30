@@ -31,7 +31,9 @@
             android:name=".screen.main.MainActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleInstance"
-            android:windowSoftInputMode="adjustResize">
+            android:windowSoftInputMode="adjustResize"
+            android:exported="false"
+            tools:ignore="AppLinkUrlError">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
@@ -50,14 +52,14 @@
             </intent-filter>
         </service>
 
-        <receiver android:name=".BootReceiver">
+        <receiver android:name=".BootReceiver"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.QUICKBOOT_POWERON" />
                 <action android:name="com.htc.intent.action.QUICKBOOT_POWERON" />
             </intent-filter>
         </receiver>
-
 
     </application>
 
