@@ -32,13 +32,13 @@ fun String?.token(
     if (this == null) {
         return ""
     }
-    if (this.length == 0) {
+    if (this.isEmpty()) {
         return ""
     }
     if (delimiters == null) {
         return ""
     }
-    if (delimiters.length == 0) {
+    if (delimiters.isEmpty()) {
         return ""
     }
 
@@ -66,7 +66,6 @@ fun String?.token(
  * Method int numtoken(String as_1, String as_2) Obtains a count tokens in a
  * string.
  *
- * @param initialString - The string from which you want count tokens returned.<br></br>
  * @param delimiters    - The string which contains delimiters of token.<br></br>
  * @return Returns count tokens in string as_1.
  */
@@ -236,7 +235,7 @@ fun String?.mid(first: Int): String {
     if (this == null) {
         return ""
     }
-    if (this.length == 0) {
+    if (this.isEmpty()) {
         return ""
     }
     return if (first > this.length) {
