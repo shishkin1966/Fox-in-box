@@ -20,15 +20,17 @@ interface ISmallUnion<T : IProviderSubscriber> : IProvider {
      * Отключить подписчика
      *
      * @param subscriber подписчик
+     * @return true - провайдер должен быть остановлен и выгружен
      */
-    fun unregister(subscriber: T)
+    fun unregister(subscriber: T) : Boolean
 
     /**
      * Отключить подписчика по его имени
      *
      * @param name имя подписчика
+     * @return true - провайдер должен быть остановлен и выгружен
      */
-    fun unregister(name: String)
+    fun unregister(name: String) : Boolean
 
     /**
      * Получить список подписчиков

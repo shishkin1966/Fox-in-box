@@ -97,13 +97,23 @@ abstract class AbsServiceLocator : IServiceLocator {
 
     override fun unregisterSubscriber(subscriber: IProviderSubscriber): Boolean {
         val types = subscriber.getProviderSubscription()
+        val stopProviders : ArrayList<String> = ArrayList()
         for (type in types) {
             if (secretary.containsKey(type)) {
                 val provider = secretary.get(type)
                 if (provider is ISmallUnion<*>) {
-                    (provider as ISmallUnion<IProviderSubscriber>).unregister(subscriber)
+                    if ((provider as ISmallUnion<IProviderSubscriber>).unregister(subscriber)) {
+                        if (!stopProviders.contains(provider.getName())) {
+                            stopProviders.add(provider.getName())
+                        }
+                    }
                 }
             }
+        }
+        for (name in stopProviders) {
+            val provider = secretary.get(name)
+            provider?.stop()
+            unregisterProvider(name)
         }
         return true
     }

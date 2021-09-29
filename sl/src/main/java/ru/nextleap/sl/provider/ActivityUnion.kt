@@ -50,7 +50,7 @@ class ActivityUnion : AbsUnion<IActivity>(), IActivityUnion {
         return false
     }
 
-    override fun unregister(subscriber: IActivity) {
+    override fun unregister(subscriber: IActivity) : Boolean {
         super.unregister(subscriber)
 
         for (i in activities.size - 1 downTo 0) {
@@ -67,6 +67,7 @@ class ActivityUnion : AbsUnion<IActivity>(), IActivityUnion {
                 activities.removeAt(i)
             }
         }
+        return false
     }
 
     override fun getName(): String {
