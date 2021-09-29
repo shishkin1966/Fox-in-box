@@ -27,7 +27,7 @@ abstract class AbsSmallUnion<T : IProviderSubscriber> : AbsProvider(), ISmallUni
         return true
     }
 
-    override fun unregister(subscriber: T) {
+    override fun unregister(subscriber: T) : Boolean {
         val cnt = secretary.size()
         if (secretary.containsKey(subscriber.getName()) && subscriber == secretary.get(subscriber.getName())) {
             secretary.remove(subscriber.getName())
@@ -36,15 +36,17 @@ abstract class AbsSmallUnion<T : IProviderSubscriber> : AbsProvider(), ISmallUni
         if (cnt == 1 && secretary.size() == 0) {
             onUnRegisterLastSubscriber()
         }
+        return false
     }
 
-    override fun unregister(name: String) {
+    override fun unregister(name: String) : Boolean {
         if (hasSubscriber(name)) {
             val subscriber = getSubscriber(name)
             if (subscriber != null) {
-                unregister(subscriber)
+                return unregister(subscriber)
             }
         }
+        return false
     }
 
     override fun getSubscribers(): List<T> {
