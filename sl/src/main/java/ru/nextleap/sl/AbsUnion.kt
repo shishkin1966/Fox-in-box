@@ -18,7 +18,7 @@ abstract class AbsUnion<T : IProviderSubscriber> : AbsSmallUnion<T>(), IUnion<T>
         return false
     }
 
-    override fun unregister(subscriber: T) : Boolean {
+    override fun unregister(subscriber: T) {
         super.unregister(subscriber)
 
         if (currentSubscriber != null) {
@@ -28,7 +28,6 @@ abstract class AbsUnion<T : IProviderSubscriber> : AbsSmallUnion<T>(), IUnion<T>
                 currentSubscriber = null
             }
         }
-        return false
     }
 
     override fun setCurrentSubscriber(subscriber: T): Boolean {
