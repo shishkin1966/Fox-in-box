@@ -2,13 +2,10 @@
 
 package ru.nextleap.fox_in_box
 
-import android.os.Bundle
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ProcessLifecycleOwner
-import com.google.firebase.analytics.FirebaseAnalytics
-import ru.nextleap.common.ApplicationUtils
 import ru.nextleap.common.Connectivity
 import ru.nextleap.common.onlyChar
 import ru.nextleap.fox_in_box.provider.*
@@ -32,7 +29,6 @@ object ApplicationSingleton {
 
 class App : ApplicationProvider(), LifecycleObserver {
     private var isBackground: Boolean = false
-    private lateinit var firebaseAnalytics: FirebaseAnalytics
 
     override fun onCreate() {
         super.onCreate()
@@ -43,7 +39,6 @@ class App : ApplicationProvider(), LifecycleObserver {
 
         ProcessLifecycleOwner.get().lifecycle.addObserver(this)
 
-        firebaseAnalytics = FirebaseAnalytics.getInstance(this)
 
         //Stetho.initializeWithDefaults(this)
     }
@@ -134,6 +129,10 @@ class App : ApplicationProvider(), LifecycleObserver {
         get() = get(WakeLockProvider.NAME)!!
         private set(value) {}
 
+    var analiticsProvider: IAnalyticsProvider
+        get() = get(AnalyticsProvider.NAME)!!
+        private set(value) {}
+
     fun getApi(): NetApi {
         return ApplicationSingleton.instance.get<NetProvider>(NetProvider.NAME)!!.getApi()
     }
@@ -173,39 +172,6 @@ class App : ApplicationProvider(), LifecycleObserver {
     fun addNotMandatoryMessage(message: IMessage) {
         val union = serviceLocator?.get<IMessengerUnion>(MessengerUnion.NAME)
         union?.addNotMandatoryMessage(message)
-    }
-
-    fun eventContent(id: String, name: String) {
-        if (::firebaseAnalytics.isInitialized) {
-            val bundle = Bundle()
-            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, id)
-            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, name)
-            firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
-        }
-    }
-
-    fun eventLogin() {
-        if (::firebaseAnalytics.isInitialized) {
-            val bundle = Bundle()
-            bundle.putString(FirebaseAnalytics.Param.METHOD, "mobile")
-            firebaseAnalytics.logEvent(FirebaseAnalytics.Event.LOGIN, bundle)
-        }
-    }
-
-    fun eventScreenView(name: String) {
-        if (::firebaseAnalytics.isInitialized) {
-            val bundle = Bundle()
-            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, name)
-            firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, bundle)
-        }
-    }
-
-    fun event(id: String, key: String, value: String) {
-        if (::firebaseAnalytics.isInitialized) {
-            val bundle = Bundle()
-            bundle.putString(key, value)
-            firebaseAnalytics.logEvent(id, bundle)
-        }
     }
 
     fun newImageHeight(url: String, width: Int): Int {
