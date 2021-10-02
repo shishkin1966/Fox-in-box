@@ -1,6 +1,6 @@
 package ru.nextleap.sl.provider
 
-import com.facebook.stetho.okhttp3.StethoInterceptor
+import com.localebro.okhttpprofiler.OkHttpProfilerInterceptor
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -67,12 +67,14 @@ abstract class AbsNetProvider<T> : INetProvider<T> {
         //builder.cache(Cache(ApplicationProvider.appContext.cacheDir, 10 * 1024 * 1024)) // 100 MB
         builder.addInterceptor(RequestInterceptor())
         //builder.addInterceptor(CacheInterceptor())
-        builder.addNetworkInterceptor(StethoInterceptor())
         builder.connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
             .readTimeout(READ_TIMEOUT, TimeUnit.MINUTES)
             .followRedirects(false)
             .followSslRedirects(false)
             .retryOnConnectionFailure(false)
+
+        builder.addInterceptor(OkHttpProfilerInterceptor())
+
         return builder.build()
     }
 
