@@ -38,7 +38,7 @@ class ObservableUnion : AbsSmallUnion<IObservableSubscriber>(),
         return true
     }
 
-    override fun unregister(subscriber: IObservableSubscriber) : Boolean {
+    override fun unregister(subscriber: IObservableSubscriber) {
         super.unregister(subscriber)
 
         val list = subscriber.getObservable()
@@ -47,7 +47,6 @@ class ObservableUnion : AbsSmallUnion<IObservableSubscriber>(),
                 observable.removeObserver(subscriber)
             }
         }
-        return false
     }
 
     override fun onUnRegister() {

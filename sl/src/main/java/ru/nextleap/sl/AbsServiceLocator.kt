@@ -102,11 +102,7 @@ abstract class AbsServiceLocator : IServiceLocator {
             if (secretary.containsKey(type)) {
                 val provider = secretary.get(type)
                 if (provider is ISmallUnion<*>) {
-                    if ((provider as ISmallUnion<IProviderSubscriber>).unregister(subscriber)) {
-                        if (!stopProviders.contains(provider.getName())) {
-                            stopProviders.add(provider.getName())
-                        }
-                    }
+                    (provider as ISmallUnion<IProviderSubscriber>).unregister(subscriber)
                 }
             }
         }
