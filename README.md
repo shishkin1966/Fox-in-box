@@ -1,7 +1,7 @@
 
 **Clean Architecture version 5**
  
-Пример реализации Clean Architecture при реализации приложения
+Пример реализации Clean Architecture при построении приложения
 
 При построении приложения использованы архитектурные шаблоны [VIPER](https://www.raywenderlich.com/5192-android-viper-tutorial) и [Service Locator](https://docs.microsoft.com/en-us/previous-versions/msp-n-p/ff648968(v=pandp.10)). 
 
