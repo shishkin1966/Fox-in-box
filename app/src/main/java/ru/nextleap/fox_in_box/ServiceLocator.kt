@@ -1,9 +1,6 @@
 package ru.nextleap.fox_in_box
 
-import ru.nextleap.fox_in_box.provider.DesktopProvider
-import ru.nextleap.fox_in_box.provider.NetProvider
-import ru.nextleap.fox_in_box.provider.SessionProvider
-import ru.nextleap.fox_in_box.provider.WakeLockProvider
+import ru.nextleap.fox_in_box.provider.*
 import ru.nextleap.sl.AbsServiceLocator
 import ru.nextleap.sl.IProviderFactory
 import ru.nextleap.sl.observe.NetObservable
@@ -30,6 +27,7 @@ class ServiceLocator : AbsServiceLocator() {
         registerProvider(ErrorSingleton.instance)
         registerProvider(ApplicationSingleton.instance)
         registerProvider(CrashProvider.NAME)
+        registerProvider(AnalyticsProvider.NAME)
         registerProvider(WakeLockProvider.NAME)
         registerProvider(PresenterUnion.NAME)
         registerProvider(DesktopProvider.NAME)

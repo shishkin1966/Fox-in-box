@@ -115,7 +115,7 @@ class SessionProvider : AbsProvider(), ISessionProvider {
                 timeout = TimeUnit.SECONDS.toMillis((token.expires_in!! * 6 / 7).toLong())
             }
             ApplicationSingleton.instance.netProvider.setToken(token.access_token)
-            ApplicationSingleton.instance.eventLogin()
+            ApplicationSingleton.instance.analiticsProvider.eventLogin()
             PreferencesUtils.putBoolean(ApplicationProvider.appContext, "isRegistration", true)
             // сохраняем пользователи и пароль
             ApplicationSingleton.instance.secureProvider.put("login", login)
