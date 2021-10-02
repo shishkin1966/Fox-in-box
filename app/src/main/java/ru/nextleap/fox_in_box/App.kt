@@ -38,9 +38,6 @@ class App : ApplicationProvider(), LifecycleObserver {
         serviceLocator = ServiceLocatorSingleton.instance
 
         ProcessLifecycleOwner.get().lifecycle.addObserver(this)
-
-
-        //Stetho.initializeWithDefaults(this)
     }
 
     override fun stop() {
@@ -137,10 +134,12 @@ class App : ApplicationProvider(), LifecycleObserver {
         return ApplicationSingleton.instance.get<NetProvider>(NetProvider.NAME)!!.getApi()
     }
 
+    // Событие - изменился observable объект с именем observable. Объект изменения obj
     fun onChange(observable: String, obj: Any) {
         observableProvider.getObservable(observable)?.onChange(obj)
     }
 
+    // Событие - изменился объект с именем name
     fun onChange(name: String) {
         observableProvider.getObservable(ObjectObservable.NAME)?.onChange(name)
     }
@@ -164,11 +163,13 @@ class App : ApplicationProvider(), LifecycleObserver {
         union?.onError(source, e)
     }
 
+    // послать почтовое сообщение
     fun addMessage(message: IMessage) {
         val union = serviceLocator?.get<IMessengerUnion>(MessengerUnion.NAME)
         union?.addMessage(message)
     }
 
+    // послать почтовое сообщение напрямую получателю. В случае его отсутствия отбросить сообщение
     fun addNotMandatoryMessage(message: IMessage) {
         val union = serviceLocator?.get<IMessengerUnion>(MessengerUnion.NAME)
         union?.addNotMandatoryMessage(message)

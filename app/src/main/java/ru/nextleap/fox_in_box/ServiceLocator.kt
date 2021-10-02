@@ -28,6 +28,7 @@ class ServiceLocator : AbsServiceLocator() {
         registerProvider(ApplicationSingleton.instance)
         registerProvider(CrashProvider.NAME)
         registerProvider(AnalyticsProvider.NAME)
+        registerProvider(DebugProvider.NAME)
         registerProvider(WakeLockProvider.NAME)
         registerProvider(PresenterUnion.NAME)
         registerProvider(DesktopProvider.NAME)
