@@ -94,7 +94,7 @@ class App : ApplicationProvider(), LifecycleObserver {
         get() = get(DesktopProvider.NAME)!!
         private set(value) {}
 
-    var netProvider: INetProvider<NetApi>
+    var netProvider: NetProvider
         get() = get(NetProvider.NAME)!!
         private set(value) {}
 
