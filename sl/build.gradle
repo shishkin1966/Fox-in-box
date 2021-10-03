@@ -67,10 +67,9 @@ dependencies {
     implementation 'com.localebro:okhttpprofiler:1.0.8'
 
 
-    //Rx
+    // Rx
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
     implementation 'io.reactivex.rxjava2:rxjava:2.2.12'
 
     implementation "androidx.preference:preference-ktx:1.1.1"
-
 }
