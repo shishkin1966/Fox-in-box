@@ -39,7 +39,6 @@ class ProviderFactory : IProviderFactory, INamed {
                 StorageProvider.NAME -> StorageProvider()
                 WakeLockProvider.NAME -> WakeLockProvider()
                 AnalyticsProvider.NAME -> AnalyticsProvider()
-                DebugProvider.NAME -> DebugProvider()
                 else -> Class.forName(name).newInstance() as IProvider
             }
         } catch (e: Exception) {

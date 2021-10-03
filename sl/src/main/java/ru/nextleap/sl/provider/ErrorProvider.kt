@@ -19,6 +19,7 @@ class ErrorProvider : AbsProvider(), IErrorProvider {
 
     override fun onError(source: String, e: Exception) {
         Log.e(source, Log.getStackTraceString(e))
+
         ApplicationUtils.showToast(
             ApplicationProvider.appContext,
             e.message,
@@ -29,6 +30,7 @@ class ErrorProvider : AbsProvider(), IErrorProvider {
 
     override fun onError(source: String, throwable: Throwable) {
         Log.e(source, Log.getStackTraceString(throwable))
+
         ApplicationUtils.showToast(
             ApplicationProvider.appContext,
             throwable.message,
@@ -39,6 +41,7 @@ class ErrorProvider : AbsProvider(), IErrorProvider {
 
     override fun onError(source: String, e: Exception, displayMessage: String?) {
         Log.e(source, Log.getStackTraceString(e))
+
         if (!displayMessage.isNullOrEmpty()) {
             ApplicationUtils.showToast(
                 ApplicationProvider.appContext,
@@ -52,6 +55,7 @@ class ErrorProvider : AbsProvider(), IErrorProvider {
     override fun onError(source: String, message: String?, isDisplay: Boolean) {
         if (!message.isNullOrEmpty()) {
             Log.e(source, message)
+
             if (isDisplay) {
                 ApplicationUtils.showToast(
                     ApplicationProvider.appContext,

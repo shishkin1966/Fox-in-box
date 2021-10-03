@@ -11,9 +11,5 @@ interface INetProvider<T> : IRequestProvider {
 
     fun getConverterFactory(): Converter.Factory
 
-    fun setToken(token: String?)
-
-    fun getToken(): String?
-
-    fun getClient(): OkHttpClient
+    fun getOkHttpClient(): OkHttpClient
 }
