@@ -1,5 +1,7 @@
 package ru.nextleap.fox_in_box
 
+import io.reactivex.Observable
+import io.reactivex.schedulers.Schedulers
 import ru.nextleap.fox_in_box.provider.*
 import ru.nextleap.sl.AbsServiceLocator
 import ru.nextleap.sl.IProviderFactory
@@ -26,23 +28,28 @@ class ServiceLocator : AbsServiceLocator() {
     override fun start() {
         registerProvider(ErrorSingleton.instance)
         registerProvider(ApplicationSingleton.instance)
-        registerProvider(CrashProvider.NAME)
-        registerProvider(AnalyticsProvider.NAME)
-        registerProvider(WakeLockProvider.NAME)
-        registerProvider(PresenterUnion.NAME)
-        registerProvider(DesktopProvider.NAME)
 
-        registerProvider(ObservableUnion.NAME)
+        val providers: ArrayList<String> = ArrayList()
+        providers.add(CrashProvider.NAME)
+        providers.add(AnalyticsProvider.NAME)
+        providers.add(WakeLockProvider.NAME)
+        providers.add(PresenterUnion.NAME)
+        providers.add(DesktopProvider.NAME)
+        providers.add(ObservableUnion.NAME)
+        providers.add(NetExecutor.NAME)
+        providers.add(CommonExecutor.NAME)
+        providers.add(SessionProvider.NAME)
+        providers.add(NetProvider.NAME)
+
+        Observable.fromIterable(providers)
+            .subscribeOn(Schedulers.io())
+            .map { provider -> registerProvider(provider) }
+            .subscribe()
+
         val union = get<IObservableUnion>(ObservableUnion.NAME)
         union?.register(NetObservable())
         union?.register(ObjectObservable())
         union?.register(ScreenBroadcastReceiverObservable())
-
-        registerProvider(NetExecutor.NAME)
-        registerProvider(CommonExecutor.NAME)
-
-        registerProvider(SessionProvider.NAME)
-        registerProvider(NetProvider.NAME)
     }
 
     override fun getProviderFactory(): IProviderFactory {
