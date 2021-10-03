@@ -1,5 +1,6 @@
 package ru.nextleap.fox_in_box
 
+import android.annotation.SuppressLint
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import ru.nextleap.fox_in_box.provider.*
@@ -25,6 +26,7 @@ class ServiceLocator : AbsServiceLocator() {
         return NAME
     }
 
+    @SuppressLint("CheckResult")
     override fun start() {
         registerProvider(ErrorSingleton.instance)
         registerProvider(ApplicationSingleton.instance)
@@ -44,7 +46,8 @@ class ServiceLocator : AbsServiceLocator() {
         Observable.fromIterable(providers)
             .subscribeOn(Schedulers.io())
             .map { provider -> registerProvider(provider) }
-            .subscribe()
+            .toList()
+            .blockingGet()
 
         val union = get<IObservableUnion>(ObservableUnion.NAME)
         union?.register(NetObservable())
