@@ -33,7 +33,6 @@ class Setting(
         }
     }
 
-
     fun backup() {
         PreferencesUtils.putString(
             ApplicationProvider.appContext,

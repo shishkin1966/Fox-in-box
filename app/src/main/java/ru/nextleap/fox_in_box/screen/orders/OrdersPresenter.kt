@@ -54,7 +54,7 @@ class OrdersPresenter(model: OrdersModel) : AbsModelPresenter(model), IResponseL
             data = OrdersData()
             getData()
         } else {
-            data = ApplicationSingleton.instance.storageProvider.fromJson(json.toString(), OrdersData::class.java)
+            data = ApplicationUtils.fromJson(json.toString(), OrdersData::class.java)
             getView<OrdersFragment>().addAllItems(data.list)
         }
     }
@@ -111,7 +111,7 @@ class OrdersPresenter(model: OrdersModel) : AbsModelPresenter(model), IResponseL
                                 eof = true
                             }
                             if (eof) {
-                                val json = ApplicationSingleton.instance.storageProvider.toJson(this.data)
+                                val json = ApplicationUtils.toJson(this.data)
                                 ApplicationSingleton.instance.commonExecutor.execute(
                                     PutStorageRequest(NAME, json)
                                 )

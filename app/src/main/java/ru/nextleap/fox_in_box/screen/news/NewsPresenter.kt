@@ -66,7 +66,7 @@ class NewsPresenter(model: NewsModel) : AbsModelPresenter(model), IResponseListe
                                 eof = true
                             }
                             if (eof) {
-                                val json = ApplicationSingleton.instance.storageProvider.toJson(this.data)
+                                val json = ApplicationUtils.toJson(this.data)
                                 ApplicationSingleton.instance.commonExecutor.execute(PutStorageRequest(NAME, json))
                                 getView<NewsFragment>().actionHandler.hideProgressBar()
                             }
@@ -94,7 +94,7 @@ class NewsPresenter(model: NewsModel) : AbsModelPresenter(model), IResponseListe
             data = NewsData()
             getData()
         } else {
-            data = ApplicationSingleton.instance.storageProvider.fromJson(json.toString(), NewsData::class.java)
+            data = ApplicationUtils.fromJson(json.toString(), NewsData::class.java)
             getView<NewsFragment>().addAllItems(data.list)
         }
     }

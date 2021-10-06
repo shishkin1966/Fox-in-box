@@ -134,14 +134,14 @@ class App : ApplicationProvider(), LifecycleObserver {
         return ApplicationSingleton.instance.get<NetProvider>(NetProvider.NAME)!!.getApi()
     }
 
-    // Событие - изменился observable объект с именем observable. Объект изменения obj
+    // Событие - изменился Observable объект с именем observable. Объект изменения obj
     fun onChange(observable: String, obj: Any) {
         observableProvider.getObservable(observable)?.onChange(obj)
     }
 
-    // Событие - изменился объект с именем name
-    fun onChange(name: String) {
-        observableProvider.getObservable(ObjectObservable.NAME)?.onChange(name)
+    // Событие - изменился ObjectObservable объект с именем observable
+    fun onChange(observable: String) {
+        observableProvider.getObservable(ObjectObservable.NAME)?.onChange(observable)
     }
 
     override fun getName(): String {

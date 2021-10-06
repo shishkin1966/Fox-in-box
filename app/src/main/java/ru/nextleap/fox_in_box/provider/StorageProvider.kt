@@ -7,7 +7,6 @@ import ru.nextleap.sl.IProvider
 import ru.nextleap.sl.provider.ApplicationProvider
 import ru.nextleap.sl.provider.ErrorSingleton.instance
 import java.io.Serializable
-import java.lang.reflect.Type
 import java.util.*
 import java.util.concurrent.locks.ReentrantLock
 
@@ -18,7 +17,6 @@ class StorageProvider : AbsProvider(), IStorageProvider {
     }
 
     private val lock: ReentrantLock = ReentrantLock()
-    private val gson: Gson = Gson()
 
     override fun onRegister() {
         Paper.init(ApplicationProvider.appContext)
@@ -203,7 +201,7 @@ class StorageProvider : AbsProvider(), IStorageProvider {
         }
     }
 
-    override fun <T> toSerializable(list: List<T>): Serializable? {
+    override fun <T> toSerializable(list: List<T>): Serializable {
         val linkedList = LinkedList<T>()
         linkedList.addAll(list)
         return linkedList
@@ -218,24 +216,6 @@ class StorageProvider : AbsProvider(), IStorageProvider {
             return value as List<T>
         }
         return null
-    }
-
-    override fun <T> toJson(obj: T): Serializable? {
-        return gson.toJson(obj)
-    }
-
-    override fun <T> toJson(obj: T, type: Type?): Serializable? {
-        //use example : type = new com.google.gson.reflect.TypeToken<List<ContactItem>>(){}.getType()
-        return gson.toJson(obj, type)
-    }
-
-    override fun <T> fromJson(json: String, cl: Class<T>): T {
-        return gson.fromJson(json, cl)
-    }
-
-    override fun <T> fromJson(json: String, type: Type): T {
-        // use example : type = new com.google.gson.reflect.TypeToken<List<ContactItem>>(){}.getType()
-        return gson.fromJson(json, type)
     }
 
     override fun compareTo(other: IProvider): Int {

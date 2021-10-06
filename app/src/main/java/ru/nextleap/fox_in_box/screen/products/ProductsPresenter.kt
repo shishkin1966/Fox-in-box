@@ -55,7 +55,7 @@ class ProductsPresenter(model: ProductsModel) : AbsModelPresenter(model), IRespo
             data = SKUData()
             getData()
         } else {
-            data = ApplicationSingleton.instance.storageProvider.fromJson(json.toString(), SKUData::class.java)
+            data = ApplicationUtils.fromJson(json.toString(), SKUData::class.java)
             getView<ProductsFragment>().addAllItems(data.list)
         }
     }
@@ -116,7 +116,7 @@ class ProductsPresenter(model: ProductsModel) : AbsModelPresenter(model), IRespo
                                 eof = true
                             }
                             if (eof) {
-                                val json = ApplicationSingleton.instance.storageProvider.toJson(this.data)
+                                val json = ApplicationUtils.toJson(this.data)
                                 ApplicationSingleton.instance.commonExecutor.execute(
                                     PutStorageRequest(NAME, json)
                                 )
