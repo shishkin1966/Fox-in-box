@@ -13,6 +13,7 @@ import ru.nextleap.sl.action.*
 import ru.nextleap.sl.data.ExtResult
 import ru.nextleap.sl.presenter.AbsModelPresenter
 import ru.nextleap.sl.request.IResponseListener
+import java.io.Serializable
 
 class AggregatedPresenter(model: AggregatedModel) : AbsModelPresenter(model), IResponseListener {
 
@@ -52,7 +53,7 @@ class AggregatedPresenter(model: AggregatedModel) : AbsModelPresenter(model), IR
             data = AggregatedData()
             getData()
         } else {
-            data = ApplicationSingleton.instance.storageProvider.fromJson(json.toString(), AggregatedData::class.java)
+            data = ApplicationUtils.fromJson(json.toString(), AggregatedData::class.java)
             getView<AggregatedFragment>().addAllItems(data.list)
         }
     }
@@ -114,7 +115,7 @@ class AggregatedPresenter(model: AggregatedModel) : AbsModelPresenter(model), IR
                                 eof = true
                             }
                             if (eof) {
-                                val json = ApplicationSingleton.instance.storageProvider.toJson(this.data)
+                                val json = ApplicationUtils.toJson(this.data)
                                 ApplicationSingleton.instance.commonExecutor.execute(
                                     PutStorageRequest(NAME, json)
                                 )

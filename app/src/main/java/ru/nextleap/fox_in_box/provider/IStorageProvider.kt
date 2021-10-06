@@ -95,6 +95,7 @@ interface IStorageProvider : IProvider {
      */
     fun <T> serializableToList(value: Serializable): List<T>?
 
+    /*
     /**
      * Convert serializable to Json
      *
@@ -107,6 +108,7 @@ interface IStorageProvider : IProvider {
      *
      * @param obj  the object
      * @param type the object type
+     * use example : type = new com.google.gson.reflect.TypeToken<List<ContactItem>>(){}.getType()
      */
     fun <T> toJson(obj: T, type: Type?): Serializable?
 
@@ -125,4 +127,5 @@ interface IStorageProvider : IProvider {
      * @param type the object type
      */
     fun <T> fromJson(json: String, type: Type): T
+     */
 }
