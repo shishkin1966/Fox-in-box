@@ -1,6 +1,5 @@
 package ru.nextleap.fox_in_box.provider
 
-import com.google.gson.Gson
 import io.paperdb.Paper
 import ru.nextleap.sl.AbsProvider
 import ru.nextleap.sl.IProvider
