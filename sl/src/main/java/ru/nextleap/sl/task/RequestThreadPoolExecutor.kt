@@ -1,7 +1,7 @@
 package ru.nextleap.sl.task
 
 import ru.nextleap.sl.RefSecretary
-import ru.nextleap.sl.provider.ErrorSingleton
+import ru.nextleap.sl.provider.LogSingleton
 import ru.nextleap.sl.request.IRequest
 import ru.nextleap.sl.request.IResultMessageRequest
 import java.util.concurrent.BlockingQueue
@@ -53,7 +53,7 @@ class RequestThreadPoolExecutor(
         super.afterExecute(r, t)
 
         if (t != null) {
-            ErrorSingleton.instance.onError(javaClass.name, t)
+            LogSingleton.instance.onError(javaClass.name, t)
         }
     }
 

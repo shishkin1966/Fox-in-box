@@ -8,13 +8,19 @@ import ru.nextleap.sl.IProvider
 import ru.nextleap.sl.data.ExtError
 
 
-object ErrorSingleton {
-    val instance = ErrorProvider()
+object LogSingleton {
+    val instance = LogProvider()
 }
 
-class ErrorProvider : AbsProvider(), IErrorProvider {
+class LogProvider : AbsProvider(), ILogProvider {
     companion object {
         const val NAME = "ErrorProvider"
+    }
+
+    override fun info(source: String, info: String?) {
+        if (!info.isNullOrEmpty()) {
+            Log.i(source, info)
+        }
     }
 
     override fun onError(source: String, e: Exception) {
@@ -87,7 +93,7 @@ class ErrorProvider : AbsProvider(), IErrorProvider {
     }
 
     override operator fun compareTo(other: IProvider): Int {
-        return if (other is IErrorProvider) 0 else 1
+        return if (other is ILogProvider) 0 else 1
     }
 
 }

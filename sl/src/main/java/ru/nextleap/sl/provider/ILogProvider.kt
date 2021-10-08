@@ -7,7 +7,15 @@ import ru.nextleap.sl.data.ExtError
 /**
  * Интерфейс провайдера обработки ошибок
  */
-interface IErrorProvider : IProvider {
+interface ILogProvider : IProvider {
+    /**
+     * Зарегистрировать информационное сообщение
+     *
+     * @param source источник сообщения
+     * @param info информационное сообщение
+     */
+    fun info(source: String, info: String?)
+
     /**
      * Событие - ошибка
      *

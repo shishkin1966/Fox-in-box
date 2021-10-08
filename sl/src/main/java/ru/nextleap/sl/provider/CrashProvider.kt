@@ -17,7 +17,7 @@ class CrashProvider : Thread.UncaughtExceptionHandler, IProvider {
 
     override fun uncaughtException(thread: Thread, throwable: Throwable) {
         android.util.Log.e(NAME, throwable.message, throwable)
-        ErrorSingleton.instance.onError(NAME, throwable)
+        LogSingleton.instance.onError(NAME, throwable)
         mHandler?.uncaughtException(thread, throwable)
     }
 

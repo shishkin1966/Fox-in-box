@@ -13,8 +13,8 @@ import ru.nextleap.sl.IValidated
 import ru.nextleap.sl.R
 import ru.nextleap.sl.action.*
 import ru.nextleap.sl.provider.ApplicationProvider
-import ru.nextleap.sl.provider.ErrorProvider
-import ru.nextleap.sl.provider.IErrorProvider
+import ru.nextleap.sl.provider.LogProvider
+import ru.nextleap.sl.provider.ILogProvider
 import ru.nextleap.sl.ui.MaterialDialogExt
 
 
@@ -77,7 +77,7 @@ class FragmentActionHandler(private val fragment: Fragment) : BaseActionHandler(
             ApplicationUtils.expand(view)
         } else {
             val provider =
-                ApplicationProvider.serviceLocator?.get<IErrorProvider>(ErrorProvider.NAME)
+                ApplicationProvider.serviceLocator?.get<ILogProvider>(LogProvider.NAME)
             provider?.onError("", action.getMessage(), true)
         }
     }

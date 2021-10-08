@@ -28,7 +28,7 @@ class ServiceLocator : AbsServiceLocator() {
 
     @SuppressLint("CheckResult")
     override fun start() {
-        registerProvider(ErrorSingleton.instance)
+        registerProvider(LogSingleton.instance)
         registerProvider(ApplicationSingleton.instance)
 
         val providers: ArrayList<String> = ArrayList()
