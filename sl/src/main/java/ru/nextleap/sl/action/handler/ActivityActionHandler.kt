@@ -20,8 +20,8 @@ import ru.nextleap.sl.IValidated
 import ru.nextleap.sl.R
 import ru.nextleap.sl.action.*
 import ru.nextleap.sl.provider.ApplicationProvider
-import ru.nextleap.sl.provider.ErrorProvider
-import ru.nextleap.sl.provider.IErrorProvider
+import ru.nextleap.sl.provider.LogProvider
+import ru.nextleap.sl.provider.ILogProvider
 
 
 class ActivityActionHandler(private val activity: AppCompatActivity) : BaseActionHandler(), IActivityActionHandler {
@@ -226,7 +226,7 @@ class ActivityActionHandler(private val activity: AppCompatActivity) : BaseActio
             ApplicationUtils.expand(view)
         } else {
             val provider =
-                ApplicationProvider.serviceLocator?.get<IErrorProvider>(ErrorProvider.NAME)
+                ApplicationProvider.serviceLocator?.get<ILogProvider>(LogProvider.NAME)
             provider?.onError("", action.getMessage(), true)
         }
     }

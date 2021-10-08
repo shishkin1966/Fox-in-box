@@ -4,7 +4,7 @@ import io.paperdb.Paper
 import ru.nextleap.sl.AbsProvider
 import ru.nextleap.sl.IProvider
 import ru.nextleap.sl.provider.ApplicationProvider
-import ru.nextleap.sl.provider.ErrorSingleton.instance
+import ru.nextleap.sl.provider.LogSingleton.instance
 import java.io.Serializable
 import java.util.*
 import java.util.concurrent.locks.ReentrantLock

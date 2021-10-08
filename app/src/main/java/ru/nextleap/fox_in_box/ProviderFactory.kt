@@ -21,7 +21,7 @@ class ProviderFactory : IProviderFactory, INamed {
     override fun create(name: String): IProvider? {
         return try {
             when (name) {
-                ErrorProvider.NAME -> ErrorSingleton.instance
+                LogProvider.NAME -> LogSingleton.instance
                 CrashProvider.NAME -> CrashProvider()
                 ApplicationSingleton.instance.getName() -> ApplicationSingleton.instance
                 ActivityUnion.NAME -> ActivityUnion()
@@ -42,7 +42,7 @@ class ProviderFactory : IProviderFactory, INamed {
                 else -> Class.forName(name).newInstance() as IProvider
             }
         } catch (e: Exception) {
-            ErrorSingleton.instance.onError(getName(), e)
+            LogSingleton.instance.onError(getName(), e)
             null
         }
     }

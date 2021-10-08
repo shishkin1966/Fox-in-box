@@ -1,4 +1,5 @@
 
+
 **Clean Architecture version 5**
  
 Пример реализации Clean Architecture при построении приложения
@@ -54,3 +55,21 @@
 
 Привязка и отвязка подписчиков (классов с интерфейсом IProviderSubscriber) к специалистам осуществляется ServiceLocator или самим провайдером. Если провайдер не загружен производится автоматическая создание необходимых провайдеров (объединений). Отписка подписчиков проводится сразу от всех подписанных им провайдеров. 
 
+В данном проекте реализованы следующие провайдеры:
+- LogSingleton - предоставляет услуги по протоколированию работы приложения
+- ApplicationSingleton - провайдер приложения
+- CrashProvider - регистратор падений приложения
+- AnalyticsProvider - провайдер аналитики
+- WakeLockProvider - провайдер Wake Locks
+- PresenterUnion - union презентеров
+- DesktopProvider - провайдер рабочих столов
+- ObservableUnion - union Observable объектов
+- NetExecutor - executor для сетевых запросов
+- CommonExecutor - executor для общих запросов
+- SessionProvider - провайдер сессии
+- NetProvider - провайдер сетевых запросов
+- SecureProvider - провайдер шифрации/дешифрации
+- StorageProvider - хранилище Serializable объектов
+- NotificationProvider - вывод Notification
+- ActivityUnion - union для Activities
+- MessengerUnion - union для доставки сообщений объектам

@@ -153,13 +153,18 @@ class App : ApplicationProvider(), LifecycleObserver {
         provider?.onUserInteraction()
     }
 
+    fun info(source: String, info: String?) {
+        val union = serviceLocator?.get<ILogProvider>(LogProvider.NAME)
+        union?.info(source, info)
+    }
+
     fun onError(source: String, message: String?, isDisplay: Boolean) {
-        val union = serviceLocator?.get<IErrorProvider>(ErrorProvider.NAME)
+        val union = serviceLocator?.get<ILogProvider>(LogProvider.NAME)
         union?.onError(source, message, isDisplay)
     }
 
     fun onError(source: String, e: Exception) {
-        val union = serviceLocator?.get<IErrorProvider>(ErrorProvider.NAME)
+        val union = serviceLocator?.get<ILogProvider>(LogProvider.NAME)
         union?.onError(source, e)
     }
 
