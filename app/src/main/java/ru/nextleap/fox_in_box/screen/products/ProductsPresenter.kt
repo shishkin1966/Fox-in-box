@@ -51,7 +51,7 @@ class ProductsPresenter(model: ProductsModel) : AbsModelPresenter(model), IRespo
     override fun onStart() {
         setPageSize(PageSize)
         val json = ApplicationSingleton.instance.storageProvider.get(NAME)
-        if  (json == null) {
+        if (json == null) {
             data = SKUData()
             getData()
         } else {

@@ -1,9 +1,10 @@
 package ru.nextleap.sl.ui
 
+import androidx.annotation.IdRes
 import ru.nextleap.sl.action.IAction
 import ru.nextleap.sl.action.handler.FragmentActionHandler
 
-abstract class AbsContentFragment() : AbsModelFragment(), OnBackPressListener {
+abstract class AbsContentFragment(@IdRes id: Int) : AbsModelFragment(id), OnBackPressListener {
 
     val actionHandler = FragmentActionHandler(this)
 

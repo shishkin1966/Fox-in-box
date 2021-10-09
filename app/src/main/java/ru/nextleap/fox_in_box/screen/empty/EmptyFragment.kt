@@ -1,16 +1,14 @@
 package ru.nextleap.fox_in_box.screen.empty
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import ru.nextleap.fox_in_box.ApplicationSingleton
 import ru.nextleap.fox_in_box.R
+import ru.nextleap.fox_in_box.screen.AbsDesktopFragment
 import ru.nextleap.sl.model.IModel
-import ru.nextleap.sl.ui.AbsContentFragment
 
 
-class EmptyFragment : AbsContentFragment() {
+class EmptyFragment : AbsDesktopFragment(
+    "fragment_empty",
+    R.layout.fragment_empty
+) {
 
     companion object {
         const val NAME = "EmptyFragment"
@@ -22,19 +20,6 @@ class EmptyFragment : AbsContentFragment() {
 
     override fun createModel(): IModel {
         return EmptyModel(this)
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(
-            ApplicationSingleton.instance.desktopProvider.getLayoutId(
-                "fragment_empty",
-                R.layout.fragment_empty
-            ), container, false
-        )
     }
 
     override fun isTop(): Boolean {

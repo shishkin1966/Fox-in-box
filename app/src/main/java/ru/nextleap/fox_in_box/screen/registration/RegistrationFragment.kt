@@ -8,12 +8,14 @@ import android.widget.TextView
 import ru.nextleap.common.ApplicationUtils
 import ru.nextleap.fox_in_box.ApplicationSingleton
 import ru.nextleap.fox_in_box.R
+import ru.nextleap.fox_in_box.screen.AbsDesktopFragment
 import ru.nextleap.sl.model.IModel
 import ru.nextleap.sl.provider.ApplicationProvider
 import ru.nextleap.sl.ui.AbsContentFragment
 
 
-class RegistrationFragment : AbsContentFragment() {
+class RegistrationFragment : AbsDesktopFragment("fragment_registration",
+    R.layout.fragment_registration) {
 
     companion object {
         const val NAME = "RegistrationFragment"
@@ -27,19 +29,6 @@ class RegistrationFragment : AbsContentFragment() {
 
     override fun createModel(): IModel {
         return RegistrationModel(this)
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(
-            ApplicationSingleton.instance.desktopProvider.getLayoutId(
-                "fragment_registration",
-                R.layout.fragment_registration
-            ), container, false
-        )
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

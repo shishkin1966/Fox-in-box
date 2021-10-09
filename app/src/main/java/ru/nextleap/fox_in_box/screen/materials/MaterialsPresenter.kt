@@ -43,7 +43,7 @@ class MaterialsPresenter(model: MaterialsModel) : AbsModelPresenter(model), IRes
     override fun onStart() {
         setPageSize(PageSize)
         val json = ApplicationSingleton.instance.storageProvider.get(NAME)
-        if  (json == null) {
+        if (json == null) {
             data = MaterialsData()
             getData()
         } else {

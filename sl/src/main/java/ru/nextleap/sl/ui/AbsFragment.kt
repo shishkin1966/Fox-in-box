@@ -17,7 +17,7 @@ import ru.nextleap.sl.provider.ApplicationProvider
 import java.util.*
 
 
-abstract class AbsFragment : Fragment(), IFragment {
+abstract class AbsFragment(id: Int) : Fragment(id), IFragment {
 
     private val stateObservable = LifecycleObservable(Lifecycle.VIEW_CREATE)
     private val actions = LinkedList<IAction>()

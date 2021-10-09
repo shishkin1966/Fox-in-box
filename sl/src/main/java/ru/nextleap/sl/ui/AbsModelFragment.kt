@@ -1,10 +1,11 @@
 package ru.nextleap.sl.ui
 
 import android.os.Bundle
+import androidx.annotation.IdRes
 import ru.nextleap.sl.model.IModel
 
 @Suppress("UNCHECKED_CAST")
-abstract class AbsModelFragment : AbsFragment(), IModelFragment {
+abstract class AbsModelFragment(@IdRes id: Int) : AbsFragment(id), IModelFragment {
     private lateinit var model: IModel
 
     override fun <T : IModel> getModel(): T {

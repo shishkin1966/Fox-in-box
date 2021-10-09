@@ -52,11 +52,12 @@ class MainActivity : AbsContentActivity() {
 
         router = MainRouter(this)
 
-        requestedOrientation = if (ApplicationUtils.is10inchTablet(ApplicationProvider.appContext)) {
-            ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
-        } else {
-            ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-        }
+        requestedOrientation =
+            if (ApplicationUtils.is10inchTablet(ApplicationProvider.appContext)) {
+                ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+            } else {
+                ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+            }
         lockOrientation(requestedOrientation)
 
         onNewIntent(intent)

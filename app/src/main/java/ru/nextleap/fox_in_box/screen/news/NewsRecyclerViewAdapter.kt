@@ -65,9 +65,19 @@ class NewsRecyclerViewAdapter :
             }
             card.setOnClickListener(this::onClick)
             if (item.Pinned) {
-                card.setCardBackgroundColor(ContextCompat.getColor(ApplicationProvider.appContext, R.color.background_new))
+                card.setCardBackgroundColor(
+                    ContextCompat.getColor(
+                        ApplicationProvider.appContext,
+                        R.color.background_new
+                    )
+                )
             } else {
-                card.setCardBackgroundColor(ContextCompat.getColor(ApplicationProvider.appContext, R.color.white))
+                card.setCardBackgroundColor(
+                    ContextCompat.getColor(
+                        ApplicationProvider.appContext,
+                        R.color.white
+                    )
+                )
             }
             if (!item.Image.isNullOrEmpty()) {
                 val url = ApplicationSingleton.instance.netProvider.getBaseUrl() + item.Image

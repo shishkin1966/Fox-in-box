@@ -1,9 +1,7 @@
 package ru.nextleap.fox_in_box.screen.news
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,19 +13,19 @@ import ru.nextleap.fox_in_box.ApplicationSingleton
 import ru.nextleap.fox_in_box.R
 import ru.nextleap.fox_in_box.action.Actions
 import ru.nextleap.fox_in_box.data.News
+import ru.nextleap.fox_in_box.screen.AbsDesktopFragment
 import ru.nextleap.fox_in_box.screen.IItemsList
 import ru.nextleap.sl.PreferencesUtils
 import ru.nextleap.sl.action.ApplicationAction
 import ru.nextleap.sl.action.DataAction
 import ru.nextleap.sl.action.IAction
-import ru.nextleap.sl.action.ShowErrorAction
 import ru.nextleap.sl.model.IModel
 import ru.nextleap.sl.provider.ApplicationProvider
-import ru.nextleap.sl.ui.AbsContentFragment
 
 
 @Suppress("UNCHECKED_CAST")
-class NewsFragment : AbsContentFragment(), ChipGroup.OnCheckedChangeListener,
+class NewsFragment : AbsDesktopFragment("fragment_news",
+    R.layout.fragment_news), ChipGroup.OnCheckedChangeListener,
     SwipeRefreshLayout.OnRefreshListener, IItemsList<News> {
 
     companion object {
@@ -48,9 +46,9 @@ class NewsFragment : AbsContentFragment(), ChipGroup.OnCheckedChangeListener,
     private lateinit var chip4: Chip
     private var position: Int =
         PreferencesUtils.getInt(ApplicationProvider.appContext, CHIP_POSITION, 1)
-    private val adapter: NewsRecyclerViewAdapter = NewsRecyclerViewAdapter()
+    private val adapter  = NewsRecyclerViewAdapter()
 
-    private var count : Int = 0
+    private var count: Int = 0
 
     override fun createModel(): IModel {
         return NewsModel(this)
@@ -84,19 +82,6 @@ class NewsFragment : AbsContentFragment(), ChipGroup.OnCheckedChangeListener,
         if (super.onAction(action)) return true
 
         return false
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(
-            ApplicationSingleton.instance.desktopProvider.getLayoutId(
-                "fragment_news",
-                R.layout.fragment_empty
-            ), container, false
-        )
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -200,7 +185,7 @@ class NewsFragment : AbsContentFragment(), ChipGroup.OnCheckedChangeListener,
             .addAction(ApplicationAction(Actions.OnSwipeRefresh))
     }
 
-    fun dataChanged() {
+    override fun dataChanged() {
         adapter.notifyDataSetChanged()
     }
 }
