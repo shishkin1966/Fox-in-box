@@ -25,8 +25,7 @@ import ru.nextleap.sl.model.IModel
 class OrdersFragment : AbsDesktopFragment(
     "fragment_products",
     R.layout.fragment_products
-), SwipeRefreshLayout.OnRefreshListener,
-    IItemsList<Orders> {
+), SwipeRefreshLayout.OnRefreshListener {
 
     companion object {
         const val NAME = "OrdersFragment"
@@ -39,7 +38,7 @@ class OrdersFragment : AbsDesktopFragment(
     private lateinit var back: TextView
     private lateinit var recyclerView: RecyclerView
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
-    private val adapter = OrdersRecyclerViewAdapter()
+    val adapter = OrdersRecyclerViewAdapter()
 
     override fun createModel(): IModel {
         return OrdersModel(this)
@@ -51,7 +50,7 @@ class OrdersFragment : AbsDesktopFragment(
         if (action is ApplicationAction) {
             when (action.getName()) {
                 Actions.ClearItems -> {
-                    clearItems()
+                    getModel<OrdersModel>().clearItems()
                     return true
                 }
             }
@@ -60,11 +59,11 @@ class OrdersFragment : AbsDesktopFragment(
         if (action is DataAction<*>) {
             when (action.getName()) {
                 Actions.AddAllItems -> {
-                    addAllItems(action.getData() as ArrayList<Orders>)
+                    getModel<OrdersModel>().addAllItems(action.getData() as ArrayList<Orders>)
                     return true
                 }
                 Actions.AddItems -> {
-                    addItems(action.getData() as ArrayList<Orders>)
+                    getModel<OrdersModel>().addItems(action.getData() as ArrayList<Orders>)
                     return true
                 }
             }
@@ -116,23 +115,6 @@ class OrdersFragment : AbsDesktopFragment(
         }
         getModel<OrdersModel>().getPresenter<OrdersPresenter>()
             .addAction(ApplicationAction(Actions.OnSwipeRefresh))
-    }
-
-    override fun addItems(data: ArrayList<Orders>) {
-        adapter.addAll(data)
-    }
-
-    override fun addAllItems(data: ArrayList<Orders>) {
-        adapter.setItems(data)
-    }
-
-    override fun clearItems() {
-        adapter.clear()
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
-    override fun dataChanged() {
-        adapter.notifyDataSetChanged()
     }
 
     override fun onDestroyView() {

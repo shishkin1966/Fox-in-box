@@ -63,7 +63,7 @@ class NewsPresenter(model: NewsModel) : AbsModelPresenter(model), IResponseListe
                                     eof = true
                                 }
                                 this.data.list.addAll(list)
-                                getView<NewsFragment>().addItems(list)
+                                getModel<NewsModel>().addItems(list)
                             } else {
                                 eof = true
                             }
@@ -99,7 +99,7 @@ class NewsPresenter(model: NewsModel) : AbsModelPresenter(model), IResponseListe
             getData()
         } else {
             data = ApplicationUtils.fromJson(json.toString(), NewsData::class.java)
-            getView<NewsFragment>().addAllItems(data.list)
+            getModel<NewsModel>().addAllItems(data.list)
         }
     }
 
@@ -132,7 +132,7 @@ class NewsPresenter(model: NewsModel) : AbsModelPresenter(model), IResponseListe
 
                 Actions.DataChanged -> {
                     ApplicationUtils.runOnUiThread {
-                        getView<NewsFragment>().dataChanged()
+                        getModel<NewsModel>().dataChanged()
                     }
                     return true
                 }
@@ -146,7 +146,7 @@ class NewsPresenter(model: NewsModel) : AbsModelPresenter(model), IResponseListe
         currentPageSize = 0
         eof = false
         data.list.clear()
-        getView<NewsFragment>().clearItems()
+        getModel<NewsModel>().clearItems()
     }
 
     private fun hasData() {
@@ -160,7 +160,7 @@ class NewsPresenter(model: NewsModel) : AbsModelPresenter(model), IResponseListe
             for (item: News in data.list) {
                 if (item.Id == (message.getData() as News).Id) {
                     item.MyVote = (message.getData() as News).MyVote
-                    getView<NewsFragment>().dataChanged()
+                    getModel<NewsModel>().dataChanged()
                     break
                 }
             }

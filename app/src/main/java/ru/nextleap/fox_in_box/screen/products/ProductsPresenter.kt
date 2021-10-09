@@ -56,7 +56,7 @@ class ProductsPresenter(model: ProductsModel) : AbsModelPresenter(model), IRespo
             getData()
         } else {
             data = ApplicationUtils.fromJson(json.toString(), SKUData::class.java)
-            getView<ProductsFragment>().addAllItems(data.list)
+            getModel<ProductsModel>().addAllItems(data.list)
         }
     }
 
@@ -82,7 +82,7 @@ class ProductsPresenter(model: ProductsModel) : AbsModelPresenter(model), IRespo
         currentPageSize = 0
         eof = false
         data.list.clear()
-        getView<ProductsFragment>().clearItems()
+        getModel<ProductsModel>().clearItems()
     }
 
     private fun hasData() {
@@ -111,7 +111,7 @@ class ProductsPresenter(model: ProductsModel) : AbsModelPresenter(model), IRespo
                                     eof = true
                                 }
                                 this.data.list.addAll(list)
-                                getView<ProductsFragment>().addItems(list)
+                                getModel<ProductsModel>().addItems(list)
                             } else {
                                 eof = true
                             }
@@ -147,7 +147,7 @@ class ProductsPresenter(model: ProductsModel) : AbsModelPresenter(model), IRespo
 
                 Actions.DataChanged -> {
                     ApplicationUtils.runOnUiThread {
-                        getView<ProductsFragment>().dataChanged()
+                        getModel<ProductsModel>().dataChanged()
                     }
                     return true
                 }

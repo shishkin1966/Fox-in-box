@@ -48,7 +48,7 @@ class MaterialsPresenter(model: MaterialsModel) : AbsModelPresenter(model), IRes
             getData()
         } else {
             data = ApplicationUtils.fromJson(json.toString(), MaterialsData::class.java)
-            getView<MaterialsFragment>().addAllItems(data.list)
+            getModel<MaterialsModel>().addAllItems(data.list)
         }
     }
 
@@ -82,7 +82,7 @@ class MaterialsPresenter(model: MaterialsModel) : AbsModelPresenter(model), IRes
         currentPageSize = 0
         eof = false
         data.list.clear()
-        getView<MaterialsFragment>().clearItems()
+        getModel<MaterialsModel>().clearItems()
     }
 
     private fun hasData() {
@@ -108,7 +108,7 @@ class MaterialsPresenter(model: MaterialsModel) : AbsModelPresenter(model), IRes
                                     eof = true
                                 }
                                 this.data.list.addAll(list)
-                                getView<MaterialsFragment>().addItems(list)
+                                getModel<MaterialsModel>().addItems(list)
                             } else {
                                 eof = true
                             }
@@ -144,7 +144,7 @@ class MaterialsPresenter(model: MaterialsModel) : AbsModelPresenter(model), IRes
 
                 Actions.DataChanged -> {
                     ApplicationUtils.runOnUiThread {
-                        getView<MaterialsFragment>().dataChanged()
+                        getModel<MaterialsModel>().dataChanged()
                     }
                     return true
                 }

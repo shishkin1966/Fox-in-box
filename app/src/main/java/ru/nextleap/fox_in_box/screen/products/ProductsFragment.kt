@@ -1,6 +1,5 @@
 package ru.nextleap.fox_in_box.screen.products
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
@@ -13,7 +12,6 @@ import ru.nextleap.fox_in_box.R
 import ru.nextleap.fox_in_box.action.Actions
 import ru.nextleap.fox_in_box.data.SKU
 import ru.nextleap.fox_in_box.screen.AbsDesktopFragment
-import ru.nextleap.fox_in_box.screen.IItemsList
 import ru.nextleap.fox_in_box.screen.home.HomePresenter
 import ru.nextleap.sl.action.ApplicationAction
 import ru.nextleap.sl.action.DataAction
@@ -25,8 +23,7 @@ import ru.nextleap.sl.model.IModel
 class ProductsFragment : AbsDesktopFragment(
     "fragment_products",
     R.layout.fragment_products
-), SwipeRefreshLayout.OnRefreshListener,
-    IItemsList<SKU> {
+), SwipeRefreshLayout.OnRefreshListener {
 
     companion object {
         const val NAME = "ProductsFragment"
@@ -39,7 +36,7 @@ class ProductsFragment : AbsDesktopFragment(
     private lateinit var back: TextView
     private lateinit var recyclerView: RecyclerView
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
-    private val adapter = SKURecyclerViewAdapter()
+    val adapter = SKURecyclerViewAdapter()
 
     override fun createModel(): IModel {
         return ProductsModel(this)
@@ -51,7 +48,7 @@ class ProductsFragment : AbsDesktopFragment(
         if (action is ApplicationAction) {
             when (action.getName()) {
                 Actions.ClearItems -> {
-                    clearItems()
+                    getModel<ProductsModel>().clearItems()
                     return true
                 }
             }
@@ -60,11 +57,11 @@ class ProductsFragment : AbsDesktopFragment(
         if (action is DataAction<*>) {
             when (action.getName()) {
                 Actions.AddAllItems -> {
-                    addAllItems(action.getData() as ArrayList<SKU>)
+                    getModel<ProductsModel>().addAllItems(action.getData() as ArrayList<SKU>)
                     return true
                 }
                 Actions.AddItems -> {
-                    addItems(action.getData() as ArrayList<SKU>)
+                    getModel<ProductsModel>().addItems(action.getData() as ArrayList<SKU>)
                     return true
                 }
             }
@@ -97,7 +94,8 @@ class ProductsFragment : AbsDesktopFragment(
         when (v?.id) {
             R.id.back -> {
                 ApplicationSingleton.instance.routerProvider.switchToTopFragment()
-                ApplicationSingleton.instance.getPresenter<HomePresenter>(HomePresenter.NAME)?.addAction(ApplicationAction(HomePresenter.ShowNews))
+                ApplicationSingleton.instance.getPresenter<HomePresenter>(HomePresenter.NAME)
+                    ?.addAction(ApplicationAction(HomePresenter.ShowNews))
             }
         }
     }
@@ -116,23 +114,6 @@ class ProductsFragment : AbsDesktopFragment(
         }
         getModel<ProductsModel>().getPresenter<ProductsPresenter>()
             .addAction(ApplicationAction(Actions.OnSwipeRefresh))
-    }
-
-    override fun addItems(data: ArrayList<SKU>) {
-        adapter.addAll(data)
-    }
-
-    override fun addAllItems(data: ArrayList<SKU>) {
-        adapter.setItems(data)
-    }
-
-    override fun clearItems() {
-        adapter.clear()
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
-    override fun dataChanged() {
-        adapter.notifyDataSetChanged()
     }
 
     override fun onDestroyView() {

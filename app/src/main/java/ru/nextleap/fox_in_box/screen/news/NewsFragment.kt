@@ -26,7 +26,7 @@ import ru.nextleap.sl.provider.ApplicationProvider
 @Suppress("UNCHECKED_CAST")
 class NewsFragment : AbsDesktopFragment("fragment_news",
     R.layout.fragment_news), ChipGroup.OnCheckedChangeListener,
-    SwipeRefreshLayout.OnRefreshListener, IItemsList<News> {
+    SwipeRefreshLayout.OnRefreshListener {
 
     companion object {
         const val NAME = "NewsFragment"
@@ -46,7 +46,7 @@ class NewsFragment : AbsDesktopFragment("fragment_news",
     private lateinit var chip4: Chip
     private var position: Int =
         PreferencesUtils.getInt(ApplicationProvider.appContext, CHIP_POSITION, 1)
-    private val adapter  = NewsRecyclerViewAdapter()
+    val adapter  = NewsRecyclerViewAdapter()
 
     private var count: Int = 0
 
@@ -60,7 +60,7 @@ class NewsFragment : AbsDesktopFragment("fragment_news",
         if (action is ApplicationAction) {
             when (action.getName()) {
                 Actions.ClearItems -> {
-                    clearItems()
+                    getModel<NewsModel>().clearItems()
                     return true
                 }
             }
@@ -69,11 +69,11 @@ class NewsFragment : AbsDesktopFragment("fragment_news",
         if (action is DataAction<*>) {
             when (action.getName()) {
                 Actions.AddAllItems -> {
-                    addAllItems(action.getData() as ArrayList<News>)
+                    getModel<NewsModel>().addAllItems(action.getData() as ArrayList<News>)
                     return true
                 }
                 Actions.AddItems -> {
-                    addItems(action.getData() as ArrayList<News>)
+                    getModel<NewsModel>().addItems(action.getData() as ArrayList<News>)
                     return true
                 }
             }
@@ -147,18 +147,6 @@ class NewsFragment : AbsDesktopFragment("fragment_news",
         super.onDestroyView()
     }
 
-    override fun addItems(data: ArrayList<News>) {
-        adapter.addAll(data)
-    }
-
-    override fun addAllItems(data: ArrayList<News>) {
-        adapter.setItems(data)
-    }
-
-    override fun clearItems() {
-        adapter.clear()
-    }
-
     override fun onCheckedChanged(group: ChipGroup?, checkedId: Int) {
         when (checkedId) {
             R.id.chip1 -> {
@@ -183,9 +171,5 @@ class NewsFragment : AbsDesktopFragment("fragment_news",
         }
         getModel<NewsModel>().getPresenter<NewsPresenter>()
             .addAction(ApplicationAction(Actions.OnSwipeRefresh))
-    }
-
-    override fun dataChanged() {
-        adapter.notifyDataSetChanged()
     }
 }

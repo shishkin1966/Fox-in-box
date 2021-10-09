@@ -55,7 +55,7 @@ class OrdersPresenter(model: OrdersModel) : AbsModelPresenter(model), IResponseL
             getData()
         } else {
             data = ApplicationUtils.fromJson(json.toString(), OrdersData::class.java)
-            getView<OrdersFragment>().addAllItems(data.list)
+            getModel<OrdersModel>().addAllItems(data.list)
         }
     }
 
@@ -81,7 +81,7 @@ class OrdersPresenter(model: OrdersModel) : AbsModelPresenter(model), IResponseL
         currentPageSize = 0
         eof = false
         data.list.clear()
-        getView<OrdersFragment>().clearItems()
+        getModel<OrdersModel>().clearItems()
     }
 
     private fun hasData() {
@@ -106,7 +106,7 @@ class OrdersPresenter(model: OrdersModel) : AbsModelPresenter(model), IResponseL
                                     eof = true
                                 }
                                 this.data.list.addAll(list)
-                                getView<OrdersFragment>().addItems(list)
+                                getModel<OrdersModel>().addItems(list)
                             } else {
                                 eof = true
                             }
@@ -142,7 +142,7 @@ class OrdersPresenter(model: OrdersModel) : AbsModelPresenter(model), IResponseL
 
                 Actions.DataChanged -> {
                     ApplicationUtils.runOnUiThread {
-                        getView<OrdersFragment>().dataChanged()
+                        getModel<OrdersModel>().dataChanged()
                     }
                     return true
                 }
