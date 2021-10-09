@@ -9,7 +9,9 @@ import ru.nextleap.fox_in_box.data.News
 import ru.nextleap.fox_in_box.provider.Providers
 import ru.nextleap.fox_in_box.request.GetNewsListRequest
 import ru.nextleap.fox_in_box.request.PutStorageRequest
-import ru.nextleap.sl.action.*
+import ru.nextleap.sl.action.ApplicationAction
+import ru.nextleap.sl.action.IAction
+import ru.nextleap.sl.action.ShowErrorAction
 import ru.nextleap.sl.data.ExtResult
 import ru.nextleap.sl.message.DataMessage
 import ru.nextleap.sl.message.IMessage
@@ -67,7 +69,9 @@ class NewsPresenter(model: NewsModel) : AbsModelPresenter(model), IResponseListe
                             }
                             if (eof) {
                                 val json = ApplicationUtils.toJson(this.data)
-                                ApplicationSingleton.instance.commonExecutor.execute(PutStorageRequest(NAME, json))
+                                ApplicationSingleton.instance.commonExecutor.execute(
+                                    PutStorageRequest(NAME, json)
+                                )
                                 getView<NewsFragment>().actionHandler.hideProgressBar()
                             }
                             hasData()
@@ -90,7 +94,7 @@ class NewsPresenter(model: NewsModel) : AbsModelPresenter(model), IResponseListe
     override fun onStart() {
         setPageSize(PageSize)
         val json = ApplicationSingleton.instance.storageProvider.get(NAME)
-        if  (json == null) {
+        if (json == null) {
             data = NewsData()
             getData()
         } else {

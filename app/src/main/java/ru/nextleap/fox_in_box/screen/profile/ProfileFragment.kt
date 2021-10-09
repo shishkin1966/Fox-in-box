@@ -1,20 +1,18 @@
 package ru.nextleap.fox_in_box.screen.profile
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import ru.nextleap.fox_in_box.ApplicationSingleton
 import ru.nextleap.fox_in_box.R
 import ru.nextleap.fox_in_box.action.Actions
 import ru.nextleap.fox_in_box.data.Profile
+import ru.nextleap.fox_in_box.screen.AbsDesktopFragment
 import ru.nextleap.sl.action.DataAction
 import ru.nextleap.sl.action.IAction
 import ru.nextleap.sl.model.IModel
-import ru.nextleap.sl.ui.AbsContentFragment
 
 
-class ProfileFragment : AbsContentFragment() {
+class ProfileFragment : AbsDesktopFragment(
+    "fragment_profile",
+    R.layout.fragment_profile
+) {
 
     companion object {
         const val NAME = "ProfileFragment"
@@ -43,19 +41,6 @@ class ProfileFragment : AbsContentFragment() {
         if (super.onAction(action)) return true
 
         return false
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(
-            ApplicationSingleton.instance.desktopProvider.getLayoutId(
-                "fragment_profile",
-                R.layout.fragment_profile
-            ), container, false
-        )
     }
 
     override fun isTop(): Boolean {

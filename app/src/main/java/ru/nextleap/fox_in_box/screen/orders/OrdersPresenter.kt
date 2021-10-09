@@ -50,7 +50,7 @@ class OrdersPresenter(model: OrdersModel) : AbsModelPresenter(model), IResponseL
     override fun onStart() {
         setPageSize(PageSize)
         val json = ApplicationSingleton.instance.storageProvider.get(NAME)
-        if  (json == null) {
+        if (json == null) {
             data = OrdersData()
             getData()
         } else {

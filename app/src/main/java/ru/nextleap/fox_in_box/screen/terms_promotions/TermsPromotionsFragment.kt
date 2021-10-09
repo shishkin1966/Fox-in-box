@@ -1,19 +1,20 @@
 package ru.nextleap.fox_in_box.screen.terms_promotions
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.TextView
 import ru.nextleap.fox_in_box.ApplicationSingleton
 import ru.nextleap.fox_in_box.R
+import ru.nextleap.fox_in_box.screen.AbsDesktopFragment
 import ru.nextleap.fox_in_box.screen.home.HomePresenter
 import ru.nextleap.sl.action.ApplicationAction
 import ru.nextleap.sl.model.IModel
-import ru.nextleap.sl.ui.AbsContentFragment
 
 
-class TermsPromotionsFragment : AbsContentFragment() {
+class TermsPromotionsFragment : AbsDesktopFragment(
+    "fragment_term_promotions",
+    R.layout.fragment_term_promotions
+) {
 
     companion object {
         const val NAME = "TermsPromotionsFragment"
@@ -27,19 +28,6 @@ class TermsPromotionsFragment : AbsContentFragment() {
 
     override fun createModel(): IModel {
         return TermsPromotionsModel(this)
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(
-            ApplicationSingleton.instance.desktopProvider.getLayoutId(
-                "fragment_term_promotions",
-                R.layout.fragment_term_promotions
-            ), container, false
-        )
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

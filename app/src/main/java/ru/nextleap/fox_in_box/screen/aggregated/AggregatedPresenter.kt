@@ -9,11 +9,12 @@ import ru.nextleap.fox_in_box.data.BaseResponse
 import ru.nextleap.fox_in_box.provider.Providers
 import ru.nextleap.fox_in_box.request.GetAggregatedListRequest
 import ru.nextleap.fox_in_box.request.PutStorageRequest
-import ru.nextleap.sl.action.*
+import ru.nextleap.sl.action.ApplicationAction
+import ru.nextleap.sl.action.IAction
+import ru.nextleap.sl.action.ShowErrorAction
 import ru.nextleap.sl.data.ExtResult
 import ru.nextleap.sl.presenter.AbsModelPresenter
 import ru.nextleap.sl.request.IResponseListener
-import java.io.Serializable
 
 class AggregatedPresenter(model: AggregatedModel) : AbsModelPresenter(model), IResponseListener {
 
@@ -49,7 +50,7 @@ class AggregatedPresenter(model: AggregatedModel) : AbsModelPresenter(model), IR
     override fun onStart() {
         setPageSize(PageSize)
         val json = ApplicationSingleton.instance.storageProvider.get(NAME)
-        if  (json == null) {
+        if (json == null) {
             data = AggregatedData()
             getData()
         } else {

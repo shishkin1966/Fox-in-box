@@ -1,9 +1,7 @@
 package ru.nextleap.fox_in_box.screen.view_news
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import ru.nextleap.common.ApplicationUtils
@@ -14,14 +12,17 @@ import ru.nextleap.fox_in_box.action.Actions
 import ru.nextleap.fox_in_box.action.ImageAction
 import ru.nextleap.fox_in_box.action.OnClickAction
 import ru.nextleap.fox_in_box.data.News
+import ru.nextleap.fox_in_box.screen.AbsDesktopFragment
 import ru.nextleap.sl.action.DataAction
 import ru.nextleap.sl.action.IAction
 import ru.nextleap.sl.model.IModel
 import ru.nextleap.sl.provider.ApplicationProvider
-import ru.nextleap.sl.ui.AbsContentFragment
 
 
-class ViewNewsFragment : AbsContentFragment() {
+class ViewNewsFragment : AbsDesktopFragment(
+    "fragment_news_view",
+    R.layout.fragment_news_view
+) {
 
     companion object {
         const val NAME = "ViewNewsFragment"
@@ -67,19 +68,6 @@ class ViewNewsFragment : AbsContentFragment() {
         if (super.onAction(action)) return true
 
         return false
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(
-            ApplicationSingleton.instance.desktopProvider.getLayoutId(
-                "fragment_news_view",
-                R.layout.fragment_news_view
-            ), container, false
-        )
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

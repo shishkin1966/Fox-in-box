@@ -2,24 +2,20 @@ package ru.nextleap.fox_in_box.screen.home
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.badge.BadgeUtils
-import ru.nextleap.fox_in_box.ApplicationSingleton
 import ru.nextleap.fox_in_box.R
+import ru.nextleap.fox_in_box.screen.AbsDesktopFragment
 import ru.nextleap.sl.model.IModel
 import ru.nextleap.sl.provider.ApplicationProvider
-import ru.nextleap.sl.ui.AbsContentFragment
 
 
-class HomeFragment : AbsContentFragment() {
-
+class HomeFragment : AbsDesktopFragment("fragment_home", R.layout.fragment_home) {
     companion object {
         const val NAME = "HomeFragment"
 
@@ -73,7 +69,7 @@ class HomeFragment : AbsContentFragment() {
         }
     }
 
-    @SuppressLint("RestrictedApi", "UnsafeExperimentalUsageError")
+    @SuppressLint("RestrictedApi", "UnsafeExperimentalUsageError", "UnsafeOptInUsageError")
     private fun setBadger() {
         val badgeDrawable = BadgeDrawable.create(button1.context)
         badgeDrawable.number = countNewsBadger
@@ -85,19 +81,6 @@ class HomeFragment : AbsContentFragment() {
             ApplicationProvider.appContext.resources.getDimension(R.dimen.badger_vertical_offset)
                 .toInt()
         BadgeUtils.attachBadgeDrawable(badgeDrawable, button1, fl)
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(
-            ApplicationSingleton.instance.desktopProvider.getLayoutId(
-                "fragment_home",
-                R.layout.fragment_home
-            ), container, false
-        )
     }
 
     override fun isTop(): Boolean {

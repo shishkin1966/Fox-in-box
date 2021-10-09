@@ -1,27 +1,28 @@
 package ru.nextleap.fox_in_box.screen.materials
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import ru.nextleap.fox_in_box.ApplicationSingleton
 import ru.nextleap.fox_in_box.R
 import ru.nextleap.fox_in_box.action.Actions
 import ru.nextleap.fox_in_box.data.Materials
+import ru.nextleap.fox_in_box.screen.AbsDesktopFragment
 import ru.nextleap.fox_in_box.screen.IItemsList
 import ru.nextleap.sl.action.ApplicationAction
 import ru.nextleap.sl.action.DataAction
 import ru.nextleap.sl.action.IAction
 import ru.nextleap.sl.model.IModel
-import ru.nextleap.sl.ui.AbsContentFragment
 
 
 @Suppress("UNCHECKED_CAST")
-class MaterialsFragment : AbsContentFragment(), SwipeRefreshLayout.OnRefreshListener,
+class MaterialsFragment : AbsDesktopFragment(
+    "fragment_materials",
+    R.layout.fragment_materials
+), SwipeRefreshLayout.OnRefreshListener,
     IItemsList<Materials> {
 
     companion object {
@@ -34,7 +35,7 @@ class MaterialsFragment : AbsContentFragment(), SwipeRefreshLayout.OnRefreshList
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
-    private val adapter: MaterialsRecyclerViewAdapter = MaterialsRecyclerViewAdapter()
+    private val adapter = MaterialsRecyclerViewAdapter()
 
     override fun createModel(): IModel {
         return MaterialsModel(this)
@@ -68,19 +69,6 @@ class MaterialsFragment : AbsContentFragment(), SwipeRefreshLayout.OnRefreshList
         if (super.onAction(action)) return true
 
         return false
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(
-            ApplicationSingleton.instance.desktopProvider.getLayoutId(
-                "fragment_materials",
-                R.layout.fragment_materials
-            ), container, false
-        )
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -132,7 +120,8 @@ class MaterialsFragment : AbsContentFragment(), SwipeRefreshLayout.OnRefreshList
         adapter.clear()
     }
 
-    fun dataChanged() {
+    @SuppressLint("NotifyDataSetChanged")
+    override fun dataChanged() {
         adapter.notifyDataSetChanged()
     }
 

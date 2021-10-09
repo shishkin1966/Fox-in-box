@@ -1,7 +1,6 @@
 package ru.nextleap.fox_in_box.screen.settings
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
@@ -10,14 +9,17 @@ import android.widget.TextView
 import androidx.appcompat.widget.SwitchCompat
 import ru.nextleap.fox_in_box.ApplicationSingleton
 import ru.nextleap.fox_in_box.R
+import ru.nextleap.fox_in_box.screen.AbsDesktopFragment
 import ru.nextleap.fox_in_box.setting.Setting
 import ru.nextleap.sl.action.DataAction
 import ru.nextleap.sl.action.IAction
 import ru.nextleap.sl.model.IModel
-import ru.nextleap.sl.ui.AbsContentFragment
 
 
-class SettingsFragment : AbsContentFragment(), CompoundButton.OnCheckedChangeListener {
+class SettingsFragment : AbsDesktopFragment(
+    "fragment_settings",
+    R.layout.fragment_settings
+), CompoundButton.OnCheckedChangeListener {
 
     companion object {
         const val NAME = "SettingsFragment"
@@ -48,19 +50,6 @@ class SettingsFragment : AbsContentFragment(), CompoundButton.OnCheckedChangeLis
         if (actionHandler.onAction(action)) return true
 
         return false
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(
-            ApplicationSingleton.instance.desktopProvider.getLayoutId(
-                "fragment_settings",
-                R.layout.fragment_settings
-            ), container, false
-        )
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

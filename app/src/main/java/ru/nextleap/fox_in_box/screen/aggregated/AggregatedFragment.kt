@@ -2,9 +2,7 @@ package ru.nextleap.fox_in_box.screen.aggregated
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.TextView
@@ -13,20 +11,22 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import ru.nextleap.common.OnSwipeTouchListener
-import ru.nextleap.fox_in_box.ApplicationSingleton
 import ru.nextleap.fox_in_box.R
 import ru.nextleap.fox_in_box.action.Actions
 import ru.nextleap.fox_in_box.data.Aggregated
+import ru.nextleap.fox_in_box.screen.AbsDesktopFragment
 import ru.nextleap.fox_in_box.screen.IItemsList
 import ru.nextleap.sl.action.ApplicationAction
 import ru.nextleap.sl.action.DataAction
 import ru.nextleap.sl.action.IAction
 import ru.nextleap.sl.model.IModel
-import ru.nextleap.sl.ui.AbsContentFragment
 
 
 @Suppress("UNCHECKED_CAST")
-class AggregatedFragment : AbsContentFragment(), SwipeRefreshLayout.OnRefreshListener,
+class AggregatedFragment : AbsDesktopFragment(
+    "fragment_aggregated",
+    R.layout.fragment_aggregated
+), SwipeRefreshLayout.OnRefreshListener,
     IItemsList<Aggregated> {
 
     companion object {
@@ -39,7 +39,7 @@ class AggregatedFragment : AbsContentFragment(), SwipeRefreshLayout.OnRefreshLis
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
-    private val adapter: AggregatedRecyclerViewAdapter = AggregatedRecyclerViewAdapter()
+    private val adapter = AggregatedRecyclerViewAdapter()
     private lateinit var error: TextView
 
     override fun createModel(): IModel {
@@ -74,19 +74,6 @@ class AggregatedFragment : AbsContentFragment(), SwipeRefreshLayout.OnRefreshLis
         if (super.onAction(action)) return true
 
         return false
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(
-            ApplicationSingleton.instance.desktopProvider.getLayoutId(
-                "fragment_aggregated",
-                R.layout.fragment_aggregated
-            ), container, false
-        )
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -141,7 +128,8 @@ class AggregatedFragment : AbsContentFragment(), SwipeRefreshLayout.OnRefreshLis
         adapter.clear()
     }
 
-    fun dataChanged() {
+    @SuppressLint("NotifyDataSetChanged")
+    override fun dataChanged() {
         adapter.notifyDataSetChanged()
     }
 
