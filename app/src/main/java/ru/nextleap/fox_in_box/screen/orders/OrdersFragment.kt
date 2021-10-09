@@ -96,11 +96,8 @@ class OrdersFragment : AbsDesktopFragment(
     private fun onClick(v: View?) {
         when (v?.id) {
             R.id.back -> {
-                val presenter =
-                    ApplicationSingleton.instance.getPresenter<HomePresenter>(HomePresenter.NAME)
-                val router = ApplicationSingleton.instance.routerProvider
-                router.switchToTopFragment()
-                presenter?.addAction(ApplicationAction(HomePresenter.ShowNews))
+                ApplicationSingleton.instance.routerProvider.switchToTopFragment()
+                ApplicationSingleton.instance.getPresenter<HomePresenter>(HomePresenter.NAME)?.addAction(ApplicationAction(HomePresenter.ShowNews))
             }
         }
     }
