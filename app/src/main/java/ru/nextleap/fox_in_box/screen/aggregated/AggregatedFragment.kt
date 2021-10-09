@@ -15,7 +15,6 @@ import ru.nextleap.fox_in_box.R
 import ru.nextleap.fox_in_box.action.Actions
 import ru.nextleap.fox_in_box.data.Aggregated
 import ru.nextleap.fox_in_box.screen.AbsDesktopFragment
-import ru.nextleap.fox_in_box.screen.IItemsList
 import ru.nextleap.sl.action.ApplicationAction
 import ru.nextleap.sl.action.DataAction
 import ru.nextleap.sl.action.IAction
@@ -26,8 +25,7 @@ import ru.nextleap.sl.model.IModel
 class AggregatedFragment : AbsDesktopFragment(
     "fragment_aggregated",
     R.layout.fragment_aggregated
-), SwipeRefreshLayout.OnRefreshListener,
-    IItemsList<Aggregated> {
+), SwipeRefreshLayout.OnRefreshListener {
 
     companion object {
         const val NAME = "AggregatedFragment"
@@ -39,7 +37,7 @@ class AggregatedFragment : AbsDesktopFragment(
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
-    private val adapter = AggregatedRecyclerViewAdapter()
+    val adapter = AggregatedRecyclerViewAdapter()
     private lateinit var error: TextView
 
     override fun createModel(): IModel {
@@ -52,7 +50,7 @@ class AggregatedFragment : AbsDesktopFragment(
         if (action is ApplicationAction) {
             when (action.getName()) {
                 Actions.ClearItems -> {
-                    clearItems()
+                    getModel<AggregatedModel>().clearItems()
                     return true
                 }
             }
@@ -61,11 +59,11 @@ class AggregatedFragment : AbsDesktopFragment(
         if (action is DataAction<*>) {
             when (action.getName()) {
                 Actions.AddAllItems -> {
-                    addAllItems(action.getData() as ArrayList<Aggregated>)
+                    getModel<AggregatedModel>().addAllItems(action.getData() as ArrayList<Aggregated>)
                     return true
                 }
                 Actions.AddItems -> {
-                    addItems(action.getData() as ArrayList<Aggregated>)
+                    getModel<AggregatedModel>().addItems(action.getData() as ArrayList<Aggregated>)
                     return true
                 }
             }
@@ -114,23 +112,6 @@ class AggregatedFragment : AbsDesktopFragment(
         }
         getModel<AggregatedModel>().getPresenter<AggregatedPresenter>()
             .addAction(ApplicationAction(Actions.OnSwipeRefresh))
-    }
-
-    override fun addItems(data: ArrayList<Aggregated>) {
-        adapter.addAll(data)
-    }
-
-    override fun addAllItems(data: ArrayList<Aggregated>) {
-        adapter.setItems(data)
-    }
-
-    override fun clearItems() {
-        adapter.clear()
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
-    override fun dataChanged() {
-        adapter.notifyDataSetChanged()
     }
 
     override fun onDestroyView() {

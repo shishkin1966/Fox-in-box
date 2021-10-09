@@ -1,6 +1,5 @@
 package ru.nextleap.fox_in_box.screen.materials
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -11,7 +10,6 @@ import ru.nextleap.fox_in_box.R
 import ru.nextleap.fox_in_box.action.Actions
 import ru.nextleap.fox_in_box.data.Materials
 import ru.nextleap.fox_in_box.screen.AbsDesktopFragment
-import ru.nextleap.fox_in_box.screen.IItemsList
 import ru.nextleap.sl.action.ApplicationAction
 import ru.nextleap.sl.action.DataAction
 import ru.nextleap.sl.action.IAction
@@ -22,8 +20,7 @@ import ru.nextleap.sl.model.IModel
 class MaterialsFragment : AbsDesktopFragment(
     "fragment_materials",
     R.layout.fragment_materials
-), SwipeRefreshLayout.OnRefreshListener,
-    IItemsList<Materials> {
+), SwipeRefreshLayout.OnRefreshListener {
 
     companion object {
         const val NAME = "MaterialsFragment"
@@ -35,7 +32,7 @@ class MaterialsFragment : AbsDesktopFragment(
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
-    private val adapter = MaterialsRecyclerViewAdapter()
+    val adapter = MaterialsRecyclerViewAdapter()
 
     override fun createModel(): IModel {
         return MaterialsModel(this)
@@ -47,7 +44,7 @@ class MaterialsFragment : AbsDesktopFragment(
         if (action is ApplicationAction) {
             when (action.getName()) {
                 Actions.ClearItems -> {
-                    clearItems()
+                    getModel<MaterialsModel>().clearItems()
                     return true
                 }
             }
@@ -56,11 +53,11 @@ class MaterialsFragment : AbsDesktopFragment(
         if (action is DataAction<*>) {
             when (action.getName()) {
                 Actions.AddAllItems -> {
-                    addAllItems(action.getData() as ArrayList<Materials>)
+                    getModel<MaterialsModel>().addAllItems(action.getData() as ArrayList<Materials>)
                     return true
                 }
                 Actions.AddItems -> {
-                    addItems(action.getData() as ArrayList<Materials>)
+                    getModel<MaterialsModel>().addItems(action.getData() as ArrayList<Materials>)
                     return true
                 }
             }
@@ -106,23 +103,6 @@ class MaterialsFragment : AbsDesktopFragment(
         }
         getModel<MaterialsModel>().getPresenter<MaterialsPresenter>()
             .addAction(ApplicationAction(Actions.OnSwipeRefresh))
-    }
-
-    override fun addItems(data: ArrayList<Materials>) {
-        adapter.addAll(data)
-    }
-
-    override fun addAllItems(data: ArrayList<Materials>) {
-        adapter.setItems(data)
-    }
-
-    override fun clearItems() {
-        adapter.clear()
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
-    override fun dataChanged() {
-        adapter.notifyDataSetChanged()
     }
 
 }

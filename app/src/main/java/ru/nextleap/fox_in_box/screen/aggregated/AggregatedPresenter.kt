@@ -55,7 +55,7 @@ class AggregatedPresenter(model: AggregatedModel) : AbsModelPresenter(model), IR
             getData()
         } else {
             data = ApplicationUtils.fromJson(json.toString(), AggregatedData::class.java)
-            getView<AggregatedFragment>().addAllItems(data.list)
+            getModel<AggregatedModel>().addAllItems(data.list)
         }
     }
 
@@ -81,7 +81,7 @@ class AggregatedPresenter(model: AggregatedModel) : AbsModelPresenter(model), IR
         currentPageSize = 0
         eof = false
         data.list.clear()
-        getView<AggregatedFragment>().clearItems()
+        getModel<AggregatedModel>().clearItems()
     }
 
     private fun hasData() {
@@ -101,8 +101,8 @@ class AggregatedPresenter(model: AggregatedModel) : AbsModelPresenter(model), IR
                             if (data.result is LinkedTreeMap<*, *>) {
                                 val items = (data.result as LinkedTreeMap<*, *>).get("data")
                                 if (items is LinkedTreeMap<*, *>) {
-                                    val itemsList = items["list"]
-                                    val rewardTypes = items["rewardTypes"]
+                                    //val itemsList = items["list"]
+                                    //val rewardTypes = items["rewardTypes"]
                                 }
                             }
                             if (list.isNotEmpty()) {
@@ -111,7 +111,7 @@ class AggregatedPresenter(model: AggregatedModel) : AbsModelPresenter(model), IR
                                     eof = true
                                 }
                                 this.data.list.addAll(list)
-                                getView<AggregatedFragment>().addItems(list)
+                                getModel<AggregatedModel>().addItems(list)
                             } else {
                                 eof = true
                             }
@@ -146,7 +146,7 @@ class AggregatedPresenter(model: AggregatedModel) : AbsModelPresenter(model), IR
                 }
                 Actions.DataChanged -> {
                     ApplicationUtils.runOnUiThread {
-                        getView<AggregatedFragment>().dataChanged()
+                        getModel<AggregatedModel>().dataChanged()
                     }
                     return true
                 }
