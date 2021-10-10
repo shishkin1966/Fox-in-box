@@ -3,6 +3,8 @@ package ru.nextleap.fox_in_box.screen.news
 import android.annotation.SuppressLint
 import ru.nextleap.fox_in_box.data.News
 import ru.nextleap.fox_in_box.screen.IItemsList
+import ru.nextleap.fox_in_box.screen.materials.MaterialsFragment
+import ru.nextleap.sl.action.handler.FragmentActionHandler
 import ru.nextleap.sl.model.AbsPresenterModel
 
 
@@ -28,4 +30,7 @@ class NewsModel(view: NewsFragment) : AbsPresenterModel(view), IItemsList<News> 
         getView<NewsFragment>().adapter.notifyDataSetChanged()
     }
 
+    fun getHandler() : FragmentActionHandler {
+        return getView<NewsFragment>().actionHandler
+    }
 }

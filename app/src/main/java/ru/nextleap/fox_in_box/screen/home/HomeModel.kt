@@ -7,4 +7,13 @@ class HomeModel(view: HomeFragment) : AbsPresenterModel(view) {
     init {
         setPresenter(HomePresenter(this))
     }
+
+    fun showNews() {
+        getView<HomeFragment>().showNews()
+    }
+
+    fun checkUpdate() {
+        getView<HomeFragment>().checkUpdate()
+    }
+
 }

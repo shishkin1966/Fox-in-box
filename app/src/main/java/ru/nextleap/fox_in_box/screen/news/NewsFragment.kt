@@ -48,8 +48,6 @@ class NewsFragment : AbsDesktopFragment("fragment_news",
         PreferencesUtils.getInt(ApplicationProvider.appContext, CHIP_POSITION, 1)
     val adapter  = NewsRecyclerViewAdapter()
 
-    private var count: Int = 0
-
     override fun createModel(): IModel {
         return NewsModel(this)
     }

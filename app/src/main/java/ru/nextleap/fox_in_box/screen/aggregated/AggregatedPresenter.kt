@@ -9,6 +9,7 @@ import ru.nextleap.fox_in_box.data.BaseResponse
 import ru.nextleap.fox_in_box.provider.Providers
 import ru.nextleap.fox_in_box.request.GetAggregatedListRequest
 import ru.nextleap.fox_in_box.request.PutStorageRequest
+import ru.nextleap.sl.Pager
 import ru.nextleap.sl.action.ApplicationAction
 import ru.nextleap.sl.action.IAction
 import ru.nextleap.sl.action.ShowErrorAction
@@ -24,20 +25,7 @@ class AggregatedPresenter(model: AggregatedModel) : AbsModelPresenter(model), IR
     }
 
     private lateinit var data: AggregatedData
-    private var currentPageSize = 0
-    private var currentPosition = 0
-    private val nextPageSize: Int
-        get() {
-            for (i in pageSize.indices) {
-                if (pageSize[i] > currentPageSize) {
-                    currentPageSize = pageSize[i]
-                    return pageSize[i]
-                }
-            }
-            return pageSize[pageSize.size - 1]
-        }
-    private lateinit var pageSize: ArrayList<Int>
-    private var eof = false
+    private val pager = Pager()
 
     override fun isRegister(): Boolean {
         return false
@@ -48,7 +36,7 @@ class AggregatedPresenter(model: AggregatedModel) : AbsModelPresenter(model), IR
     }
 
     override fun onStart() {
-        setPageSize(PageSize)
+        pager.setPageSize(PageSize)
         val json = ApplicationSingleton.instance.storageProvider.get(NAME)
         if (json == null) {
             data = AggregatedData()
@@ -59,34 +47,23 @@ class AggregatedPresenter(model: AggregatedModel) : AbsModelPresenter(model), IR
         }
     }
 
-    private fun setPageSize(initialPageSize: Int) {
-        if (initialPageSize > 0) {
-            pageSize = ArrayList()
-            pageSize.add(initialPageSize)
-            pageSize.add(initialPageSize * 2)
-            pageSize.add(initialPageSize * 4)
-        }
-    }
-
     private fun getData() {
         init()
         ApplicationUtils.runOnUiThread {
-            getView<AggregatedFragment>().actionHandler.showProgressBar()
+            getModel<AggregatedModel>().getHandler().showProgressBar()
         }
         hasData()
     }
 
     private fun init() {
-        currentPosition = 0
-        currentPageSize = 0
-        eof = false
+        pager.init()
         data.list.clear()
         getModel<AggregatedModel>().clearItems()
     }
 
     private fun hasData() {
-        if (!eof) {
-            Providers.getAggregatedList(getName(), currentPosition, nextPageSize)
+        if (!pager.eof) {
+            Providers.getAggregatedList(getName(), pager.currentPosition, pager.nextPageSize)
         }
     }
 
@@ -106,31 +83,28 @@ class AggregatedPresenter(model: AggregatedModel) : AbsModelPresenter(model), IR
                                 }
                             }
                             if (list.isNotEmpty()) {
-                                currentPosition += list.size
-                                if (list.size < currentPageSize) {
-                                    eof = true
-                                }
+                                pager.add(list.size)
                                 this.data.list.addAll(list)
                                 getModel<AggregatedModel>().addItems(list)
                             } else {
-                                eof = true
+                                pager.eof = true
                             }
-                            if (eof) {
+                            if (pager.eof) {
                                 val json = ApplicationUtils.toJson(this.data)
                                 ApplicationSingleton.instance.commonExecutor.execute(
                                     PutStorageRequest(NAME, json)
                                 )
-                                getView<AggregatedFragment>().actionHandler.hideProgressBar()
+                                getModel<AggregatedModel>().getHandler().hideProgressBar()
                             }
                             hasData()
                         } else {
-                            getView<AggregatedFragment>().actionHandler.hideProgressBar()
+                            getModel<AggregatedModel>().getHandler().hideProgressBar()
                         }
                     }
                 }
             } else {
-                getView<AggregatedFragment>().actionHandler.hideProgressBar()
-                getView<AggregatedFragment>().actionHandler.showErrorAction(ShowErrorAction(result.getErrorText()))
+                getModel<AggregatedModel>().getHandler().hideProgressBar()
+                getModel<AggregatedModel>().getHandler().showErrorAction(ShowErrorAction(result.getErrorText()))
             }
         }
     }

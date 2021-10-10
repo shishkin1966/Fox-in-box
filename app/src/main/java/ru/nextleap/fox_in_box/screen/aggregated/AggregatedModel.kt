@@ -3,6 +3,7 @@ package ru.nextleap.fox_in_box.screen.aggregated
 import android.annotation.SuppressLint
 import ru.nextleap.fox_in_box.data.Aggregated
 import ru.nextleap.fox_in_box.screen.IItemsList
+import ru.nextleap.sl.action.handler.FragmentActionHandler
 import ru.nextleap.sl.model.AbsPresenterModel
 
 
@@ -26,5 +27,9 @@ class AggregatedModel(view: AggregatedFragment) : AbsPresenterModel(view), IItem
     @SuppressLint("NotifyDataSetChanged")
     override fun dataChanged() {
         getView<AggregatedFragment>().adapter.notifyDataSetChanged()
+    }
+
+    fun getHandler() : FragmentActionHandler {
+        return getView<AggregatedFragment>().actionHandler
     }
 }
