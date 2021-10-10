@@ -92,7 +92,7 @@ class ViewNewsPresenter(model: ViewNewsModel) : AbsModelPresenter(model), IRespo
         if (item != null) {
             when (id) {
                 R.id.likeImage -> {
-                    item!!.MyVote = !item!!.MyVote
+                    item!!.MyVote = !(item!!.MyVote)
                     getView<ViewNewsFragment>().addAction(DataAction(Actions.ResponseOnClick, id))
                     ApplicationSingleton.instance.addMessage(
                         DataMessage(

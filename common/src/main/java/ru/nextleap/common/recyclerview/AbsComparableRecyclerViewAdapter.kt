@@ -1,13 +1,18 @@
 package ru.nextleap.common.recyclerview
 
 import androidx.recyclerview.widget.RecyclerView
-import ru.nextleap.common.ApplicationUtils
 
-abstract class AbsComparableRecyclerViewAdapter<E:Comparable<E>, VH : RecyclerView.ViewHolder> : IRecyclerViewAdapter<E>,
+abstract class AbsComparableRecyclerViewAdapter<E : Comparable<E>, VH : RecyclerView.ViewHolder> :
+    IRecyclerViewAdapter<E>,
     RecyclerView.Adapter<VH>() {
     private var items: MutableList<E> = ArrayList()
 
     override fun getItemCount(): Int = items.size
+
+    override fun setItem(position: Int, item: E) {
+        this.items[position] = item
+        notifyItemChanged(position)
+    }
 
     override fun setItems(items: List<E>) {
         this.items.clear()

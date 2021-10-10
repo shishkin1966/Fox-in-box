@@ -37,13 +37,15 @@ class OrdersPresenter(model: OrdersModel) : AbsModelPresenter(model), IResponseL
 
     override fun onStart() {
         pager.setPageSize(PageSize)
-        val json = ApplicationSingleton.instance.storageProvider.get(NAME)
-        if (json == null) {
-            data = OrdersData()
-            getData()
-        } else {
-            data = ApplicationUtils.fromJson(json.toString(), OrdersData::class.java)
-            getModel<OrdersModel>().addAllItems(data.list)
+        if (!this::data.isInitialized) {
+            val json = ApplicationSingleton.instance.storageProvider.get(NAME)
+            if (json == null) {
+                data = OrdersData()
+                getData()
+            } else {
+                data = ApplicationUtils.fromJson(json.toString(), OrdersData::class.java)
+                getModel<OrdersModel>().addAllItems(data.list)
+            }
         }
     }
 

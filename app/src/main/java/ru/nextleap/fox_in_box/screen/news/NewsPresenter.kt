@@ -53,10 +53,7 @@ class NewsPresenter(model: NewsModel) : AbsModelPresenter(model), IResponseListe
                                 pager.eof = true
                             }
                             if (pager.eof) {
-                                val json = ApplicationUtils.toJson(this.data)
-                                ApplicationSingleton.instance.commonExecutor.execute(
-                                    PutStorageRequest(NAME, json)
-                                )
+                                saveData()
                                 getModel<NewsModel>().getHandler().hideProgressBar()
                             }
                             hasData()
@@ -78,13 +75,15 @@ class NewsPresenter(model: NewsModel) : AbsModelPresenter(model), IResponseListe
 
     override fun onStart() {
         pager.setPageSize(PageSize)
-        val json = ApplicationSingleton.instance.storageProvider.get(NAME)
-        if (json == null) {
-            data = NewsData()
-            getData()
-        } else {
-            data = ApplicationUtils.fromJson(json.toString(), NewsData::class.java)
-            getModel<NewsModel>().addAllItems(data.list)
+        if (!this::data.isInitialized) {
+            val json = ApplicationSingleton.instance.storageProvider.get(NAME)
+            if (json == null) {
+                data = NewsData()
+                getData()
+            } else {
+                data = ApplicationUtils.fromJson(json.toString(), NewsData::class.java)
+                getModel<NewsModel>().addAllItems(data.list)
+            }
         }
     }
 
@@ -131,14 +130,23 @@ class NewsPresenter(model: NewsModel) : AbsModelPresenter(model), IResponseListe
 
     override fun read(message: IMessage) {
         if (message is DataMessage) {
+            val messageItem = message.getData() as News
             for (item: News in data.list) {
-                if (item.Id == (message.getData() as News).Id) {
-                    item.MyVote = (message.getData() as News).MyVote
-                    getModel<NewsModel>().dataChanged()
+                if (item.Id == messageItem.Id) {
+                    item.MyVote = messageItem.MyVote
+                    getView<NewsFragment>().adapter.setItem(messageItem)
+                    saveData()
                     break
                 }
             }
         }
+    }
+
+    private fun saveData() {
+        val json = ApplicationUtils.toJson(this.data)
+        ApplicationSingleton.instance.commonExecutor.execute(
+            PutStorageRequest(NAME, json)
+        )
     }
 
 }

@@ -9,6 +9,11 @@ abstract class AbsRecyclerViewAdapter<E, VH : RecyclerView.ViewHolder> : IRecycl
 
     override fun getItemCount(): Int = items.size
 
+    override fun setItem(position: Int, item: E) {
+        this.items[position] = item
+        notifyItemChanged(position)
+    }
+
     override fun setItems(items: List<E>) {
         this.items.clear()
         this.items.addAll(items)
