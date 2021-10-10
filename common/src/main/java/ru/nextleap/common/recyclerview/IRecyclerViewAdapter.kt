@@ -3,6 +3,8 @@ package ru.nextleap.common.recyclerview
 interface IRecyclerViewAdapter<E> {
     fun getItemCount(): Int
 
+    fun setItem(position: Int,item: E)
+
     fun setItems(items: List<E>)
 
     fun add(e: E)

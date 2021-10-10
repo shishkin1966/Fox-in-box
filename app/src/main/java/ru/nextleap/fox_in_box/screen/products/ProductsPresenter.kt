@@ -38,13 +38,15 @@ class ProductsPresenter(model: ProductsModel) : AbsModelPresenter(model), IRespo
 
     override fun onStart() {
         pager.setPageSize(PageSize)
-        val json = ApplicationSingleton.instance.storageProvider.get(NAME)
-        if (json == null) {
-            data = SKUData()
-            getData()
-        } else {
-            data = ApplicationUtils.fromJson(json.toString(), SKUData::class.java)
-            getModel<ProductsModel>().addAllItems(data.list)
+        if (!this::data.isInitialized) {
+            val json = ApplicationSingleton.instance.storageProvider.get(NAME)
+            if (json == null) {
+                data = SKUData()
+                getData()
+            } else {
+                data = ApplicationUtils.fromJson(json.toString(), SKUData::class.java)
+                getModel<ProductsModel>().addAllItems(data.list)
+            }
         }
     }
 

@@ -37,13 +37,15 @@ class AggregatedPresenter(model: AggregatedModel) : AbsModelPresenter(model), IR
 
     override fun onStart() {
         pager.setPageSize(PageSize)
-        val json = ApplicationSingleton.instance.storageProvider.get(NAME)
-        if (json == null) {
-            data = AggregatedData()
-            getData()
-        } else {
-            data = ApplicationUtils.fromJson(json.toString(), AggregatedData::class.java)
-            getModel<AggregatedModel>().addAllItems(data.list)
+        if (!this::data.isInitialized) {
+            val json = ApplicationSingleton.instance.storageProvider.get(NAME)
+            if (json == null) {
+                data = AggregatedData()
+                getData()
+            } else {
+                data = ApplicationUtils.fromJson(json.toString(), AggregatedData::class.java)
+                getModel<AggregatedModel>().addAllItems(data.list)
+            }
         }
     }
 

@@ -27,6 +27,15 @@ class NewsRecyclerViewAdapter :
         setHasStableIds(true)
     }
 
+    fun setItem(item:News) {
+        val items = getItems()
+        for(i in 0..itemCount - 1) {
+            if (items[i].Id == item.Id) {
+                setItem(i,item)
+            }
+        }
+    }
+
     override fun getItemId(position: Int): Long {
         return getItem(position).Id.toLong()
     }

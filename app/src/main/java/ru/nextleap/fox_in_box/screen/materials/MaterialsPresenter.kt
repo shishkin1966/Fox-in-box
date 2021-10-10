@@ -30,13 +30,15 @@ class MaterialsPresenter(model: MaterialsModel) : AbsModelPresenter(model), IRes
 
     override fun onStart() {
         pager.setPageSize(PageSize)
-        val json = ApplicationSingleton.instance.storageProvider.get(NAME)
-        if (json == null) {
-            data = MaterialsData()
-            getData()
-        } else {
-            data = ApplicationUtils.fromJson(json.toString(), MaterialsData::class.java)
-            getModel<MaterialsModel>().addAllItems(data.list)
+        if (!this::data.isInitialized) {
+            val json = ApplicationSingleton.instance.storageProvider.get(NAME)
+            if (json == null) {
+                data = MaterialsData()
+                getData()
+            } else {
+                data = ApplicationUtils.fromJson(json.toString(), MaterialsData::class.java)
+                getModel<MaterialsModel>().addAllItems(data.list)
+            }
         }
     }
 
