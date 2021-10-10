@@ -9,6 +9,10 @@ import androidx.core.content.ContextCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.badge.BadgeUtils
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory
+import com.google.android.play.core.install.model.AppUpdateType
+import com.google.android.play.core.install.model.UpdateAvailability
+import ru.nextleap.fox_in_box.ApplicationConstant
 import ru.nextleap.fox_in_box.R
 import ru.nextleap.fox_in_box.screen.AbsDesktopFragment
 import ru.nextleap.sl.model.IModel
@@ -261,6 +265,23 @@ class HomeFragment : AbsDesktopFragment("fragment_home", R.layout.fragment_home)
         viewPager.adapter = null
 
         super.onDestroyView()
+    }
+
+    fun checkUpdate() {
+            val appUpdateManager = AppUpdateManagerFactory.create(ApplicationProvider.appContext)
+            val appUpdateInfoTask = appUpdateManager.appUpdateInfo
+            appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
+                if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
+                    && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)
+                ) {
+                    appUpdateManager.startUpdateFlowForResult(
+                        appUpdateInfo,
+                        AppUpdateType.FLEXIBLE,
+                        requireActivity(),
+                        ApplicationConstant.REQUEST_APPLICATION_UPDATE
+                    )
+                }
+            }
     }
 
 

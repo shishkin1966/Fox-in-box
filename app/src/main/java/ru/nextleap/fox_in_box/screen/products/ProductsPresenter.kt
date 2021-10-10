@@ -9,6 +9,7 @@ import ru.nextleap.fox_in_box.data.SKU
 import ru.nextleap.fox_in_box.provider.Providers
 import ru.nextleap.fox_in_box.request.GetSKUListRequest
 import ru.nextleap.fox_in_box.request.PutStorageRequest
+import ru.nextleap.sl.Pager
 import ru.nextleap.sl.action.ApplicationAction
 import ru.nextleap.sl.action.IAction
 import ru.nextleap.sl.action.ShowErrorAction
@@ -25,20 +26,7 @@ class ProductsPresenter(model: ProductsModel) : AbsModelPresenter(model), IRespo
     }
 
     private lateinit var data: SKUData
-    private var currentPageSize = 0
-    private var currentPosition = 0
-    private val nextPageSize: Int
-        get() {
-            for (i in pageSize.indices) {
-                if (pageSize[i] > currentPageSize) {
-                    currentPageSize = pageSize[i]
-                    return pageSize[i]
-                }
-            }
-            return pageSize[pageSize.size - 1]
-        }
-    private lateinit var pageSize: ArrayList<Int>
-    private var eof = false
+    private val pager = Pager()
 
     override fun isRegister(): Boolean {
         return false
@@ -49,7 +37,7 @@ class ProductsPresenter(model: ProductsModel) : AbsModelPresenter(model), IRespo
     }
 
     override fun onStart() {
-        setPageSize(PageSize)
+        pager.setPageSize(PageSize)
         val json = ApplicationSingleton.instance.storageProvider.get(NAME)
         if (json == null) {
             data = SKUData()
@@ -60,34 +48,23 @@ class ProductsPresenter(model: ProductsModel) : AbsModelPresenter(model), IRespo
         }
     }
 
-    private fun setPageSize(initialPageSize: Int) {
-        if (initialPageSize > 0) {
-            pageSize = ArrayList()
-            pageSize.add(initialPageSize)
-            pageSize.add(initialPageSize * 2)
-            pageSize.add(initialPageSize * 4)
-        }
-    }
-
     private fun getData() {
         init()
         ApplicationUtils.runOnUiThread {
-            getView<ProductsFragment>().actionHandler.showProgressBar()
+            getModel<ProductsModel>().getHandler().showProgressBar()
         }
         hasData()
     }
 
     private fun init() {
-        currentPosition = 0
-        currentPageSize = 0
-        eof = false
+        pager.init()
         data.list.clear()
         getModel<ProductsModel>().clearItems()
     }
 
     private fun hasData() {
-        if (!eof) {
-            Providers.getSKUList(getName(), currentPosition, nextPageSize)
+        if (!pager.eof) {
+            Providers.getSKUList(getName(), pager.currentPosition, pager.nextPageSize)
         }
     }
 
@@ -106,31 +83,28 @@ class ProductsPresenter(model: ProductsModel) : AbsModelPresenter(model), IRespo
                                 }
                             }
                             if (list.isNotEmpty()) {
-                                currentPosition += list.size
-                                if (list.size < currentPageSize) {
-                                    eof = true
-                                }
+                                pager.add(list.size)
                                 this.data.list.addAll(list)
                                 getModel<ProductsModel>().addItems(list)
                             } else {
-                                eof = true
+                                pager.eof = true
                             }
-                            if (eof) {
+                            if (pager.eof) {
                                 val json = ApplicationUtils.toJson(this.data)
                                 ApplicationSingleton.instance.commonExecutor.execute(
                                     PutStorageRequest(NAME, json)
                                 )
-                                getView<ProductsFragment>().actionHandler.hideProgressBar()
+                                getModel<ProductsModel>().getHandler().hideProgressBar()
                             }
                             hasData()
                         } else {
-                            getView<ProductsFragment>().actionHandler.hideProgressBar()
+                            getModel<ProductsModel>().getHandler().hideProgressBar()
                         }
                     }
                 }
             } else {
-                getView<ProductsFragment>().actionHandler.hideProgressBar()
-                getView<ProductsFragment>().actionHandler.showErrorAction(ShowErrorAction(result.getErrorText()))
+                getModel<ProductsModel>().getHandler().hideProgressBar()
+                getModel<ProductsModel>().getHandler().showErrorAction(ShowErrorAction(result.getErrorText()))
             }
         }
     }

@@ -3,6 +3,8 @@ package ru.nextleap.fox_in_box.screen.materials
 import android.annotation.SuppressLint
 import ru.nextleap.fox_in_box.data.Materials
 import ru.nextleap.fox_in_box.screen.IItemsList
+import ru.nextleap.fox_in_box.screen.aggregated.AggregatedFragment
+import ru.nextleap.sl.action.handler.FragmentActionHandler
 import ru.nextleap.sl.model.AbsPresenterModel
 
 
@@ -26,5 +28,9 @@ class MaterialsModel(view: MaterialsFragment) : AbsPresenterModel(view), IItemsL
     @SuppressLint("NotifyDataSetChanged")
     override fun dataChanged() {
         getView<MaterialsFragment>().adapter.notifyDataSetChanged()
+    }
+
+    fun getHandler() : FragmentActionHandler {
+        return getView<MaterialsFragment>().actionHandler
     }
 }

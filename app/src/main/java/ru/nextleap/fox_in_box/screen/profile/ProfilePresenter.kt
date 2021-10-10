@@ -40,13 +40,13 @@ class ProfilePresenter(model: ProfileModel) : AbsModelPresenter(model), IRespons
     }
 
     private fun getData() {
-        getView<ProfileFragment>().addAction(ShowProgressBarAction())
+        getModel<ProfileModel>().getHandler().showProgressBar()
         Providers.getProfile(getName())
     }
 
     override fun response(result: ExtResult) {
         ApplicationUtils.runOnUiThread {
-            getView<ProfileFragment>().addAction(HideProgressBarAction())
+            getModel<ProfileModel>().getHandler().hideProgressBar()
             if (!result.hasError()) {
                 when (result.getName()) {
                     GetProfileRequest.NAME -> {
@@ -65,7 +65,7 @@ class ProfilePresenter(model: ProfileModel) : AbsModelPresenter(model), IRespons
                     }
                 }
             } else {
-                getView<ProfileFragment>().addAction(ShowErrorAction(result.getErrorText()))
+                getModel<ProfileModel>().getHandler().showErrorAction(ShowErrorAction(result.getErrorText()))
             }
         }
     }

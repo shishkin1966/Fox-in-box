@@ -49,12 +49,12 @@ class MainPresenter(model: MainModel) : AbsModelPresenter(model), IResponseListe
         if (!isValid()) return false
 
         if (action is ShowProgressBarAction) {
-            getView<MainActivity>().actionHandler.showProgressBar()
+            getModel<MainModel>().getHandler().showProgressBar()
             return true
         }
 
         if (action is HideProgressBarAction) {
-            getView<MainActivity>().actionHandler.hideProgressBar()
+            getModel<MainModel>().getHandler().hideProgressBar()
             return true
         }
 
@@ -64,11 +64,11 @@ class MainPresenter(model: MainModel) : AbsModelPresenter(model), IResponseListe
                 return true
             }
             ShowHomeFragment -> {
-                getView<MainActivity>().router.showHomeFragment()
+                getModel<MainModel>().getRouter().showHomeFragment()
                 return true
             }
             Authorization -> {
-                getView<MainActivity>().router.showAuthorizationFragment()
+                getModel<MainModel>().getRouter().showAuthorizationFragment()
                 return true
             }
             OnNetworkConnected, OnStartApplication -> {
@@ -76,23 +76,23 @@ class MainPresenter(model: MainModel) : AbsModelPresenter(model), IResponseListe
                 return true
             }
             Registration -> {
-                getView<MainActivity>().router.showRegistrationFragment()
+                getModel<MainModel>().getRouter().showRegistrationFragment()
                 return true
             }
             RestorePsw -> {
-                getView<MainActivity>().router.showRestorePswFragment()
+                getModel<MainModel>().getRouter().showRestorePswFragment()
                 return true
             }
             ShowTermsPromotionsFragment -> {
-                getView<MainActivity>().router.showTermsPromotionsFragment()
+                getModel<MainModel>().getRouter().showTermsPromotionsFragment()
                 return true
             }
             ShowProductsFragment -> {
-                getView<MainActivity>().router.showProductsFragment()
+                getModel<MainModel>().getRouter().showProductsFragment()
                 return true
             }
             ShowOrdersFragment -> {
-                getView<MainActivity>().router.showOrdersFragment()
+                getModel<MainModel>().getRouter().showOrdersFragment()
                 return true
             }
         }
@@ -104,7 +104,7 @@ class MainPresenter(model: MainModel) : AbsModelPresenter(model), IResponseListe
                     return true
                 }
                 ShowViewNewsFragment -> {
-                    getView<MainActivity>().router.showViewNewsFragment(action.getData() as News)
+                    getModel<MainModel>().getRouter().showViewNewsFragment(action.getData() as News)
                     return true
                 }
             }
@@ -143,7 +143,7 @@ class MainPresenter(model: MainModel) : AbsModelPresenter(model), IResponseListe
 
     private fun connect() {
         ApplicationUtils.runOnUiThread {
-            getView<MainActivity>().addAction(ShowProgressBarAction())
+            getModel<MainModel>().getHandler().showProgressBar()
         }
         getToken()
     }
@@ -154,14 +154,14 @@ class MainPresenter(model: MainModel) : AbsModelPresenter(model), IResponseListe
 
     override fun response(result: ExtResult) {
         ApplicationUtils.runOnUiThread {
-            getView<MainActivity>().addAction(HideProgressBarAction())
+            getModel<MainModel>().getHandler().hideProgressBar()
             if (!result.hasError()) {
                 when (result.getName()) {
                     GetTokenRequest.NAME -> {
                         if ((result.getData() as Token).error.isNullOrEmpty()) {
                             ApplicationSingleton.instance.sessionProvider.setToken(result.getData() as Token)
                             // показать главный экран
-                            getView<MainActivity>().router.showHomeFragment()
+                            getModel<MainModel>().getRouter().showHomeFragment()
                         } else {
                             ApplicationSingleton.instance.sessionProvider.clearToken()
 

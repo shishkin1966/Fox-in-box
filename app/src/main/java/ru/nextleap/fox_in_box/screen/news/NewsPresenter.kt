@@ -9,6 +9,7 @@ import ru.nextleap.fox_in_box.data.News
 import ru.nextleap.fox_in_box.provider.Providers
 import ru.nextleap.fox_in_box.request.GetNewsListRequest
 import ru.nextleap.fox_in_box.request.PutStorageRequest
+import ru.nextleap.sl.Pager
 import ru.nextleap.sl.action.ApplicationAction
 import ru.nextleap.sl.action.IAction
 import ru.nextleap.sl.action.ShowErrorAction
@@ -27,20 +28,7 @@ class NewsPresenter(model: NewsModel) : AbsModelPresenter(model), IResponseListe
     }
 
     private lateinit var data: NewsData
-    private var currentPageSize = 0
-    private var currentPosition = 0
-    private val nextPageSize: Int
-        get() {
-            for (i in pageSize.indices) {
-                if (pageSize[i] > currentPageSize) {
-                    currentPageSize = pageSize[i]
-                    return pageSize[i]
-                }
-            }
-            return pageSize[pageSize.size - 1]
-        }
-    private lateinit var pageSize: ArrayList<Int>
-    private var eof = false
+    private val pager = Pager()
 
     override fun isRegister(): Boolean {
         return true
@@ -58,31 +46,28 @@ class NewsPresenter(model: NewsModel) : AbsModelPresenter(model), IResponseListe
                                 list.add(News(item as LinkedTreeMap<String, Any?>))
                             }
                             if (list.isNotEmpty()) {
-                                currentPosition += list.size
-                                if (list.size < currentPageSize) {
-                                    eof = true
-                                }
+                                pager.add(list.size)
                                 this.data.list.addAll(list)
                                 getModel<NewsModel>().addItems(list)
                             } else {
-                                eof = true
+                                pager.eof = true
                             }
-                            if (eof) {
+                            if (pager.eof) {
                                 val json = ApplicationUtils.toJson(this.data)
                                 ApplicationSingleton.instance.commonExecutor.execute(
                                     PutStorageRequest(NAME, json)
                                 )
-                                getView<NewsFragment>().actionHandler.hideProgressBar()
+                                getModel<NewsModel>().getHandler().hideProgressBar()
                             }
                             hasData()
                         } else {
-                            getView<NewsFragment>().actionHandler.hideProgressBar()
+                            getModel<NewsModel>().getHandler().hideProgressBar()
                         }
                     }
                 }
             } else {
-                getView<NewsFragment>().actionHandler.hideProgressBar()
-                getView<NewsFragment>().actionHandler.showErrorAction(ShowErrorAction(result.getErrorText()))
+                getModel<NewsModel>().getHandler().hideProgressBar()
+                getModel<NewsModel>().getHandler().showErrorAction(ShowErrorAction(result.getErrorText()))
             }
         }
     }
@@ -92,7 +77,7 @@ class NewsPresenter(model: NewsModel) : AbsModelPresenter(model), IResponseListe
     }
 
     override fun onStart() {
-        setPageSize(PageSize)
+        pager.setPageSize(PageSize)
         val json = ApplicationSingleton.instance.storageProvider.get(NAME)
         if (json == null) {
             data = NewsData()
@@ -103,19 +88,10 @@ class NewsPresenter(model: NewsModel) : AbsModelPresenter(model), IResponseListe
         }
     }
 
-    private fun setPageSize(initialPageSize: Int) {
-        if (initialPageSize > 0) {
-            pageSize = ArrayList()
-            pageSize.add(initialPageSize)
-            pageSize.add(initialPageSize * 2)
-            pageSize.add(initialPageSize * 4)
-        }
-    }
-
     private fun getData() {
         init()
         ApplicationUtils.runOnUiThread {
-            getView<NewsFragment>().actionHandler.showProgressBar()
+            getModel<NewsModel>().getHandler().showProgressBar()
         }
         hasData()
     }
@@ -142,16 +118,14 @@ class NewsPresenter(model: NewsModel) : AbsModelPresenter(model), IResponseListe
     }
 
     private fun init() {
-        currentPosition = 0
-        currentPageSize = 0
-        eof = false
+        pager.init()
         data.list.clear()
         getModel<NewsModel>().clearItems()
     }
 
     private fun hasData() {
-        if (!eof) {
-            Providers.getNewsList(getName(), currentPosition, nextPageSize)
+        if (!pager.eof) {
+            Providers.getNewsList(getName(), pager.currentPosition, pager.nextPageSize)
         }
     }
 
