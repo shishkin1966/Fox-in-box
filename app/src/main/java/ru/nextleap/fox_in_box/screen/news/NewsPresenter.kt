@@ -131,11 +131,10 @@ class NewsPresenter(model: NewsModel) : AbsModelPresenter(model), IResponseListe
     override fun read(message: IMessage) {
         if (message is DataMessage) {
             val messageItem = message.getData() as News
-            for (item: News in data.list) {
-                if (item.Id == messageItem.Id) {
-                    item.MyVote = messageItem.MyVote
+            for (i in 0..data.list.size - 1) {
+                if (data.list[i].Id == messageItem.Id) {
+                    data.list[i] = messageItem
                     getView<NewsFragment>().adapter.setItem(messageItem)
-                    saveData()
                     break
                 }
             }
@@ -143,10 +142,15 @@ class NewsPresenter(model: NewsModel) : AbsModelPresenter(model), IResponseListe
     }
 
     private fun saveData() {
-        val json = ApplicationUtils.toJson(this.data)
+        val json = ApplicationUtils.toJson(data)
         ApplicationSingleton.instance.commonExecutor.execute(
             PutStorageRequest(NAME, json)
         )
     }
 
+    override fun onDestroyView() {
+        saveData()
+
+        super.onDestroyView()
+    }
 }
