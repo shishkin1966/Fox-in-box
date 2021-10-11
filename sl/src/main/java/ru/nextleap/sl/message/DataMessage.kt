@@ -2,7 +2,7 @@ package ru.nextleap.sl.message
 
 import ru.nextleap.sl.provider.IMessengerSubscriber
 
-class DataMessage(address: String, private val data: Any) : AbsMessage(address) {
+open class DataMessage(address: String, private val data: Any) : AbsMessage(address) {
 
     override fun read(subscriber: IMessengerSubscriber) {
         subscriber.read(this)

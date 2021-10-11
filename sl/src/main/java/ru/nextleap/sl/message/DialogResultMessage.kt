@@ -3,7 +3,7 @@ package ru.nextleap.sl.message
 import ru.nextleap.sl.action.DialogResultAction
 import ru.nextleap.sl.provider.IMessengerSubscriber
 
-class DialogResultMessage : AbsMessage {
+open class DialogResultMessage : AbsMessage {
     companion object {
         const val SUBJ = "DialogResultMessage"
     }

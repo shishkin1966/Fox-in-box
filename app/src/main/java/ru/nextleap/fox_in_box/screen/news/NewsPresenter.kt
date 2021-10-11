@@ -6,6 +6,7 @@ import ru.nextleap.fox_in_box.ApplicationSingleton
 import ru.nextleap.fox_in_box.action.Actions
 import ru.nextleap.fox_in_box.data.BaseResponse
 import ru.nextleap.fox_in_box.data.News
+import ru.nextleap.fox_in_box.message.NewsDataMessage
 import ru.nextleap.fox_in_box.provider.Providers
 import ru.nextleap.fox_in_box.request.GetNewsListRequest
 import ru.nextleap.fox_in_box.request.PutStorageRequest
@@ -14,7 +15,6 @@ import ru.nextleap.sl.action.ApplicationAction
 import ru.nextleap.sl.action.IAction
 import ru.nextleap.sl.action.ShowErrorAction
 import ru.nextleap.sl.data.ExtResult
-import ru.nextleap.sl.message.DataMessage
 import ru.nextleap.sl.message.IMessage
 import ru.nextleap.sl.presenter.AbsModelPresenter
 import ru.nextleap.sl.request.IResponseListener
@@ -64,7 +64,8 @@ class NewsPresenter(model: NewsModel) : AbsModelPresenter(model), IResponseListe
                 }
             } else {
                 getModel<NewsModel>().getHandler().hideProgressBar()
-                getModel<NewsModel>().getHandler().showErrorAction(ShowErrorAction(result.getErrorText()))
+                getModel<NewsModel>().getHandler()
+                    .showErrorAction(ShowErrorAction(result.getErrorText()))
             }
         }
     }
@@ -129,9 +130,9 @@ class NewsPresenter(model: NewsModel) : AbsModelPresenter(model), IResponseListe
     }
 
     override fun read(message: IMessage) {
-        if (message is DataMessage) {
+        if (message is NewsDataMessage) {
             val messageItem = message.getData() as News
-            for (i in 0..data.list.size - 1) {
+            for (i in 0 until data.list.size) {
                 if (data.list[i].Id == messageItem.Id) {
                     data.list[i] = messageItem
                     getView<NewsFragment>().adapter.setItem(messageItem)

@@ -7,6 +7,7 @@ import ru.nextleap.fox_in_box.R
 import ru.nextleap.fox_in_box.action.Actions
 import ru.nextleap.fox_in_box.data.BaseResponse
 import ru.nextleap.fox_in_box.data.News
+import ru.nextleap.fox_in_box.message.NewsDataMessage
 import ru.nextleap.fox_in_box.provider.Providers
 import ru.nextleap.fox_in_box.request.GetNewsRequest
 import ru.nextleap.fox_in_box.screen.news.NewsPresenter
@@ -95,7 +96,7 @@ class ViewNewsPresenter(model: ViewNewsModel) : AbsModelPresenter(model), IRespo
                     item!!.MyVote = !(item!!.MyVote)
                     getView<ViewNewsFragment>().addAction(DataAction(Actions.ResponseOnClick, id))
                     ApplicationSingleton.instance.addMessage(
-                        DataMessage(
+                        NewsDataMessage(
                             NewsPresenter.NAME,
                             item!!
                         )
