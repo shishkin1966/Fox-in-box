@@ -1,7 +1,6 @@
 package ru.nextleap.common.recyclerview
 
 import androidx.recyclerview.widget.RecyclerView
-import ru.nextleap.common.ApplicationUtils
 
 abstract class AbsRecyclerViewAdapter<E, VH : RecyclerView.ViewHolder> : IRecyclerViewAdapter<E>,
     RecyclerView.Adapter<VH>() {
@@ -21,35 +20,40 @@ abstract class AbsRecyclerViewAdapter<E, VH : RecyclerView.ViewHolder> : IRecycl
     }
 
     override fun add(e: E) {
-        items.add(e)
-        notifyDataSetChanged()
+        if (items.add(e)) {
+            val position = items.size - 1;
+            notifyItemInserted(position);
+        }
     }
 
     override fun add(position: Int, e: E) {
-        items.add(position, e)
-        notifyDataSetChanged()
+        items.add(position, e);
+        notifyItemInserted(position);
     }
 
     override fun addAll(items: List<E>) {
-        this.items.addAll(items)
-        notifyDataSetChanged()
+        val positionStart = this.items.size;
+        if (this.items.addAll(items)) {
+            notifyItemRangeInserted(positionStart, items.size);
+        }
     }
 
     override fun move(fromPosition: Int, toPosition: Int) {
         val e = items.removeAt(fromPosition)
         items.add(toPosition, e)
-        notifyDataSetChanged()
+        notifyItemMoved(fromPosition, toPosition);
     }
 
     override fun remove(position: Int): E {
         val e = items.removeAt(position)
-        notifyDataSetChanged()
+        notifyItemRemoved(position);
         return e
     }
 
     override fun clear() {
-        items.clear()
-        notifyDataSetChanged()
+        val itemCount = items.size;
+        items.clear();
+        notifyItemRangeRemoved(0, itemCount);
     }
 
     override fun isEmpty(): Boolean {
