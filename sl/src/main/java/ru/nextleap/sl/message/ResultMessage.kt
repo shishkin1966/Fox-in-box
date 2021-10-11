@@ -4,7 +4,7 @@ import ru.nextleap.sl.data.ExtResult
 import ru.nextleap.sl.provider.IMessengerSubscriber
 import ru.nextleap.sl.request.IResponseListener
 
-class ResultMessage : AbsMessage {
+open class ResultMessage : AbsMessage {
     private lateinit var result: ExtResult
 
     private constructor(address: String) : super(address)
