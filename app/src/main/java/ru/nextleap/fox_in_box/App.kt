@@ -130,6 +130,10 @@ class App : ApplicationProvider(), LifecycleObserver {
         get() = get(AnalyticsProvider.NAME)!!
         private set(value) {}
 
+    var jobProvider: IJobProvider
+        get() = get(JobProvider.NAME)!!
+        private set(value) {}
+
     fun getApi(): NetApi {
         return ApplicationSingleton.instance.get<NetProvider>(NetProvider.NAME)!!.getApi()
     }
