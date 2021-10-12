@@ -21,11 +21,13 @@ import android.text.Spanned
 import android.util.DisplayMetrics
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowInsets
 import android.view.WindowManager
 import android.view.animation.DecelerateInterpolator
 import android.view.animation.OvershootInterpolator
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.annotation.ChecksSdkIntAtLeast
 import androidx.annotation.IdRes
 import androidx.core.app.ActivityCompat
 import androidx.core.content.res.ResourcesCompat
@@ -42,6 +44,9 @@ import com.google.gson.Gson
 import com.muddzdev.styleabletoast.StyleableToast
 import java.io.Serializable
 import java.lang.reflect.Type
+import kotlin.math.floor
+import kotlin.math.max
+import kotlin.math.sqrt
 
 
 @Suppress("UNCHECKED_CAST", "unused")
@@ -55,26 +60,31 @@ class ApplicationUtils {
         const val MESSAGE_TYPE_WARNING = 2
         const val MESSAGE_TYPE_SUCCESS = 3
 
+        @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.HONEYCOMB)
         @JvmStatic
         fun hasHoneycomb(): Boolean {
             return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB
         }
 
+        @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.JELLY_BEAN)
         @JvmStatic
         fun hasJellyBean(): Boolean {
             return Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN
         }
 
+        @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
         @JvmStatic
         fun hasJellyBeanMR1(): Boolean {
             return Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1
         }
 
+        @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
         @JvmStatic
         fun hasJellyBeanMR2(): Boolean {
             return Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2
         }
 
+        @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.KITKAT)
         @JvmStatic
         fun hasKitKat(): Boolean {
             return Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
@@ -85,46 +95,55 @@ class ApplicationUtils {
             return Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP || Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP_MR1
         }
 
+        @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.LOLLIPOP)
         @JvmStatic
         fun hasLollipop(): Boolean {
             return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
         }
 
+        @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.M)
         @JvmStatic
         fun hasMarshmallow(): Boolean {
             return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
         }
 
+        @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.N)
         @JvmStatic
         fun hasN(): Boolean {
             return Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
         }
 
+        @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.N_MR1)
         @JvmStatic
         fun hasNMR1(): Boolean {
             return Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1
         }
 
+        @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.O)
         @JvmStatic
         fun hasO(): Boolean {
             return Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
         }
 
+        @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.O_MR1)
         @JvmStatic
         fun hasOMR1(): Boolean {
             return Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1
         }
 
+        @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.P)
         @JvmStatic
         fun hasP(): Boolean {
             return Build.VERSION.SDK_INT >= Build.VERSION_CODES.P
         }
 
+        @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.Q)
         @JvmStatic
         fun hasQ(): Boolean {
             return Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
         }
 
+        @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.R)
         @JvmStatic
         fun hasR(): Boolean {
             return Build.VERSION.SDK_INT >= Build.VERSION_CODES.R
@@ -192,7 +211,7 @@ class ApplicationUtils {
                         }
                     }
 
-                    if (!listPermissionsNeeded.isEmpty()) {
+                    if (listPermissionsNeeded.isNotEmpty()) {
                         val arrayPermissionsNeeded =
                             arrayOfNulls<String>(listPermissionsNeeded.size)
                         listPermissionsNeeded.toArray(arrayPermissionsNeeded)
@@ -377,19 +396,41 @@ class ApplicationUtils {
         @JvmStatic
         fun getScreenWidth(context: Context): Int {
             val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
-            val display = wm.defaultDisplay
-            val metrics = DisplayMetrics()
-            display.getMetrics(metrics)
-            return metrics.widthPixels
+            return if (hasR()) {
+                val windowMetrics = wm.currentWindowMetrics
+                val windowInsets: WindowInsets = windowMetrics.windowInsets
+                val insets = windowInsets.getInsetsIgnoringVisibility(
+                    WindowInsets.Type.navigationBars() or WindowInsets.Type.displayCutout()
+                )
+                val insetsWidth = insets.right + insets.left
+                val b = windowMetrics.bounds
+                b.width() - insetsWidth
+            } else {
+                val display = wm.defaultDisplay
+                val metrics = DisplayMetrics()
+                display.getMetrics(metrics)
+                metrics.widthPixels
+            }
         }
 
         @JvmStatic
         fun getScreenHeight(context: Context): Int {
             val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
-            val display = wm.defaultDisplay
-            val metrics = DisplayMetrics()
-            display.getMetrics(metrics)
-            return metrics.heightPixels
+            return if (hasR()) {
+                val windowMetrics = wm.currentWindowMetrics
+                val windowInsets: WindowInsets = windowMetrics.windowInsets
+                val insets = windowInsets.getInsetsIgnoringVisibility(
+                    WindowInsets.Type.navigationBars() or WindowInsets.Type.displayCutout()
+                )
+                val insetsHeight = insets.top + insets.bottom
+                val b = windowMetrics.bounds
+                b.height() - insetsHeight
+            } else {
+                val display = wm.defaultDisplay
+                val metrics = DisplayMetrics()
+                display.getMetrics(metrics)
+                return metrics.heightPixels
+            }
         }
 
         /**
@@ -409,8 +450,8 @@ class ApplicationUtils {
             val heightInches = heightPixels / heightDpi
 
             val diagonal =
-                Math.sqrt((widthInches * widthInches + heightInches * heightInches).toDouble())
-            return Math.floor(diagonal + 0.5)
+                sqrt((widthInches * widthInches + heightInches * heightInches).toDouble())
+            return floor(diagonal + 0.5)
         }
 
         @JvmStatic
@@ -619,13 +660,13 @@ class ApplicationUtils {
 
         @JvmStatic
         fun setRoundedImage(context: Context, view: ImageView) {
-            val imageBitmap: Bitmap = (view.getDrawable() as BitmapDrawable).getBitmap()
+            val imageBitmap: Bitmap = (view.drawable as BitmapDrawable).bitmap
             val imageDrawable: RoundedBitmapDrawable = RoundedBitmapDrawableFactory.create(
-                context.getResources(),
+                context.resources,
                 imageBitmap
             )
             imageDrawable.isCircular = true
-            imageDrawable.cornerRadius = Math.max(
+            imageDrawable.cornerRadius = max(
                 imageBitmap.width,
                 imageBitmap.height
             ) / 2.0f
