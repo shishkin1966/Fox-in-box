@@ -63,3 +63,4 @@ Provider - объект, предоставляющий какую-либо фу
 - NotificationProvider - вывод Notification
 - ActivityUnion - union для Activities
 - MessengerUnion - union для доставки сообщений объектам
+- JobProvider - провайдер запуска задач
