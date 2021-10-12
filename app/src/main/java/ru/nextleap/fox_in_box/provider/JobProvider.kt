@@ -4,6 +4,7 @@ import androidx.work.*
 import ru.nextleap.sl.AbsProvider
 import ru.nextleap.sl.IProvider
 import ru.nextleap.sl.provider.ApplicationProvider
+import java.util.concurrent.TimeUnit
 
 class JobProvider : AbsProvider(), IJobProvider {
     companion object {
@@ -13,7 +14,7 @@ class JobProvider : AbsProvider(), IJobProvider {
     override fun <T : ListenableWorker> runOnce(workerClass: Class<T>) {
         val request: WorkRequest =
             OneTimeWorkRequest.from(workerClass)
-        runOnce(request)
+        run(request)
     }
 
     override fun <T : ListenableWorker> runOnce(workerClass: Class<T>, data: Data) {
@@ -21,7 +22,7 @@ class JobProvider : AbsProvider(), IJobProvider {
             OneTimeWorkRequest.Builder(workerClass)
                 .setInputData(data)
                 .build()
-        runOnce(request)
+        run(request)
     }
 
     override fun <T : ListenableWorker> runOnce(workerClass: Class<T>, constraints: Constraints) {
@@ -29,7 +30,7 @@ class JobProvider : AbsProvider(), IJobProvider {
             OneTimeWorkRequest.Builder(workerClass)
                 .setConstraints(constraints)
                 .build()
-        runOnce(request)
+        run(request)
     }
 
     override fun <T : ListenableWorker> runOnce(
@@ -42,7 +43,45 @@ class JobProvider : AbsProvider(), IJobProvider {
                 .setInputData(data)
                 .setConstraints(constraints)
                 .build()
-        runOnce(request)
+        run(request)
+    }
+
+    override fun <T : ListenableWorker> runPeriodic(
+        workerClass: Class<T>,
+        data: Data,
+        constraints: Constraints,
+        repeatInterval: Long,
+        repeatIntervalTimeUnit: TimeUnit
+    ) {
+        val request: WorkRequest =
+            PeriodicWorkRequest.Builder(workerClass, repeatInterval, repeatIntervalTimeUnit)
+                .setInputData(data)
+                .setConstraints(constraints)
+                .build()
+        run(request)
+    }
+
+    override fun <T : ListenableWorker> runPeriodic(
+        workerClass: Class<T>,
+        data: Data,
+        constraints: Constraints,
+        repeatInterval: Long,
+        repeatIntervalTimeUnit: TimeUnit,
+        flexInterval: Long,
+        flexIntervalTimeUnit: TimeUnit
+    ) {
+        val request: WorkRequest =
+            PeriodicWorkRequest.Builder(
+                workerClass,
+                repeatInterval,
+                repeatIntervalTimeUnit,
+                flexInterval,
+                flexIntervalTimeUnit
+            )
+                .setInputData(data)
+                .setConstraints(constraints)
+                .build()
+        run(request)
     }
 
     override fun getName(): String {
@@ -53,9 +92,11 @@ class JobProvider : AbsProvider(), IJobProvider {
         return if (other is IJobProvider) 0 else 1
     }
 
-    private fun runOnce(request: WorkRequest) {
+    override fun run(request: WorkRequest) {
         WorkManager
             .getInstance(ApplicationProvider.appContext)
             .enqueue(request)
     }
+
+
 }
