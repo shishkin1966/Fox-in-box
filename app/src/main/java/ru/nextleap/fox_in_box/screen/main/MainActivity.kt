@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import androidx.work.Data
 import ru.nextleap.common.ApplicationUtils
 import ru.nextleap.fox_in_box.ApplicationConstant.Companion.REQUEST_APPLICATION_UPDATE
 import ru.nextleap.fox_in_box.ApplicationSingleton
@@ -100,6 +101,12 @@ class MainActivity : AbsContentActivity() {
                 onUserInteraction()
             }
         }
+
+        val data = Data.Builder()
+            .putString("message", "Тест")
+            .build()
+        ApplicationSingleton.instance.jobProvider.runOnce(NotificationWorker::class.java, data)
+
     }
 
     override fun onBackPressed() {
