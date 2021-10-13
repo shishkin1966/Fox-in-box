@@ -14,7 +14,7 @@ object LogSingleton {
 
 class LogProvider : AbsProvider(), ILogProvider {
     companion object {
-        const val NAME = "ErrorProvider"
+        const val NAME = "LogProvider"
     }
 
     override fun info(source: String, info: String?) {
