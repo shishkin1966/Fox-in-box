@@ -621,8 +621,8 @@ class ApplicationUtils {
                 override fun onAnimationCancel(animation: Animator?) {}
                 override fun onAnimationRepeat(animation: Animator?) {}
             })
-            va.setDuration(300)
-            va.setInterpolator(OvershootInterpolator())
+            va.duration = 300
+            va.interpolator = OvershootInterpolator()
             va.start()
         }
 

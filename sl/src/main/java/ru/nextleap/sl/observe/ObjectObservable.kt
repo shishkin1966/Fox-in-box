@@ -1,3 +1,4 @@
+@file:Suppress("unused", "UNUSED_PARAMETER")
 package ru.nextleap.sl.observe
 
 import ru.nextleap.sl.Secretary
@@ -9,7 +10,7 @@ class ObjectObservable : AbsObservable() {
     }
 
     private val objects = Secretary<ArrayList<String>>()
-
+    private val debouncies = Secretary<ObservableDebounce>()
 
     override fun getName(): String {
         return NAME
@@ -26,10 +27,8 @@ class ObjectObservable : AbsObservable() {
                 objects.put(listenObject, ArrayList())
             }
             val list = objects.get(listenObject)
-            if (list != null) {
-                if (!list.contains(subscriber.getName())) {
-                    list.add(subscriber.getName())
-                }
+            if (list != null && !list.contains(subscriber.getName())) {
+                list.add(subscriber.getName())
             }
         }
     }
@@ -48,13 +47,25 @@ class ObjectObservable : AbsObservable() {
 
     override fun onChange(obj: Any) {
         if (obj is String) {
-            val observers = objects[obj]
-            if (observers != null) {
-                for (name in observers) {
-                    val observer = getObserver(name)
-                    observer?.onChange(getName(), obj)
+            if (debouncies.containsKey(obj)) {
+                debouncies.get(obj)?.onEvent()
+            } else {
+                val observers = getObserverNames(obj)
+                if (observers != null) {
+                    for (name in observers) {
+                        val observer = getObserver(name)
+                        observer?.onChange(getName(), obj)
+                    }
                 }
             }
         }
+    }
+
+    fun setDebounce(obj: String, delay: Long) {
+        debouncies.put(obj, ObservableDebounce(obj, delay))
+    }
+
+    fun getObserverNames(obj: String): List<String>? {
+        return objects[obj]
     }
 }
