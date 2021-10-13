@@ -143,9 +143,9 @@ class App : ApplicationProvider(), LifecycleObserver {
         observableProvider.getObservable(observable)?.onChange(obj)
     }
 
-    // Событие - изменился ObjectObservable объект с именем observable
-    fun onChange(observable: String) {
-        observableProvider.getObservable(ObjectObservable.NAME)?.onChange(observable)
+    // Событие - изменился ObjectObservable объект. Изменения в объекте с именем obj
+    fun onChange(obj: String) {
+        observableProvider.getObservable(ObjectObservable.NAME)?.onChange(obj)
     }
 
     override fun getName(): String {
