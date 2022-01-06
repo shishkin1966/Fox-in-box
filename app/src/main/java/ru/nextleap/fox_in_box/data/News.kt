@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 import com.google.gson.internal.LinkedTreeMap
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
-import ru.nextleap.common.to_double
+import ru.nextleap.common.toDouble
 import java.io.Serializable
 import java.text.SimpleDateFormat
 import java.util.*
@@ -90,7 +90,7 @@ data class News(private val map: LinkedTreeMap<String, Any?>) : Serializable, Pa
     var DateExpired: Boolean? = null
 
     init {
-        Id = map["Id"].toString().to_double().toInt()
+        Id = map["Id"].toString().toDouble().toInt()
         Title = map["Title"] as String?
         Body = map["Body"] as String?
         Preview = map["Preview"] as String?
@@ -108,14 +108,14 @@ data class News(private val map: LinkedTreeMap<String, Any?>) : Serializable, Pa
         YoutubeLink = map["YoutubeLink"] as String?
         Image = map["Image"] as String?
         LikesEnabled = map["LikesEnabled"] as Boolean?
-        LikesCount = map["LikesCount"].toString().to_double().toInt()
+        LikesCount = map["LikesCount"].toString().toDouble().toInt()
         CommentsEnabled = map["CommentsEnabled"] as Boolean?
-        CommentsCount = map["CommentsCount"].toString().to_double().toInt()
+        CommentsCount = map["CommentsCount"].toString().toDouble().toInt()
         if (map.containsValue("MyVote")) {
             MyVote = map["MyVote"] as Boolean
         }
         DisplayViews = map["DisplayViews"] as Boolean?
-        ViewsCount = map["ViewsCount"].toString().to_double().toInt()
+        ViewsCount = map["ViewsCount"].toString().toDouble().toInt()
         ReadByUser = map["ReadByUser"] as Boolean?
         LastLikedUser = map["LastLikedUser"] as String?
         DateExpired = map["DateExpired"] as Boolean?

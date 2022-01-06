@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 import com.google.gson.internal.LinkedTreeMap
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
-import ru.nextleap.common.to_double
+import ru.nextleap.common.toDouble
 import java.io.Serializable
 
 @Parcelize
@@ -28,7 +28,7 @@ data class Aggregated(private val map: LinkedTreeMap<String, Any?>) : Serializab
 
 
     init {
-        Id = map["Id"].toString().to_double().toInt()
+        Id = map["Id"].toString().toDouble().toInt()
         Image = map["Image"] as String?
         Name = map["Name"] as String?
         Description = map["Description"] as String?
