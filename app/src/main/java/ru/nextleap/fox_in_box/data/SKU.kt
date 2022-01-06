@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 import com.google.gson.internal.LinkedTreeMap
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
-import ru.nextleap.common.to_double
+import ru.nextleap.common.toDouble
 import java.io.Serializable
 import java.text.SimpleDateFormat
 import java.util.*
@@ -165,7 +165,7 @@ data class SKU(private var map: LinkedTreeMap<String, Any?>) : Serializable, Par
     var IsFolder: Boolean? = null
 
     init {
-        Id = map["Id"].toString().to_double().toInt()
+        Id = map["Id"].toString().toDouble().toInt()
         Category = map["Category"] as String?
         Subcategory = map["Subcategory"] as String?
         Brand = map["Brand"] as String?
@@ -184,11 +184,11 @@ data class SKU(private var map: LinkedTreeMap<String, Any?>) : Serializable, Par
         ExternalCode = map["ExternalCode"] as String?
         UnitBarCode = map["UnitBarCode"] as String?
         BoxBarCode = map["BoxBarCode"] as String?
-        Volume = map["Volume"].toString().to_double()
-        Weight = map["Weight"].toString().to_double()
-        Amount = map["Amount"].toString().to_double().toInt()
+        Volume = map["Volume"].toString().toDouble()
+        Weight = map["Weight"].toString().toDouble()
+        Amount = map["Amount"].toString().toDouble().toInt()
         Links = map["Links"] as String?
-        DomainFolderId = map["DomainFolderId"].toString().to_double().toInt()
+        DomainFolderId = map["DomainFolderId"].toString().toDouble().toInt()
         Group = map["Group"] as String?
         VolumeUnit = map["VolumeUnit"] as String?
         WeightUnit = map["WeightUnit"] as String?
@@ -205,8 +205,8 @@ data class SKU(private var map: LinkedTreeMap<String, Any?>) : Serializable, Par
         CustomField8 = map["CustomField8"] as String?
         CustomField9 = map["CustomField9"] as String?
         CustomField10 = map["CustomField10"] as String?
-        AmountForUser = map["AmountForUser"].toString().to_double().toInt()
-        ProjectId = map["ProjectId"].toString().to_double().toInt()
+        AmountForUser = map["AmountForUser"].toString().toDouble().toInt()
+        ProjectId = map["ProjectId"].toString().toDouble().toInt()
         Name = map["Name"] as String?
         Description = map["Description"] as String?
         Image = map["Image"] as String?

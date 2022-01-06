@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 import com.google.gson.internal.LinkedTreeMap
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
-import ru.nextleap.common.to_double
+import ru.nextleap.common.toDouble
 import java.io.Serializable
 
 @Parcelize
@@ -79,8 +79,8 @@ data class Materials(private var map: LinkedTreeMap<String, Any?>) : Serializabl
     var ImagePath: String? = null
 
     init {
-        Id = map["Id"].toString().to_double().toInt()
-        ProjectId = map["ProjectId"].toString().to_double().toInt()
+        Id = map["Id"].toString().toDouble().toInt()
+        ProjectId = map["ProjectId"].toString().toDouble().toInt()
         Name = map["Name"] as String?
         Description = map["Description"] as String?
         Image = map["Image"] as String?
@@ -88,7 +88,7 @@ data class Materials(private var map: LinkedTreeMap<String, Any?>) : Serializabl
         Complete = map["Complete"] as Boolean?
         ImageStyle = map["ImageStyle"] as String?
         LikesEnabled = map["LikesEnabled"] as Boolean?
-        LikesCount = map["LikesCount"].toString().to_double().toInt()
+        LikesCount = map["LikesCount"].toString().toDouble().toInt()
         ViewButtonName = map["ViewButtonName"] as String?
         TestButtonName = map["TestButtonName"] as String?
         MyVote = map["MyVote"] as Boolean?

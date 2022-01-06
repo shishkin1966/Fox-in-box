@@ -1,4 +1,7 @@
-package ru.nextleap.common;
+@file:Suppress("unused", "UNUSED_PARAMETER")
+
+package ru.nextleap.common
+
 
 import java.io.File
 import java.math.BigDecimal
@@ -19,9 +22,9 @@ fun String?.isNullOrEmpty(): Boolean {
 
 fun String?.pos(which: String?, start: Int): Int {
     if (this == null || which == null) {
-        return -1;
+        return -1
     }
-    return if (start >= this.length) -1 else this.indexOf(which, start);
+    return if (start >= this.length) -1 else this.indexOf(which, start)
 }
 
 fun String?.token(
@@ -247,9 +250,9 @@ fun Double?.double2String(): String {
     if (this == null) return ""
     val format = DecimalFormat("###,##0.00")
     val customSymbol = DecimalFormatSymbols()
-    customSymbol.setDecimalSeparator('.')
-    customSymbol.setGroupingSeparator(' ')
-    format.setDecimalFormatSymbols(customSymbol)
+    customSymbol.decimalSeparator = '.'
+    customSymbol.groupingSeparator = ' '
+    format.decimalFormatSymbols = customSymbol
     return format.format(this)
 }
 
@@ -315,17 +318,16 @@ fun Long.formatDateShortRu(): String {
 }
 
 fun String.getDir(): String {
-    try {
+    return try {
         val file = File(this)
-        return file.parent
+        file.parent.allTrim()
     } catch (e: Exception) {
-        return ""
+        ""
     }
 }
 
 fun String.onlyChar(): String {
-    var s = this.replace(":", "_")
-    s = this.replace("\\", "_")
+    var s: String = this.replace("\\", "_")
     s = s.replace("/", "_")
     s = s.replace(" ", "_")
     s = s.replace(":", "_")
@@ -354,7 +356,7 @@ fun ByteArray.byteArrayToHex(): String {
     return sb.toString()
 }
 
-fun String.to_double(): Double {
+fun String.toDouble(): Double {
     var d = 0.0
     if (!this.isNullOrEmpty()) {
         try {
@@ -365,7 +367,7 @@ fun String.to_double(): Double {
     return d
 }
 
-fun String.to_int(): Int {
+fun String.toInt(): Int {
     var i = 0
     if (!this.isNullOrEmpty()) {
         try {
@@ -376,7 +378,7 @@ fun String.to_int(): Int {
     return i
 }
 
-fun String.to_long(): Long {
+fun String.toLong(): Long {
     var l: Long = 0
     if (!this.isNullOrEmpty()) {
         try {
