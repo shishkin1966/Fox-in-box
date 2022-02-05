@@ -63,7 +63,7 @@ class NetProvider : AbsNetProvider<NetApi>() {
             .followSslRedirects(false)
             .retryOnConnectionFailure(false)
 
-        builder.addInterceptor(OkHttpProfilerInterceptor())
+        //builder.addInterceptor(OkHttpProfilerInterceptor())
 
         return builder.build()
     }
