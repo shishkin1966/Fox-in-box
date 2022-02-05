@@ -119,59 +119,63 @@ fun String?.getNumbers(): String? {
     } else this!!.replace("[^\\.0123456789\\+]".toRegex(), "")
 }
 
-fun String?.toLongValue(): Long {
-    var l: Long = 0
-    if (!this.isNullOrEmpty()) {
-        try {
-            val str = this.getDigits()
-            l = java.lang.Long.parseLong(str!!)
-        } catch (e: Exception) {
+val String?.longValue: Long
+    get() {
+        var l: Long = 0
+        if (!this.isNullOrEmpty()) {
+            try {
+                val str = this.getDigits()
+                l = java.lang.Long.parseLong(str!!)
+            } catch (e: Exception) {
+            }
+
         }
-
+        return l
     }
-    return l
-}
 
-fun String?.toIntValue(): Int {
-    var i = 0
-    if (!this.isNullOrEmpty()) {
-        try {
-            val str = this.getDigits()
-            i = Integer.parseInt(str!!)
-        } catch (e: Exception) {
+val String?.intValue: Int
+    get() {
+        var i = 0
+        if (!this.isNullOrEmpty()) {
+            try {
+                val str = this.getDigits()
+                i = Integer.parseInt(str!!)
+            } catch (e: Exception) {
+            }
+
         }
-
+        return i
     }
-    return i
-}
 
-fun String?.toDoubleValue(): Double {
-    var s: String? = this
-    var d = 0.0
-    if (!s.isNullOrEmpty()) {
-        s = s!!.replace(",", ".")
-        s = s.getNumbers()
-        try {
-            d = java.lang.Double.parseDouble(s!!)
-        } catch (e: Exception) {
+val String?.doubleValue: Double
+    get() {
+        var s: String? = this
+        var d = 0.0
+        if (!s.isNullOrEmpty()) {
+            s = s!!.replace(",", ".")
+            s = s.getNumbers()
+            try {
+                d = java.lang.Double.parseDouble(s!!)
+            } catch (e: Exception) {
+            }
         }
+        return d
     }
-    return d
-}
 
-fun String?.toFloatValue(): Float {
-    var s: String? = this
-    var f = 0f
-    if (!s.isNullOrEmpty()) {
-        s = s!!.replace(",", ".")
-        s = s.getNumbers()
-        try {
-            f = java.lang.Float.parseFloat(s!!)
-        } catch (e: Exception) {
+val String?.floatValue: Float
+    get() {
+        var s: String? = this
+        var f = 0f
+        if (!s.isNullOrEmpty()) {
+            s = s!!.replace(",", ".")
+            s = s.getNumbers()
+            try {
+                f = java.lang.Float.parseFloat(s!!)
+            } catch (e: Exception) {
+            }
         }
+        return f
     }
-    return f
-}
 
 fun String?.replace(
     replaceString: String?, replaceWith: String?
@@ -356,35 +360,3 @@ fun ByteArray.byteArrayToHex(): String {
     return sb.toString()
 }
 
-fun String.toDouble(): Double {
-    var d = 0.0
-    if (!this.isNullOrEmpty()) {
-        try {
-            d = this.toDouble()
-        } catch (e: java.lang.Exception) {
-        }
-    }
-    return d
-}
-
-fun String.toInt(): Int {
-    var i = 0
-    if (!this.isNullOrEmpty()) {
-        try {
-            i = this.toInt()
-        } catch (e: java.lang.Exception) {
-        }
-    }
-    return i
-}
-
-fun String.toLong(): Long {
-    var l: Long = 0
-    if (!this.isNullOrEmpty()) {
-        try {
-            l = this.toLong()
-        } catch (e: java.lang.Exception) {
-        }
-    }
-    return l
-}

@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 import com.google.gson.internal.LinkedTreeMap
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
-import ru.nextleap.common.toDouble
+import ru.nextleap.common.doubleValue
 import java.io.Serializable
 
 @Parcelize
@@ -138,7 +138,7 @@ data class Profile(private var map: LinkedTreeMap<String, Any?>) : Serializable,
         PassportRegistrationAddress = map["PassportRegistrationAddress"] as String?
         Inn = map["Inn"] as String?
         PassportVerificationState =
-            map["PassportVerificationState"].toString().toDouble().toInt()
+            map["PassportVerificationState"].toString().doubleValue.toInt()
         PassportVerificationComment = map["PassportVerificationComment"] as String?
         Images = map["Images"] as List<String>?
         Blocked = map["Blocked"] as Boolean?

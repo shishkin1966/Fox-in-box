@@ -102,10 +102,10 @@ class MainActivity : AbsContentActivity() {
             }
         }
 
-        val data = Data.Builder()
-            .putString("message", "Тест")
-            .build()
-        ApplicationSingleton.instance.jobProvider.runOnce(NotificationWorker::class.java, data)
+        //val data = Data.Builder()
+        //    .putString("message", "Тест")
+        //    .build()
+        // ApplicationSingleton.instance.jobProvider.runOnce(NotificationWorker::class.java, data)
 
     }
 

@@ -81,7 +81,7 @@ dependencies {
     // Stream API
     implementation 'com.annimon:stream:1.2.1'
 
-    implementation 'androidx.preference:preference-ktx:1.1.1'
+    implementation 'androidx.preference:preference-ktx:1.2.0'
 
     implementation 'com.squareup.okhttp3:okhttp:4.9.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
@@ -110,5 +110,5 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
 
     // Jobs
-    implementation 'androidx.work:work-runtime:2.6.0'
+    implementation 'androidx.work:work-runtime:2.7.1'
 }

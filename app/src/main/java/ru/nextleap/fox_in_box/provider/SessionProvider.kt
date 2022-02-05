@@ -74,6 +74,7 @@ class SessionProvider : AbsProvider(), ISessionProvider {
                 // экран восстановления пароля
                 presenter?.addAction(ApplicationAction(MainPresenter.RestorePsw))
             } else {
+                /*
                 if (ApplicationSingleton.instance.netProvider.getToken().isNullOrEmpty()) {
                     if (!login.isNullOrEmpty() && !psw.isNullOrEmpty()) {
                         // имя пользователя и пароль есть
@@ -90,6 +91,8 @@ class SessionProvider : AbsProvider(), ISessionProvider {
                     // уже соединен - показать главный экран
                     presenter?.addAction(ApplicationAction(MainPresenter.ShowHomeFragment))
                 }
+                */
+                presenter?.addAction(ApplicationAction(MainPresenter.ShowHomeFragment))
             }
         }
     }
