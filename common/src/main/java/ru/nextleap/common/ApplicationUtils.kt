@@ -14,6 +14,7 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.os.Handler
+import android.os.HandlerThread
 import android.os.Looper
 import android.provider.Settings
 import android.text.Html
@@ -671,6 +672,21 @@ class ApplicationUtils {
                 imageBitmap.height
             ) / 2.0f
             view.setImageDrawable(imageDrawable)
+        }
+
+        @JvmStatic
+        fun isMainThread() : Boolean {
+            return Looper.myLooper() == Looper.getMainLooper()
+        }
+
+        @JvmStatic
+        fun getHandler() : Handler {
+            return Handler(Looper.getMainLooper())
+        }
+
+        @JvmStatic
+        fun getThreadHandler() : HandlerThread {
+            return HandlerThread("HandlerThread")
         }
 
     }

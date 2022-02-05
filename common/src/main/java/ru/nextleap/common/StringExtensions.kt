@@ -13,11 +13,11 @@ import kotlin.experimental.and
 
 
 fun CharSequence?.isNullOrEmpty(): Boolean {
-    return this == null || this.toString().trim { it <= ' ' }.length < 1
+    return this == null || this.toString().trim { it <= ' ' }.isEmpty()
 }
 
 fun String?.isNullOrEmpty(): Boolean {
-    return this == null || trim { it <= ' ' }.length < 1
+    return this == null || trim { it <= ' ' }.isEmpty()
 }
 
 fun String?.pos(which: String?, start: Int): Int {
