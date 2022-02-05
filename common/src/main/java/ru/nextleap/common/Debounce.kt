@@ -1,6 +1,10 @@
-package ru.nextleap.common;
+package ru.nextleap.common
 
 import android.os.Handler
+import android.os.HandlerThread
+
+
+
 
 /**
  * Класс, устраняющий дребезг (частое повторение) события
@@ -8,13 +12,19 @@ import android.os.Handler
  * @param delay задержка, после которой запустится действие
  * @param skip  количество событий, которое будет пропущено перед запуском задержки
  */
+@Suppress("UNCHECKED_CAST", "unused")
 open class Debounce(delay: Long, skip: Int = 0) : Runnable {
 
     private var delay: Long = 5000 //5 sec
     private var skip = 0
-    private val handler: Handler = Handler()
+    private var handler: Handler = ApplicationUtils.getHandler()
 
     init {
+        if (!ApplicationUtils.isMainThread()) {
+            val otherThread = HandlerThread("HandlerThread")
+            handler = Handler(otherThread.looper)
+        }
+
         this.delay = delay
         this.skip = skip
     }
