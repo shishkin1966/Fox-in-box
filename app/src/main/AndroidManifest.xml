@@ -1,7 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:installLocation="auto"
-    package="ru.nextleap.fox_in_box">
+    android:installLocation="auto">
 
     <meta-data
         android:name="ru.nextleap.fox_in_box.GlideProvider"
