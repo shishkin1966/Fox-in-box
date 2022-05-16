@@ -6,13 +6,13 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 32
     buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "ru.nextleap.fox_in_box"
         minSdkVersion 21
-        targetSdkVersion 31
+        targetSdkVersion 32
         versionCode 1
         versionName "1.0"
 
@@ -32,6 +32,7 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    namespace 'ru.nextleap.fox_in_box'
 
     applicationVariants.all { variant ->
 
@@ -46,16 +47,16 @@ dependencies {
     implementation project(path: ':sl')
 
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation "com.google.android.material:material:1.4.0"
+    implementation "com.google.android.material:material:1.6.0"
     implementation 'com.android.support:multidex:1.0.3'
-    implementation 'androidx.core:core-ktx:1.6.0'
-    implementation 'androidx.appcompat:appcompat:1.3.1'
-    implementation 'androidx.lifecycle:lifecycle-process:2.3.1'
+    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.appcompat:appcompat:1.4.1'
+    implementation 'androidx.lifecycle:lifecycle-process:2.4.1'
 
-    implementation 'com.google.firebase:firebase-crashlytics:18.2.3'
-    implementation 'com.google.firebase:firebase-analytics:19.0.2'
+    implementation 'com.google.firebase:firebase-crashlytics:18.2.10'
+    implementation 'com.google.firebase:firebase-analytics:21.0.0'
     implementation 'com.google.android.play:core-ktx:1.8.1'
-    implementation 'com.google.firebase:firebase-messaging:22.0.0'
+    implementation 'com.google.firebase:firebase-messaging:23.0.4'
 
     testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
@@ -70,7 +71,7 @@ dependencies {
     implementation 'com.balysv:material-ripple:1.0.2'
 
     // сериализация
-    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'com.google.code.gson:gson:2.8.9'
 
     // БД ROOM
     //implementation "androidx.room:room-runtime:2.2.5"

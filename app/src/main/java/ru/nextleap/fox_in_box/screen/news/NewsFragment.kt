@@ -25,7 +25,7 @@ import ru.nextleap.sl.provider.ApplicationProvider
 
 @Suppress("UNCHECKED_CAST")
 class NewsFragment : AbsDesktopFragment("fragment_news",
-    R.layout.fragment_news), ChipGroup.OnCheckedChangeListener,
+    R.layout.fragment_news), ChipGroup.OnCheckedStateChangeListener,
     SwipeRefreshLayout.OnRefreshListener {
 
     companion object {
@@ -96,7 +96,7 @@ class NewsFragment : AbsDesktopFragment("fragment_news",
         recyclerView.adapter = adapter
 
         chipGroup = view.findViewById(R.id.chipGroup)
-        chipGroup.setOnCheckedChangeListener(this)
+        chipGroup.setOnCheckedStateChangeListener(this)
 
         chip1 = view.findViewById(R.id.chip1)
         chip2 = view.findViewById(R.id.chip2)
@@ -145,8 +145,16 @@ class NewsFragment : AbsDesktopFragment("fragment_news",
         super.onDestroyView()
     }
 
-    override fun onCheckedChanged(group: ChipGroup?, checkedId: Int) {
-        when (checkedId) {
+    override fun onRefresh() {
+        if (swipeRefreshLayout.isRefreshing) {
+            swipeRefreshLayout.isRefreshing = false
+        }
+        getModel<NewsModel>().getPresenter<NewsPresenter>()
+            .addAction(ApplicationAction(Actions.OnSwipeRefresh))
+    }
+
+    override fun onCheckedChanged(group: ChipGroup, checkedIds: MutableList<Int>) {
+        when (checkedIds[0]) {
             R.id.chip1 -> {
                 position = 1
             }
@@ -161,13 +169,5 @@ class NewsFragment : AbsDesktopFragment("fragment_news",
                 position = 4
             }
         }
-    }
-
-    override fun onRefresh() {
-        if (swipeRefreshLayout.isRefreshing) {
-            swipeRefreshLayout.isRefreshing = false
-        }
-        getModel<NewsModel>().getPresenter<NewsPresenter>()
-            .addAction(ApplicationAction(Actions.OnSwipeRefresh))
     }
 }
