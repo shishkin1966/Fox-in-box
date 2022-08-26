@@ -16,10 +16,6 @@ abstract class AbsMessage() : AbsAction(), IMessage {
     }
 
     constructor(message: IMessage) : this() {
-        address = message.getAddress()
-        copyTo.addAll(message.getCopyTo())
-        id = message.getMessageId()
-        keepAliveTime = message.getEndTime()
     }
 
     override fun getMessageId(): Int {
@@ -59,8 +55,8 @@ abstract class AbsMessage() : AbsAction(), IMessage {
             return true
         }
 
-        for (copyto in copyTo) {
-            if (copyto == address) {
+        for (s in copyTo) {
+            if (s == address) {
                 return true
             }
         }
